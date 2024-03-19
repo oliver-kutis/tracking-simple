@@ -6,7 +6,14 @@ export default {
 			image: "url('./src/lib/img/background-main.jpg')",
 			'bg-alt': "url('./src/lib/img/bg-alt.jpg')",
 		},
-		extend: {},
+		extend: {
+			fontFamilys: {
+				sans: ['Inter', 'sans-serif'],
+				montserrat: ['Montserrat', 'sans-serif'],
+				roboto: ['Roboto', 'sans-serif'],
+				poppins: ['Poppins', 'sans-serif'],
+			},
+		},
 	},
 	plugins: [require('daisyui')],
 	daisyui: {
@@ -14,10 +21,11 @@ export default {
 		themes: [
 			{
 				darkTheme: {
-					primary: '#020024',
+					// primary: '#020024',
 					secondary: '#907900',
-					// accent: '#00D4FF',
-					accent: '#0281a8',
+					accent: '#00D4FF',
+					// accent: '#007a8a',
+					// accent: '#0281a8',
 					neutral: '#020a02',
 					// 'base-100': '#1a1a1a',
 					'base-100': '#020024',

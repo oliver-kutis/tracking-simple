@@ -3,45 +3,12 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<style>
-			body {
-				position: relative;
-				overflow: hidden;
-				height: 100vh;
-				margin: 0;
-				padding: 0;
-			}
-			body::before {
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				content: '';
-				background-image: url('/src/lib/img/bg-dalle.webp');
-				/* background-image: linear-gradient(135deg, hsl(237, 92%, 62%) 25%, transparent 25%),
-					linear-gradient(225deg, hsl(237, 92%, 62%) 25%, transparent 25%),
-					linear-gradient(45deg, hsl(237, 92%, 62%) 25%, transparent 25%),
-					linear-gradient(315deg, hsl(237, 92%, 62%) 25%, transparent 25%); */
-
-				/* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Cpath d='M0 30 Q25 50 50 30 Q25 10 0 30' fill='hsl(237, 92%, 62%)'/%3E%3C/svg%3E"); */
-				/* background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBpZD0id2F2ZSIgc3R5bGU9InRyYW5zZm9ybTpyb3RhdGUoMGRlZyk7IHRyYW5zaXRpb246IDAuM3MiIHZpZXdCb3g9IjAgMCAxNDQwIDE1MCIgdmVyc2lvbj0iMS4xIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9InN3LWdyYWRpZW50LTAiIHgxPSIwIiB4Mj0iMCIgeTE9IjEiIHkyPSIwIj48c3RvcCBzdG9wLWNvbG9yPSJyZ2JhKDEwOC41OTMsIDIxMC40NzEsIDI0MS43NTcsIDEpIiBvZmZzZXQ9IjAlIi8+PHN0b3Agc3RvcC1jb2xvcj0icmdiYSgyLCAxMCwgMiwgMSkiIG9mZnNldD0iMTAwJSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIHN0eWxlPSJ0cmFuc2Zvcm06dHJhbnNsYXRlKDAsIDBweDsgb3BhY2l0eToxIiBmaWxsPSJ1cmwoI3N3LWdyYWRpZW50LTApIiBkPSJNMCwxMzVMMTAsMTEyLjVD'); */
-				/* background-image: url("data:image/svg+xml,%3Csvg id='wave' style='transform:rotate(0deg); transition: 0.3s' viewBox='0 0 1440 100' version='1.1' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='sw-gradient-0' x1='0' x2='0' y1='1' y2='0'%3E%3Cstop stop-color='rgba(108.593, 210.471, 241.757, 1)' offset='0%'%3E%3C/stop%3E%3Cstop stop-color='rgba(2, 10, 2, 1)' offset='100%'%3E%3C/stop%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath style='transform:translate(0, 0px); opacity:1' fill='url(%23sw-gradient-0)' d='M0,50L10,55C20,60,40,70,60,75C80,80,100,80,120,76.7C140,73,160,67,180,61.7C200,57,220,53,240,58.3C260,63,280,77,300,73.3C320,70,340,50,360,46.7C380,43,400,57,420,58.3C440,60,460,50,480,38.3C500,27,520,13,540,20C560,27,580,53,600,53.3C620,53,640,27,660,15C680,3,700,7,720,13.3C740,20,760,30,780,41.7C800,53,820,67,840,71.7C860,77,880,73,900,75C920,77,940,83,960,85C980,87,1000,83,1020,71.7C1040,60,1060,40,1080,33.3C1100,27,1120,33,1140,30C1160,27,1180,13,1200,13.3C1220,13,1240,27,1260,41.7C1280,57,1300,73,1320,70C1340,67,1360,43,1380,33.3C1400,23,1420,27,1430,28.3L1440,30L1440,100L1430,100C1420,100,1400,100,1380,100C1360,100,1340,100,1320,100C1300,100,1280,100,1260,100C1240,100,1220,100,1200,100C1180,100,1160,100,1140,100C1120,100,1100,100,1080,100C1060,100,1040,100,1020,100C1000,100,980,100,960,100C940,100,920,100,900,100C880,100,860,100,840,100C820,100,800,100,780,100C760,100,740,100,720,100C700,100,680,100,660,100C640,100,620,100,600,100C580,100,560,100,540,100C520,100,500,100,480,100C460,100,440,100,420,100C400,100,380,100,360,100C340,100,320,100,300,100C280,100,260,100,240,100C220,100,200,100,180,100C160,100,140,100,120,100C100,100,80,100,60,100C40,100,20,100,10,100L0,100Z'%3E%3C/path%3E%3C/svg%3E"); */
-				/* background-color: hsl(0, 0%, 0%); */
-				/* background-repeat: repeat; */
-				background-position: cover;
-				/* background-position:
-					80px 0px,
-					80px 0px,
-					0 0,
-					0 0; */
-				/* background-size: auto 1000px; */
-				background-size: cover;
-				/* filter: blur(10px); */
-				opacity: 0.3;
-				z-index: -1;
-			}
-		</style>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet"
+		/>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		%sveltekit.head%
 	</head>

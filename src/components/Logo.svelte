@@ -33,7 +33,7 @@
 			></path></g
 		></svg
 	>
-	<span>tracking simply</span>
+	<slot><span>tracking simply</span></slot>
 </div>
 
 <!-- <style>
