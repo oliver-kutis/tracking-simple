@@ -1,7 +1,11 @@
 <script lang="ts">
+	let klass: string = '';
+	export { klass as class };
 </script>
 
-<div class="block">
-	<h2 class="">Google Analytics</h2>
-	<p>Setup of GA4 measurement and data collection management.</p>
+<div class={klass}>
+	<slot name="title"><h2>Service</h2></slot>
+	<slot name="content">
+		<p>Service description</p>
+	</slot>
 </div>

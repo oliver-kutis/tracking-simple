@@ -13,16 +13,27 @@ export default {
 				roboto: ['Roboto', 'sans-serif'],
 				poppins: ['Poppins', 'sans-serif'],
 			},
+			backgroundImage: {
+				clouds: "url('/src/lib/img/bg-clouds.jpg');",
+			},
+			colors: {
+				card: '#024269',
+			},
 		},
 	},
 	plugins: [require('daisyui')],
 	daisyui: {
 		// styled: true,
 		themes: [
+			'sunset',
+			'dark',
+			'cyberpunk',
+			'cupcake',
 			{
 				darkTheme: {
-					// primary: '#020024',
+					primary: '#020024',
 					secondary: '#907900',
+					card: '#213a5f',
 					accent: '#00D4FF',
 					// accent: '#007a8a',
 					// accent: '#0281a8',
@@ -34,12 +45,12 @@ export default {
 					warning: '#ff9200',
 					error: '#ff759f',
 				},
-				lightTheme: {
-					primary: '#00D4FF',
+				mytheme: {
+					primary: '#ff9200',
 					secondary: '#907900',
-					accent: '#007a8a',
+					accent: '#00D4FF',
 					neutral: '#020a02',
-					'base-100': '#fff6ff',
+					'base-100': '#111827',
 					info: '#009eb5',
 					success: '#00a064',
 					warning: '#ff9200',
