@@ -1,24 +1,47 @@
 <script>
-	import '../app.css';
-	import Logo from '../components/Logo.svelte';
-	import SearchIcon from '../components/svg/SearchIcon.svelte';
-	import LinkedIn from '../components/svg/LinkedIn.svelte';
-	import Bio from '../components/Bio.svelte';
-	import X from '../components/svg/X.svelte';
-	import Medium from '../components/svg/Medium.svelte';
+	import '../../app.css';
+	import Logo from '../../components/Logo.svelte';
+	import SearchIcon from '../../components/svg/SearchIcon.svelte';
+	import LinkedIn from '../../components/svg/LinkedIn.svelte';
+	import Bio from '../../components/Bio.svelte';
+	import X from '../../components/svg/X.svelte';
+	import Medium from '../../components/svg/Medium.svelte';
 	import { fly, slide } from 'svelte/transition';
 	import { backOut } from 'svelte/easing';
+	import themeStore from '$stores/theme';
+	import Nav from '../../components/Nav.svelte';
+	// import { createEventDispatcher } from 'svelte';
+	import toggleThemeSettings from '$stores/toggleThemeSetts';
 
 	// import Footer from '../components/Footer.svelte';
-	import Nav from '../components/Nav.svelte';
+
+	// const dispatch = createEventDispatcher();
+
+	$: console.log($themeStore);
+	$: {
+		if (typeof document !== 'undefined') {
+			document.documentElement.setAttribute('data-theme', $themeStore);
+		}
+	}
 </script>
 
 <!-- <div class="h-full items-center"> -->
 <!-- <div class="bg-info bg-opacity-10 h-full items-center"> -->
 <!-- <div class="bg-clouds bg-repeat-space bg-cover bg-fixed bg-opacity-10 h-full items-center"> -->
+<svelte:body
+	data-theme={$themeStore}
+	on:click={event => {
+		console.log(event.target?.classList.contains('theme-settings'));
+		if (event.target?.classList.contains('theme-settings')) return;
+		$toggleThemeSettings = $toggleThemeSettings === true ? false : true;
+		// dispatch('close');
+	}}
+/>
 <div class="flex w-full h-full">
 	<div class="container inset-0 max-h-full py-5 px-10 rounded max-w-screen-xlg mx-auto">
 		<Nav></Nav>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 		<main class="flex mt-5 flex-col flex-grow w-full mx-auto">
 			<slot />
 		</main>

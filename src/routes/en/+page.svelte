@@ -1,21 +1,25 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { fly, slide } from 'svelte/transition';
-	import { backOut } from 'svelte/easing';
-	import Service from '$components/Service.svelte';
+	// import { onMount } from 'svelte';
+	// import { fly, slide } from 'svelte/transition';
+	// import { backOut } from 'svelte/easing';
+	// import Service from '$components/Service.svelte';
+	import { langConfigs } from '$lib/info';
 	import Bio from '$components/Bio.svelte';
 
-	let categories: string[] = ['Web tracking', 'Tag management', 'Marketing analytics'];
-	let currentCategoryIndex = 0;
-	let showText: boolean = false;
+	// TODO: Make this dynamic
+	let lang = 'en';
 
-	onMount(() => {
-		showText = true;
-		const interval = setInterval(() => {
-			currentCategoryIndex = (currentCategoryIndex + 1) % categories.length;
-			// clearTimeout(timer);
-		}, 5000);
-	});
+	// let categories: string[] = ['Web tracking', 'Tag management', 'Marketing analytics'];
+	// let currentCategoryIndex = 0;
+	// let showText: boolean = false;
+
+	// onMount(() => {
+	// 	showText = true;
+	// 	const interval = setInterval(() => {
+	// 		currentCategoryIndex = (currentCategoryIndex + 1) % categories.length;
+	// 		// clearTimeout(timer);
+	// 	}, 5000);
+	// });
 </script>
 
 <!-- <div
@@ -23,14 +27,14 @@
 	style="background: url('/src/lib/img/bg-clouds.jpg') no-repeat center center fixed; background-size: cover;"
 > -->
 <svelte:head>
-	<title>Oliver Kutis | Web analyst</title>
-	<meta name="description" content="" />
+	<title>{langConfigs.en.title}</title>
+	<meta name="description" content={langConfigs.en.description} />
 </svelte:head>
-<Bio />
+<Bio lang={lang} />
 <section class="w-full">
 	<ul class="grid grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 mb-12">
 		<li class="rounded-2xl border-2 p-6 border-neutral">
-			<h2 class="flex text-lg font-semibold text-zinc-700 dark:text-zinc-100">
+			<h2 class="flex text-lg font-semibold text-base">
 				<svg
 					viewBox="0 0 24 24"
 					fill="none"
@@ -41,24 +45,27 @@
 					class="h-6 w-6 flex-none"
 					><path
 						d="M2.75 9.75a3 3 0 0 1 3-3h12.5a3 3 0 0 1 3 3v8.5a3 3 0 0 1-3 3H5.75a3 3 0 0 1-3-3v-8.5Z"
-						class="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500"
+						class="fill-none stroke-primary"
 					/><path
 						d="M3 14.25h6.249c.484 0 .952-.002 1.316.319l.777.682a.996.996 0 0 0 1.316 0l.777-.682c.364-.32.832-.319 1.316-.319H21M8.75 6.5V4.75a2 2 0 0 1 2-2h2.5a2 2 0 0 1 2 2V6.5"
-						class="stroke-zinc-400 dark:stroke-zinc-500"
+						class="stroke-primary"
 					/></svg
-				><span class="ml-3">Front-End Developer</span>
+				><span class="ml-3">Web Analyst</span>
 			</h2>
-			<h4 class="text-sm mt-5 mb-2 font-semibold text-indigo-700">Frameworks</h4>
-			<p class="mb-5 dark:text-zinc-50 text-gray-500">Svelte, Angular, Vue, React</p>
-			<h4 class="text-sm mt-5 mb-2 font-semibold text-indigo-700">Languages</h4>
-			<p class=" mb-5 dark:text-zinc-50 text-gray-500">HTML, CSS, JavaScript</p>
-			<h4 class="text-sm mt-5 mb-2 font-semibold text-indigo-700">CSS Frameworks</h4>
-			<p class="mb-5 dark:text-zinc-50 text-gray-500">
-				Bootstrap, TailwindCSS, Vuetify, ChakraUI, Buefy, Flowbite
+			<h4 class="text-sm mt-5 mb-2 font-semibold text-primary">Skills</h4>
+			<p class="mb-5 text-base">
+				Tag management (GTM, sGTM), Web analytics (GA, GA4), Marketing analytics
 			</p>
+			<h4 class="text-sm mt-5 mb-2 font-semibold text-primary">Platforms</h4>
+			<p class="mb-5 text-base">
+				Google Ads, Meta Pixel, Sklik & Zbozi.cz, LinkedIn, Twitter, TikTok, Heureka, Biano,
+				Glami, Criteo, ...
+			</p>
+			<h4 class="text-sm mt-5 mb-2 font-semibold text-primary">Languages</h4>
+			<p class=" mb-5 text-base">JavaScript, Python, SQL</p>
 		</li>
 		<li class="rounded-2xl border-2 p-6 border-neutral">
-			<h2 class="flex text-lg font-semibold text-zinc-700 dark:text-zinc-100">
+			<h2 class="flex text-lg font-semibold text-base">
 				<svg
 					viewBox="0 0 24 24"
 					fill="none"
@@ -69,22 +76,22 @@
 					class="h-6 w-6 flex-none"
 					><path
 						d="M2.75 9.75a3 3 0 0 1 3-3h12.5a3 3 0 0 1 3 3v8.5a3 3 0 0 1-3 3H5.75a3 3 0 0 1-3-3v-8.5Z"
-						class="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500"
+						class="fill-none stroke-primary"
 					/><path
 						d="M3 14.25h6.249c.484 0 .952-.002 1.316.319l.777.682a.996.996 0 0 0 1.316 0l.777-.682c.364-.32.832-.319 1.316-.319H21M8.75 6.5V4.75a2 2 0 0 1 2-2h2.5a2 2 0 0 1 2 2V6.5"
-						class="stroke-zinc-400 dark:stroke-zinc-500"
+						class="stroke-primary"
 					/></svg
 				><span class="ml-3">Other Skills</span>
 			</h2>
-			<h4 class="text-sm mt-5 mb-2 font-semibold text-indigo-700">Programming Languages</h4>
-			<p class="mb-5 dark:text-zinc-50 text-gray-500">Python, Nodejs</p>
-			<h4 class="text-sm mt-5 mb-2 font-semibold text-indigo-700">Database</h4>
-			<p class=" mb-5 dark:text-zinc-50 text-gray-500">Postgres</p>
-			<h4 class="text-sm mt-5 mb-2 font-semibold text-indigo-700">BaaS</h4>
-			<p class="mb-5 dark:text-zinc-50 text-gray-500">Firebase, Pocketbase</p>
+			<h4 class="text-sm mt-5 mb-2 font-semibold text-primary">Google Cloud Platform</h4>
+			<p class="mb-5 text-base">Dataform, Cloud Functions, Workflows</p>
+			<h4 class="text-sm mt-5 mb-2 font-semibold text-primary">Data analytics</h4>
+			<p class=" mb-5 text-base">Bigquery, Keboola, Adverity, Looker Studio</p>
+			<h4 class="text-sm mt-5 mb-2 font-semibold text-primary">Other</h4>
+			<p class="mb-5 text-base">Marketing Mix Modeling (MMM), Causal Impact, GeoLift</p>
 		</li>
 		<li class="rounded-2xl border-2 p-6 border-neutral">
-			<h2 class="flex text-lg font-semibold text-zinc-700 dark:text-zinc-100">
+			<h2 class="flex text-lg font-semibold text-base">
 				<svg
 					viewBox="0 0 24 24"
 					fill="none"
@@ -95,20 +102,35 @@
 					class="h-6 w-6 flex-none"
 					><path
 						d="M2.75 9.75a3 3 0 0 1 3-3h12.5a3 3 0 0 1 3 3v8.5a3 3 0 0 1-3 3H5.75a3 3 0 0 1-3-3v-8.5Z"
-						class="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500"
+						class="fill-none stroke-primary"
+					/><path
+						d="M3 14.25h6.249c.484 0 .952-.002 1.316.319l.777.682a.996.996 0 0 0 1.316 0l.777-.682c.364-.32.832-.319 1.316-.319H21M8.75 6.5V4.75a2 2 0 0 1 2-2h2.5a2 2 0 0 1 2 2V6.5"
+						class="stroke-primary"
+					/>
+				</svg><span class="ml-3">Experience</span>
+				<!-- <svg
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke-width="1.5"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+					class="h-6 w-6 flex-none"
+					><path
+						d="M2.75 9.75a3 3 0 0 1 3-3h12.5a3 3 0 0 1 3 3v8.5a3 3 0 0 1-3 3H5.75a3 3 0 0 1-3-3v-8.5Z"
+						class="fill-none stroke-primary"
 					/><path
 						d="M3 14.25h6.249c.484 0 .952-.002 1.316.319l.777.682a.996.996 0 0 0 1.316 0l.777-.682c.364-.32.832-.319 1.316-.319H21M8.75 6.5V4.75a2 2 0 0 1 2-2h2.5a2 2 0 0 1 2 2V6.5"
 						class="stroke-zinc-400 dark:stroke-zinc-500"
-					/></svg
-				><span class="ml-3">Experience</span>
+					/>
+					</svg
+				><span class="ml-3">Experience</span> -->
 			</h2>
-			<p class="mt-5 mb-5 dark:text-zinc-50 text-gray-500">10+ years</p>
-			<h4 class="text-sm mt-5 mb-2 font-semibold text-indigo-700">Areas</h4>
-			<p class="mb-5 dark:text-zinc-50 text-gray-500">Developer Tools & SaaS</p>
-			<h4 class="text-sm mt-5 mb-2 font-semibold text-indigo-700">Product</h4>
-			<p class=" mb-5 dark:text-zinc-50 text-gray-500">
-				Prototyping, MVP, Customer Development, Marketing, SEO
-			</p>
+			<p class="mt-5 mb-5 text-base">2+ years</p>
+			<h4 class="text-sm mt-5 mb-2 font-semibold text-primary">Areas</h4>
+			<p class="mb-5 text-base">Ecommerce, B2B</p>
+			<h4 class="text-sm mt-5 mb-2 font-semibold text-primary">Clients</h4>
+			<p class="mb-5 text-base">eyerim.sk, krmimkvalitne.cz, svetpeceni.cz</p>
 		</li>
 	</ul>
 </section>

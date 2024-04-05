@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import { themes as daisyThemes } from './src/lib/themes.ts';
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
@@ -25,10 +26,11 @@ export default {
 	daisyui: {
 		// styled: true,
 		themes: [
-			'sunset',
-			'dark',
-			'cyberpunk',
-			'cupcake',
+			// 'sunset',
+			// 'dark',
+			// 'cyberpunk',
+			// 'cupcake',
+			...daisyThemes.map(themeObj => themeObj.theme),
 			{
 				darkTheme: {
 					primary: '#020024',
