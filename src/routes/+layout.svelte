@@ -1,17 +1,17 @@
 <script>
-	import '../../app.css';
-	import Logo from '../../components/Logo.svelte';
-	import SearchIcon from '../../components/svg/SearchIcon.svelte';
-	import LinkedIn from '../../components/svg/LinkedIn.svelte';
-	import Bio from '../../components/Bio.svelte';
-	import X from '../../components/svg/X.svelte';
-	import Medium from '../../components/svg/Medium.svelte';
+	import '../app.css';
+	import Logo from '../components/Logo.svelte';
+	import SearchIcon from '../components/svg/SearchIcon.svelte';
+	import LinkedIn from '../components/svg/LinkedIn.svelte';
+	import Bio from '../components/Bio.svelte';
+	import X from '../components/svg/X.svelte';
+	import Medium from '../components/svg/Medium.svelte';
 	import { fly, slide } from 'svelte/transition';
 	import { backOut } from 'svelte/easing';
 	import themeStore from '$stores/theme';
-	import Nav from '../../components/Nav.svelte';
+	import Nav from '../components/Nav.svelte';
 	// import { createEventDispatcher } from 'svelte';
-	import toggleThemeSettings from '$stores/toggleThemeSetts';
+	import toggleNavSettings from '$stores/toggleNavSettings';
 
 	// import Footer from '../components/Footer.svelte';
 
@@ -31,10 +31,24 @@
 <svelte:body
 	data-theme={$themeStore}
 	on:click={event => {
-		console.log(event.target?.classList.contains('theme-settings'));
-		if (event.target?.classList.contains('theme-settings')) return;
-		$toggleThemeSettings = $toggleThemeSettings === true ? false : true;
-		// dispatch('close');
+		if (event.target instanceof Element) {
+			if (
+				event.target?.closest('.theme-settings') != null ||
+				event.target.classList.contains('theme-settings') ||
+				event.target?.closest('.nav-settings') != null ||
+				event.target.classList.contains('theme-settings')
+			)
+				return;
+
+			if ($toggleNavSettings.theme === true) {
+				$toggleNavSettings.theme = false;
+				$toggleNavSettings.nav = false;
+			}
+			if ($toggleNavSettings.nav === true) {
+				$toggleNavSettings.nav = false;
+				$toggleNavSettings.theme = false;
+			}
+		}
 	}}
 />
 <div class="flex w-full h-full">

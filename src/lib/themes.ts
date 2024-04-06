@@ -1,4 +1,4 @@
-export const themes = [
+export const themes: Theme[] = [
 	{
 		theme: 'dark',
 		meta: {

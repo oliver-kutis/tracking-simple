@@ -15,7 +15,7 @@ const themeStore = <T>(key: string, initValue: T): ThemeStore<T> => {
 	const storedValueStr = localStorage.getItem(key);
 	if (storedValueStr != null) store.set(JSON.parse(storedValueStr));
 
-	store.subscribe((val): void => {
+	store.subscribe((val: T): void => {
 		if (val == null) {
 			localStorage.removeItem(key);
 		} else {
@@ -31,7 +31,7 @@ const themeStore = <T>(key: string, initValue: T): ThemeStore<T> => {
 		if (get(store) !== localValue) store.set(localValue);
 	});
 
-	document.querySelector('html')?.setAttribute('data-theme', get(store));
+	document.querySelector('html')?.setAttribute('data-theme', get(store) as string);
 
 	return {
 		subscribe,

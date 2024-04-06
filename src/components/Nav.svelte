@@ -4,11 +4,12 @@
 	import { browser } from '$app/environment';
 	import { themes } from '$lib/themes';
 	import themeStore from '../stores/theme';
-	import toggleThemeSettings from '../stores/toggleThemeSetts';
+	import toggleNavSettings from '../stores/toggleNavSettings';
 	import { writable } from 'svelte/store';
+	import { onMount } from 'svelte';
 
 	let isDarkMode = browser ? Boolean(document.documentElement.classList.contains('dark')) : true;
-	let toggleMenu = false;
+	// let $toggleNavSettings.nav = false;
 
 	const navMenu = [
 		{
@@ -20,6 +21,11 @@
 			link: '/about',
 		},
 	];
+
+	$toggleNavSettings = {
+		nav: false,
+		theme: false,
+	};
 
 	function disableTransitionsTemporarily() {
 		document.documentElement.classList.add('[&_*]:!transition-none');
@@ -63,20 +69,23 @@
 				</ul>
 			</nav>
 		</div>
-		<div class="dropdown flex mr-2 sm:hidden gap-2">
+		<!-- <div class="nav-settings dropdown flex mr-2 gap-2"> -->
+		<div class="nav-settings dropdown flex mr-2 sm:hidden gap-2">
 			<!-- svelte-ignore a11y-label-has-associated-control -->
 			<button
 				on:click={() => {
-					toggleMenu = !toggleMenu;
+					// console.log($toggleNavSettings.nav);
+					$toggleNavSettings.nav = !$toggleNavSettings.nav;
+					$toggleNavSettings.theme = false;
 				}}
 				class="bg-transparent"
 			>
-				{#if toggleMenu}
+				{#if $toggleNavSettings.nav}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
-						class="inline-block h-6 w-6 stroke-current"
+						class="nav-settings inline-block h-6 w-6 stroke-current"
 					>
 						<title>Close Dropdown</title>
 						<path
@@ -91,7 +100,7 @@
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
-						class="inline-block h-6 w-6 stroke-current"
+						class="nav-settings inline-block h-6 w-6 stroke-current"
 					>
 						<title>Open Dropdown</title>
 						<path
@@ -104,16 +113,16 @@
 				{/if}
 			</button>
 			<ul
-				class={`${toggleMenu ? 'block' : 'hidden'} w-52  absolute right-8 z-50 top-16  py-2 mt-2 mr-10 rounded-lg shadow-xl bg-primary light:bg-white`}
+				class={`${$toggleNavSettings.nav ? 'block' : 'hidden'} w-52 absolute right-1 z-50 top-10 py-2 mt-2 mr-2 rounded-lg shadow-xl bg-primary bg-opacity-90`}
 			>
 				{#each navMenu as item}
 					<li class="mb-2">
 						<a
 							on:blur={() => {
-								toggleMenu = false;
+								$toggleNavSettings.nav = false;
 							}}
 							href={item.link}
-							class="inline-block px-4 py-2 text-sm rounded font-medium text-zinc-900 dark:text-zinc-50 w-full hover:bg-indigo-800 hover:text-white focus:relative"
+							class={`${item.link === $page.url.pathname ? 'text-base font-semibold' : 'text-sm'} inline-block px-4 py-2  rounded-sm font-medium text-neutral w-full hover:bg-neutral hover:text-primary hover:text-base focus:relative`}
 						>
 							{item.title}
 						</a>
@@ -122,7 +131,7 @@
 				<li>
 					<a
 						href="mailto:jranand.py@gmail.com"
-						class="inline-block px-4 py-2 text-sm rounded w-full border-indigo-500 font-medium text-zinc-900 dark:text-zinc-50 hover:bg-indigo-800 hover:text-white focus:relative"
+						class="inline-block px-4 py-2 text-sm rounded-sm w-full font-medium text-neutral hover:bg-neutral hover:text-primary hover:text-base focus:relative"
 						>Say Hello</a
 					>
 				</li>
@@ -132,11 +141,12 @@
 			<!-- svelte-ignore a11y-label-has-associated-control -->
 			<button
 				on:click={() => {
-					$toggleThemeSettings = !$toggleThemeSettings;
+					$toggleNavSettings.theme = !$toggleNavSettings.theme;
+					$toggleNavSettings.nav = false;
 				}}
 				class="bg-transparent"
 			>
-				{#if $toggleThemeSettings}
+				{#if $toggleNavSettings.theme}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -175,42 +185,24 @@
 				{/if}
 			</button>
 			<ul
-				class={`${$toggleThemeSettings ? 'block' : 'hidden'} w-52  absolute right-8 z-50 top-16  py-2 mt-2 mr-10 rounded-lg shadow-xl bg-primary light:bg-white`}
+				class={`${$toggleNavSettings.theme ? 'block' : 'hidden'} w-52 absolute right-1 z-50 top-10 py-2 mt-2 mr-2 rounded-lg shadow-xl bg-primary bg-opacity-90`}
 			>
 				{#each themes as { theme } (theme)}
 					<li class="mb-2">
 						<button
 							on:click={() => {
 								$themeStore = theme;
-								$toggleThemeSettings = false;
+								$toggleNavSettings.theme = false;
 							}}
-							class="inline-block px-4 py-2 text-sm text-left rounded w-full border-indigo-500 font-medium text-neutral hover:bg-neutral hover:text-primary focus:relative"
+							class={`${theme === $themeStore ? 'text-base font-semibold' : 'text-sm'} text-neutral inline-block px-4 py-2 text-left rounded-sm w-full hover:bg-neutral hover:text-primary hover:text-base focus:relative`}
 						>
 							{theme}
 						</button>
-						<!-- <button
-							on:click={() => {
-								$themeStore = theme;
-								toggleMenu = false;
-							}}
-							class="inline-block px-4 py-2 text-sm text-left rounded w-full border-indigo-500 font-medium text-zinc-900 dark:text-zinc-50 hover:bg-indigo-800 hover:text-white focus:relative"
-						>
-							{theme}
-						</button> -->
-						<!-- <a
-							on:blur={() => {
-								toggleMenu = false;
-							}}
-							href={item.link}
-							class="inline-block px-4 py-2 text-sm rounded font-medium text-zinc-900 dark:text-zinc-50 w-full hover:bg-indigo-800 hover:text-white focus:relative"
-						>
-							{item.title}
-						</a> -->
 					</li>
 				{/each}
 			</ul>
 		</div>
-		<button
+		<!-- <button
 			type="button"
 			role="switch"
 			aria-label="Toggle Dark Mode"
@@ -229,8 +221,6 @@
 				}
 			}}
 		>
-			<!-- <MoonIcon class="hidden text-zinc-500 dark:block" />
-			<SunIcon class="block text-zinc-400 dark:hidden" /> -->
-		</button>
+		</button> -->
 	</div>
 </header>

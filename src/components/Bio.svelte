@@ -1,7 +1,6 @@
 <script>
 	// import SocialLinks from '$lib/components/SocialLinks.svelte';
-	import { langConfigs } from '$lib/info.ts';
-
+	import { langConfigs } from '$lib/info';
 	export let lang = 'en';
 </script>
 

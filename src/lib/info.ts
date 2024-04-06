@@ -5,7 +5,17 @@ export const linkedinURL = 'https://linkedin.com/in/oliver-kuti%C5%A1-5248a1179'
 export const twitterURL = 'https://twitter.com/oliverkutis';
 export const emailAddress = 'oliver.kutis@gmail.com';
 
-export const langConfigs = {
+type LangConfigsType = {
+	[key: string]: {
+		name: string;
+		title: string;
+		description: string;
+		bio: string;
+		bioDescription: string;
+	};
+};
+
+export const langConfigs: LangConfigsType = {
 	en: {
 		name: 'Oliver Kutis',
 		title: 'Oliver Kutis | Web analytics',
