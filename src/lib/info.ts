@@ -1,4 +1,6 @@
-export const websiteURL = 'https://oliverkutis.blog';
+import { dev } from '$app/environment';
+
+export const websiteURL = dev ? 'http://localhost:5173/' : 'https://oliverkutis.blog';
 
 export const githubURL = 'https://github.com/oliver-kutis';
 export const linkedinURL = 'https://linkedin.com/in/oliver-kuti%C5%A1-5248a1179';

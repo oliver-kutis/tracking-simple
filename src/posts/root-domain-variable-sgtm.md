@@ -208,7 +208,9 @@ done
 
 -   https://prnt.sc/bRXDdm47axhx
 
-## Remarks
+### Test heading 3
+
+# Remarks
 
 ==Sometimes, websites are on a subdomain in which case we don't want to extract the root domain as it would appear as a traffic from different website: https://prnt.sc/e2BqWfwqYXoH. In the variable, this behavior is controlled by these config options: https://prnt.sc/CFVyJZ7dmRbC. The 1st option controls whether to extract root domain only for external referrers and the 2nd option controls how do we check whether the hostname is external. We can either match only on the root domain (sgtm.sanitino.cz == sanitino.cz) or on full hostname (sgtm.sanitino.cz != sanitino.cz). Note that `'www.'` or protocol don't play a role in the check. When we determine that the hostname is not external, the full hostname is returned. ==
 

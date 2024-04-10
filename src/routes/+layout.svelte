@@ -1,15 +1,15 @@
 <script>
 	import '../app.css';
-	import Logo from '../components/Logo.svelte';
-	import SearchIcon from '../components/svg/SearchIcon.svelte';
-	import LinkedIn from '../components/svg/LinkedIn.svelte';
-	import Bio from '../components/Bio.svelte';
-	import X from '../components/svg/X.svelte';
-	import Medium from '../components/svg/Medium.svelte';
-	import { fly, slide } from 'svelte/transition';
-	import { backOut } from 'svelte/easing';
+	// import Logo from '../lib/components/Logo.svelte';
+	// import SearchIcon from '../lib/components/svg/SearchIcon.svelte';
+	// import LinkedIn from '../lib/components/svg/LinkedIn.svelte';
+	// import Bio from '../lib/components/Bio.svelte';
+	// import X from '../lib/components/svg/X.svelte';
+	// import Medium from '../lib/components/svg/Medium.svelte';
+	// import { fly, slide } from 'svelte/transition';
+	// import { backOut } from 'svelte/easing';
 	import themeStore from '$stores/theme';
-	import Nav from '../components/Nav.svelte';
+	import Nav from '../lib/components/Nav.svelte';
 	// import { createEventDispatcher } from 'svelte';
 	import toggleNavSettings from '$stores/toggleNavSettings';
 
@@ -52,7 +52,8 @@
 	}}
 />
 <div class="flex w-full h-full">
-	<div class="container inset-0 max-h-full py-5 px-10 rounded max-w-screen-xlg mx-auto">
+	<!-- <div class="container inset-0 max-h-full py-5 px-10 rounded max-w-screen-xlg mx-auto"> -->
+	<div class="container inset-0 max-h-full py-5 px-5 rounded max-w-5xl mx-auto">
 		<Nav></Nav>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -113,5 +114,8 @@
 
 <!-- <Footer></Footer> -->
 
-<style>
-</style>
+<!-- <style>
+	:global(html)
+
+
+</style> -->

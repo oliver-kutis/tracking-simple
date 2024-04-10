@@ -4,7 +4,7 @@
 	// import { backOut } from 'svelte/easing';
 	// import Service from '$components/Service.svelte';
 	import { langConfigs } from '$lib/info';
-	import Bio from '$components/Bio.svelte';
+	import Bio from '$lib/components/Bio.svelte';
 
 	// TODO: Make this dynamic
 	let lang = 'en';

@@ -8,7 +8,7 @@
 <section class="flex justify-start items-center gap-16 pt-8 pb-16">
 	<div class="bio">
 		<img
-			src="../src/lib/img/me.png"
+			src="../../static/img/me.png"
 			alt="Oliver Kutis"
 			class="block h-24 w-24 mb-5 origin-left pointer-events-auto rounded-full ring-primary border border-primary"
 		/>

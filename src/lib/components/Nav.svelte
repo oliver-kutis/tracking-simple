@@ -1,10 +1,10 @@
 <script>
-	import Logo from '../components/Logo.svelte';
+	import Logo from './Logo.svelte';
 	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
 	import { themes } from '$lib/themes';
-	import themeStore from '../stores/theme';
-	import toggleNavSettings from '../stores/toggleNavSettings';
+	import themeStore from '../../stores/theme';
+	import toggleNavSettings from '../../stores/toggleNavSettings';
 	import { writable } from 'svelte/store';
 	import { onMount } from 'svelte';
 

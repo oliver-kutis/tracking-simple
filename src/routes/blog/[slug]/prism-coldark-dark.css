@@ -45,13 +45,12 @@ pre[class*='language-'] {
 	padding: 1em;
 	margin: 0.5em 0;
 	overflow: auto;
-	background: theme('colors.gray.800');
 }
 
 :not(pre) > code[class*='language-'],
-/* pre[class*='language-'] {
+pre[class*='language-'] {
 	background: #111b27;
-} */
+}
 
 /* Inline code */
 :not(pre) > code[class*='language-'] {

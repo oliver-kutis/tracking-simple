@@ -22,7 +22,11 @@ export default {
 			},
 		},
 	},
-	plugins: [require('daisyui'), require('@tailwindcss/typography')],
+	plugins: [
+		require('daisyui'),
+		require('@tailwindcss/typography'),
+		require('tailwind-scrollbar'),
+	],
 	daisyui: {
 		// styled: true,
 		themes: [

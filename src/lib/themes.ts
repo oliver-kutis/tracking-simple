@@ -1,3 +1,5 @@
+import type { Theme } from '../types/index.ts';
+
 export const themes: Theme[] = [
 	{
 		theme: 'dark',
