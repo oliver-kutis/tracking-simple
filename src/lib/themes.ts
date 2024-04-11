@@ -1,4 +1,4 @@
-import type { Theme } from '../types/index.ts';
+import type { Theme } from './types/index.js';
 
 export const themes: Theme[] = [
 	{

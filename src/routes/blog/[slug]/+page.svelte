@@ -1,7 +1,7 @@
 <script lang="ts">
 	import themeStore from '$stores/theme';
 	import { themes } from '$lib/themes';
-	import type { Theme } from '../../../types';
+	import type { Theme } from '../../../lib/types';
 	import './prism-coldark-dark.css';
 	// import './prism-dracula.css';
 	// import './prism-duotone-dark.css';
@@ -91,12 +91,11 @@
 	// 		if (currentThemeMode === 'light') el.classList.add('shiki-light');
 	// 		else if (currentThemeMode === 'dark') el.classList.add('shiki-dark');
 	// 	});
-	// });
 </script>
 
 <article>
-	<TableOfContents type="static"></TableOfContents>
-	<TableOfContents type="modal"></TableOfContents>
+	<!-- <TableOfContents type="static"></TableOfContents> -->
+	<TableOfContents></TableOfContents>
 	<div class={`shiki-${currentThemeMode} prose py-2 px-2 max-w-none`}>
 		<Post />
 	</div>

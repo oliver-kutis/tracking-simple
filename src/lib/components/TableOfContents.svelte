@@ -1,16 +1,34 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import elementInViewport from '../../actions/elementInViewport';
 
-	export let type: string;
+	// animation start
+	let clicked = false;
+	let timeoutId = 0;
+
+	const onClick = () => {
+		clicked = !clicked;
+		timeoutId++;
+		const tId = timeoutId;
+		setTimeout(() => {
+			// cancel timeout if new was set
+			if (tId === timeoutId) clicked = false;
+		}, 1000);
+	};
+	// animation end
 
 	export let isModalOpen = false;
 	function toggleModal() {
 		isModalOpen = !isModalOpen;
 	}
 
+	let showModalTOC = false;
+
 	let arr;
+
+	$: console.log(timeoutId);
 	onMount(() => {
-		let headings = Array.from(document.querySelectorAll('h1[id], h2[id], h3[id]'));
+		let headings = Array.from(document.querySelectorAll('h1[id], h2[id]'));
 		let obj = {};
 		let currentHeading = null;
 		let currentLevel = 1;
@@ -62,33 +80,34 @@
 	});
 </script>
 
-{#if type === 'static'}
-	{#if arr}
-		<h1 class="text-2xl font-bold mb-4">Table of Contents</h1>
-		<ol class="list-disc pl-5">
+<!-- <svelte:window bind:scrollY={scrollY} /> -->
+
+{#if arr}
+	<div
+		use:elementInViewport
+		on:enterViewport={() => {
+			if (showModalTOC) showModalTOC = false;
+		}}
+		on:leaveViewport={() => {
+			if (!showModalTOC) showModalTOC = true;
+			if (timeoutId < 1) onClick();
+		}}
+	>
+		<h1 class="text-4xl font-bold mb-4">Table of Contents</h1>
+		<ol class="list-none pl-2">
 			{#each arr as [index, { headingProps, children }]}
-				<li class="mb-2">
-					<a class=" hover:underline" href={headingProps.href}>{headingProps.text}</a>
+				<li class="my-2">
+					<a class=" hover:text-primary font-semibold" href={headingProps.href}
+						>{headingProps.text}</a
+					>
 					{#if children}
-						<ol class="list-disc pl-5">
+						<ol class="list-none pl-5">
 							{#each Object.values(children) as child}
-								<li class="mb-2">
-									<a class="hover:underline" href={child.headingProps.href}
-										>{child.headingProps.text}</a
+								<li class="my-2">
+									<a
+										class="hover:text-primary font-medium"
+										href={child.headingProps.href}>{child.headingProps.text}</a
 									>
-									{#if child.children}
-										<ol class="list-disc pl-5">
-											{#each Object.values(child.children) as childChild}
-												<li class="mb-2">
-													<a
-														class="hover:underline"
-														href={childChild.headingProps.href}
-														>{childChild.headingProps.text}</a
-													>
-												</li>
-											{/each}
-										</ol>
-									{/if}
 								</li>
 							{/each}
 						</ol>
@@ -96,142 +115,133 @@
 				</li>
 			{/each}
 		</ol>
-	{/if}
-{:else if type === 'modal'}
-	{#if arr}
-		<!-- <div class="fixed right-0 top-1/2 transform -transalate-y-1/2 mt-10 mr-10">
-			<button class="bg-blue-500 text-white px-4 py-2 rounded" on:click={toggleModal}>
-				{#if isModalOpen}
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						class="h-6 w-6"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M15 19l-7-7 7-7"
-						/>
-					</svg>
-				{:else}
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						class="h-6 w-6"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M9 5l7 7-7 7"
-						/>
-					</svg>
-				{/if}
-			</button>
-		</div> -->
+	</div>
+{/if}
 
-		{#if isModalOpen}
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<div
-				class="fixed mr-6 inset-0 flex items-center justify-end"
-				on:click={e => {
-					toggleModal();
-				}}
+{#if arr && showModalTOC}
+	{#if isModalOpen}
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div
+			class="fixed mr-6 inset-0 flex items-center justify-end"
+			on:click={() => {
+				if (isModalOpen) toggleModal();
+			}}
+		>
+			<button
+				class="relative -inset-x-1 bg-primary text-neutral px-4 py-2 rounded-2xl"
+				on:click={toggleModal}
 			>
-				<button
-					class="relative -inset-x-1 bg-primary text-neutral px-4 py-2 rounded-2xl"
-					on:click={toggleModal}
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+					class="h-6 w-6"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						class="h-6 w-6"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M9 5l7 7-7 7"
-						/>
-					</svg>
-				</button>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M9 5l7 7-7 7"
+					/>
+				</svg>
+			</button>
+			<div
+				class="relative break-words bg-base-100 bg-opacity-95 p-5 border border-primary rounded-xl shadow-lg max-h-96 w-72 max-h-screen overflow-hidden"
+			>
+				<h1 class="text-2xl font-bold mb-4">Table of Contents</h1>
 				<div
-					class="relative break-words bg-base-100 bg-opacity-95 p-5 border border-primary rounded-xl shadow-lg max-h-96 w-72 max-h-screen overflow-hidden"
+					class="max-h-72 overflow-y-auto scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar scrollbar-thin scrollbar-track-neutral scrollbar-thumb-primary"
 				>
-					<h1 class="text-2xl font-bold mb-4">Table of Contents</h1>
-					<div
-						class="max-h-72 overflow-y-auto scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar scrollbar-thin scrollbar-track-neutral scrollbar-thumb-primary"
-					>
-						<ol class="list-decimal px-5">
-							{#each arr as [index, { headingProps, children }]}
-								<li class="mb-2">
-									<a class=" hover:underline" href={headingProps.href}
-										>{headingProps.text}</a
-									>
-									{#if children}
-										<ol class="list-decimal pl-5">
-											{#each Object.values(children) as child}
-												<li class="mb-2">
-													<a
-														class=" hover:underline"
-														href={child.headingProps.href}
-														>{child.headingProps.text}</a
-													>
-													{#if child.children}
-														<ol class="list-decimal pl-5">
-															{#each Object.values(child.children) as childChild}
-																<li class="mb-2">
-																	<a
-																		class=" hover:underline"
-																		href={childChild
-																			.headingProps.href}
-																		>{childChild.headingProps
-																			.text}</a
-																	>
-																</li>
-															{/each}
-														</ol>
-													{/if}
-												</li>
-											{/each}
-										</ol>
-									{/if}
-								</li>
-							{/each}
-						</ol>
-					</div>
+					<ol class="list-none pl-2 pr-5">
+						{#each arr as [index, { headingProps, children }]}
+							<li class="mb-2">
+								<a class="hover:text-primary" href={headingProps.href}
+									>{headingProps.text}</a
+								>
+								{#if children}
+									<ol class="list-none pl-4">
+										{#each Object.values(children) as child}
+											<li class="mb-2">
+												<a
+													class="hover:text-primary"
+													href={child.headingProps.href}
+													>{child.headingProps.text}</a
+												>
+											</li>
+										{/each}
+									</ol>
+								{/if}
+							</li>
+						{/each}
+					</ol>
 				</div>
 			</div>
-		{:else}
-			<div class="fixed right-0 top-1/2 transform -translate-y-1/2">
-				<button
-					class="bg-primary text-neutral px-4 py-2 rounded-2xl mr-5"
-					on:click={toggleModal}
+		</div>
+	{:else}
+		<!-- <div
+			class="fixed transform right-1/2 bottom-8 translate-x-1/2 sm:right-0 sm:top-1/2 sm:-translate-y-1/2"
+		> -->
+		<div class="fixed right-0 top-1/2 -translate-y-1/2 transform">
+			<button
+				class={`bg-neutral text-primary border border-primary px-2 py-2 rounded-2xl sm:mr-5 ${clicked ? 'scale-wiggle' : ''}`}
+				class:active={clicked}
+				on:click={toggleModal}
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+					class="h-6 w-6"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						class="h-6 w-6"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M15 19l-7-7 7-7"
-						/>
-					</svg>
-				</button>
-			</div>
-		{/if}
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M15 19l-7-7 7-7"
+					/>
+				</svg>
+			</button>
+		</div>
 	{/if}
 {/if}
+
+<style>
+	.active {
+		animation-duration: 1s;
+		animation-play-state: paused;
+		animation-fill-mode: forwards;
+	}
+	@keyframes scale-wiggle {
+		0% {
+			transform: scale(1);
+		}
+		20% {
+			transform: scale(1.2);
+		}
+		40% {
+			transform: scale(0.9);
+		}
+		60% {
+			transform: scale(1.15);
+		}
+		80% {
+			transform: scale(0.95);
+		}
+		90% {
+			transform: scale(1.02);
+		}
+		95% {
+			transform: scale(0.98);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+	.scale-wiggle {
+		animation-name: scale-wiggle;
+		animation-play-state: running;
+	}
+</style>
