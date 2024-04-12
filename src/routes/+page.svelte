@@ -33,8 +33,8 @@
 <Bio lang={lang} />
 <section class="w-full">
 	<ul class="grid grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 mb-12">
-		<li class="rounded-2xl border-2 p-6 border-neutral">
-			<h2 class="flex text-lg font-semibold text-base">
+		<li class="bg-neutral rounded-2xl border shadow-2xl p-6 border-neutral">
+			<h2 class="flex text-lg font-semibold text-primary">
 				<svg
 					viewBox="0 0 24 24"
 					fill="none"
@@ -64,8 +64,8 @@
 			<h4 class="text-sm mt-5 mb-2 font-semibold text-primary">Languages</h4>
 			<p class=" mb-5 text-base">JavaScript, Python, SQL</p>
 		</li>
-		<li class="rounded-2xl border-2 p-6 border-neutral">
-			<h2 class="flex text-lg font-semibold text-base">
+		<li class="bg-neutral rounded-2xl border shadow-2xl p-6 border-neutral">
+			<h2 class="flex text-lg font-semibold text-primary">
 				<svg
 					viewBox="0 0 24 24"
 					fill="none"
@@ -90,8 +90,8 @@
 			<h4 class="text-sm mt-5 mb-2 font-semibold text-primary">Other</h4>
 			<p class="mb-5 text-base">Marketing Mix Modeling (MMM), Causal Impact, GeoLift</p>
 		</li>
-		<li class="rounded-2xl border-2 p-6 border-neutral">
-			<h2 class="flex text-lg font-semibold text-base">
+		<li class="bg-neutral rounded-2xl border shadow-2xl p-6 border-neutral">
+			<h2 class="flex text-lg font-semibold text-primary">
 				<svg
 					viewBox="0 0 24 24"
 					fill="none"
@@ -119,9 +119,9 @@
 					><path
 						d="M2.75 9.75a3 3 0 0 1 3-3h12.5a3 3 0 0 1 3 3v8.5a3 3 0 0 1-3 3H5.75a3 3 0 0 1-3-3v-8.5Z"
 						class="fill-none stroke-primary"
-					/><path
+						/><path
 						d="M3 14.25h6.249c.484 0 .952-.002 1.316.319l.777.682a.996.996 0 0 0 1.316 0l.777-.682c.364-.32.832-.319 1.316-.319H21M8.75 6.5V4.75a2 2 0 0 1 2-2h2.5a2 2 0 0 1 2 2V6.5"
-						class="stroke-zinc-400 dark:stroke-zinc-500"
+						class="stroke-zinc-400 dark:accenttroke-zinc-500"
 					/>
 					</svg
 				><span class="ml-3">Experience</span> -->

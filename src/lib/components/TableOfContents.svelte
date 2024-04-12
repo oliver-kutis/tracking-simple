@@ -94,18 +94,18 @@
 		}}
 	>
 		<h1 class="text-4xl font-bold mb-4">Table of Contents</h1>
-		<ol class="list-none pl-2">
+		<ol class="pl-2 border-b border-neutral pb-5 mb-5">
 			{#each arr as [index, { headingProps, children }]}
 				<li class="my-2">
-					<a class=" hover:text-primary font-semibold" href={headingProps.href}
+					<a class=" hover:text-accent text-lg font-medium" href={headingProps.href}
 						>{headingProps.text}</a
 					>
 					{#if children}
-						<ol class="list-none pl-5">
+						<ol class="list-disc marker:text-secondary pl-5">
 							{#each Object.values(children) as child}
 								<li class="my-2">
 									<a
-										class="hover:text-primary font-medium"
+										class="hover:text-accent text-md font-normal"
 										href={child.headingProps.href}>{child.headingProps.text}</a
 									>
 								</li>
@@ -122,14 +122,15 @@
 	{#if isModalOpen}
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<!-- class={`bg-neutral text-primary border border-primary px-2 py-2 rounded-2xl sm:mr-5 ${clicked ? 'scale-wiggle' : ''}`} -->
 		<div
-			class="fixed mr-6 inset-0 flex items-center justify-end"
+			class="fixed mr-6 inset-0 flex items-center justify-end text-sm"
 			on:click={() => {
 				if (isModalOpen) toggleModal();
 			}}
 		>
 			<button
-				class="relative -inset-x-1 bg-primary text-neutral px-4 py-2 rounded-2xl"
+				class="relative -inset-x-1 bg-neutral text-primary border border-primary px-2 py-2 rounded-2xl"
 				on:click={toggleModal}
 			>
 				<svg
@@ -148,9 +149,9 @@
 				</svg>
 			</button>
 			<div
-				class="relative break-words bg-base-100 bg-opacity-95 p-5 border border-primary rounded-xl shadow-lg max-h-96 w-72 max-h-screen overflow-hidden"
+				class="relative break-words bg-neutral bg-opacity-95 p-5 border border-primary rounded-xl shadow-lg max-h-96 w-64 max-h-screen overflow-hidden"
 			>
-				<h1 class="text-2xl font-bold mb-4">Table of Contents</h1>
+				<h1 class="text-xl font-bold mb-4">Table of Contents</h1>
 				<div
 					class="max-h-72 overflow-y-auto scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar scrollbar-thin scrollbar-track-neutral scrollbar-thumb-primary"
 				>

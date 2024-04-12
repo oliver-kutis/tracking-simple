@@ -96,7 +96,9 @@
 <article>
 	<!-- <TableOfContents type="static"></TableOfContents> -->
 	<TableOfContents></TableOfContents>
-	<div class={`shiki-${currentThemeMode} prose py-2 px-2 max-w-none`}>
+	<div
+		class={`shiki-${currentThemeMode} prose py-2 px-2 max-w-none prose-p:text-neutral-content prose-p:text-lg prose-headings:font-bold`}
+	>
 		<Post />
 	</div>
 </article>

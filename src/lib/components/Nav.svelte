@@ -5,6 +5,7 @@
 	import { themes } from '$lib/themes';
 	import themeStore from '../../stores/theme';
 	import toggleNavSettings from '../../stores/toggleNavSettings';
+	import elementInViewport from '../../actions/elementInViewport';
 	import { writable } from 'svelte/store';
 	import { onMount } from 'svelte';
 
@@ -15,6 +16,10 @@
 		{
 			title: 'Home',
 			link: '/',
+		},
+		{
+			title: 'Blog',
+			link: '/blog',
 		},
 		{
 			title: 'About',
@@ -39,7 +44,9 @@
 <!-- <div class="bg-info bg-opacity-10 h-full items-center"> -->
 <!-- <div class="bg-clouds bg-repeat-space bg-cover bg-fixed bg-opacity-10 h-full items-center"> -->
 
-<header class="flex items-center justify-between w-full py-4 mx-auto lg:pb-8 gap-16">
+<header
+	class="flex border-b border-neutral items-center justify-between w-full px-4 py-2 mx-auto lg:mb-8 gap-16"
+>
 	<!-- <a class="text-lg font-bold sm:text-2xl dark:text-indigo-500 text-indigo-700" href="/"> -->
 	<a class="text-lg font-bold sm:text-2xl text-primary font" href="/"> oliver kutis </a>
 

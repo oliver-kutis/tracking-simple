@@ -35,6 +35,7 @@ export default function elementInViewport(node: Element, params: ElemsInViewport
 	return {
 		update(params: ElemsInViewportParams): void {
 			setOberver(params);
+			console.log('leave');
 		},
 		destroy(): void {
 			if (observer) observer.disconnect();
