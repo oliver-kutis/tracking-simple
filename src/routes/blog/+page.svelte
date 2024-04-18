@@ -41,11 +41,10 @@
 	{/each}
 </section> -->
 
-<section class="grid gap-8 p-5">
+<section class="grid gap-8 p-5 mt-20">
 	{#each data.posts as post}
-		<div
-			class="post bg-neutral border border-neutral shadow-lg shadow-base-300 rounded-3xl overflow-hidden flex flex-col md:flex-row"
-		>
+		<!-- class="post bg-neutral border-2 border-neutral shadow-lg shadow-base-300 rounded-3xl overflow-hidden flex flex-col md:flex-row" -->
+		<div class="post pb-8 border-b border-neutral overflow-hidden flex flex-col md:flex-row">
 			<!-- <a href={post.slug} class="w-1/4 md:w-full"> -->
 			<a href={post.slug} class="w-1/2">
 				<img
@@ -61,15 +60,15 @@
 					class="text-2xl font-bold text-primary hover:text-accent transition-colors"
 					>{post.title}</a
 				>
-				<p class="text-neutral-content mt-2">{post.summary}</p>
+				<p class="mt-2">{post.summary}</p>
 				<div class="mt-4">
 					<a href={post.slug} class="text-primary hover:text-accent transition-colors"
 						>Read more</a
 					>
 				</div>
 				<div class="mt-4">
-					<span class="text-neutral-content">Published on</span>
-					<time datetime={post.date} class="text-sm text-gray-500">{post.date}</time>
+					<span>Published on</span>
+					<time datetime={post.date} class="text-sm">{post.date}</time>
 				</div>
 			</div>
 		</div>
