@@ -18,7 +18,30 @@ const mdsvexOptions = {
 	highlight: {
 		highlighter: async (code, lang = 'text') => {
 			const highlighter = await getHighlighter({
-				themes: ['poimandres', 'andromeeda', 'github-light'],
+				themes: [
+					'poimandres',
+					'andromeeda',
+					'github-light',
+					'min-light',
+					// 'catppuccin-latte',
+					// 'light-plus',
+					'material-theme-lighter',
+					'rose-pine-dawn',
+					'slack-ochin',
+					// 'solarized-dark',
+					'vitesse-dark',
+					'vesper',
+					'rose-pine-moon',
+					'min-dark',
+					'material-theme-ocean',
+					'nord',
+					'ayu-dark',
+					'solarized-dark',
+					'synthwave-84',
+					'dracula',
+					'tokyo-night',
+					'red',
+				],
 				langs: ['javascript', 'typescript', 'html', 'css', 'bash', 'python'],
 			});
 			await highlighter.loadLanguage(
@@ -33,12 +56,19 @@ const mdsvexOptions = {
 				highlighter.codeToHtml(code, {
 					lang,
 					themes: {
-						dark: 'poimandres',
-						light: 'github-light',
+						'min-light': 'min-light',
+						// light: 'vitesse-light',
+						'min-dark': 'min-dark',
+						vesper: 'vesper',
+						nord: 'nord',
+						'ayu-dark': 'ayu-dark',
+						'solarized-dark': 'solarized-dark',
+						'synthwave-84': 'synthwave-84',
+						dracula: 'tokyo-night',
+						red: 'red',
 					},
-
-					defaultColor: 'light',
-					cssVariablePrefix: '--shiki',
+					defaultColor: false,
+					cssVariablePrefix: '--shiki-',
 				}),
 			);
 			return `{@html \`${html}\` }`;

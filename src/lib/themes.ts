@@ -5,74 +5,49 @@ export const themes: Theme[] = [
 		theme: 'dark',
 		meta: {
 			mode: 'dark',
+			shikiTheme: 'min-dark',
 		},
 	},
 	{
 		theme: 'sunset',
 		meta: {
 			mode: 'dark',
-		},
-	},
-	// dark: ['sunset', 'dark', 'luxury', 'night'],
-	// light: ['cupcake', 'cyberpunk', 'nord', 'lofi', 'garden', 'fantasy', 'emerald'],
-	// generate above themes and assign them to the corresponding mode
-	{
-		theme: 'luxury',
-		meta: {
-			mode: 'dark',
+			shikiTheme: 'vesper',
 		},
 	},
 	{
 		theme: 'night',
 		meta: {
 			mode: 'dark',
+			shikiTheme: 'solarized-dark',
 		},
 	},
 	{
-		theme: 'cupcake',
+		theme: 'synthwave',
 		meta: {
-			mode: 'light',
+			mode: 'dark',
+			shikiTheme: 'synthwave-84',
 		},
 	},
-	{
-		theme: 'cyberpunk',
-		meta: {
-			mode: 'light',
-		},
-	},
-
 	{
 		theme: 'nord',
 		meta: {
 			mode: 'light',
+			shikiTheme: 'nord',
 		},
 	},
-
-	{
-		theme: 'lofi',
-		meta: {
-			mode: 'light',
-		},
-	},
-
 	{
 		theme: 'garden',
 		meta: {
 			mode: 'light',
+			shikiTheme: 'min-light',
 		},
 	},
-
 	{
-		theme: 'fantasy',
+		theme: 'valentine',
 		meta: {
 			mode: 'light',
-		},
-	},
-
-	{
-		theme: 'emerald',
-		meta: {
-			mode: 'light',
+			shikiTheme: 'red',
 		},
 	},
 ];

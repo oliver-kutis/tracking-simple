@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import elementInViewport from '../../actions/elementInViewport';
+	import themeStore from '$stores/theme';
+	import { isNordOrValentine } from '$lib';
 
 	// animation start
 	let clicked = false;
@@ -124,13 +126,13 @@
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<!-- class={`bg-neutral text-primary border border-primary px-2 py-2 rounded-2xl sm:mr-5 ${clicked ? 'scale-wiggle' : ''}`} -->
 		<div
-			class="fixed mr-6 inset-0 flex items-center justify-end text-sm"
+			class="z-10 fixed mr-6 inset-0 flex items-center justify-end text-sm"
 			on:click={() => {
 				if (isModalOpen) toggleModal();
 			}}
 		>
 			<button
-				class="relative -inset-x-1 bg-neutral text-primary border border-primary px-2 py-2 rounded-2xl"
+				class={`${isNordOrValentine($themeStore) ? 'text-white bg-primary border-primary' : 'text-primary bg-neutral border-primary'} relative -inset-x-1 border-4 px-2 py-2 rounded-2xl`}
 				on:click={toggleModal}
 			>
 				<svg
@@ -149,24 +151,29 @@
 				</svg>
 			</button>
 			<div
-				class="relative break-words bg-neutral bg-opacity-95 p-5 border border-primary rounded-xl shadow-lg max-h-96 w-64 max-h-screen overflow-hidden"
+				class="relative break-words bg-primary bg-opacity-100 lg:bg-opacity-65 p-5 rounded-xl shadow-inner max-h-96 w-64 max-h-screen overflow-hidden"
 			>
-				<h1 class="text-xl font-bold mb-4">Table of Contents</h1>
+				<h1
+					class={`${isNordOrValentine($themeStore) ? 'text-white' : 'text-neutral'} text-xl font-bold mb-4`}
+				>
+					Table of Contents
+				</h1>
 				<div
 					class="max-h-72 overflow-y-auto scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar scrollbar-thin scrollbar-track-neutral scrollbar-thumb-primary"
 				>
 					<ol class="list-none pl-2 pr-5">
 						{#each arr as [index, { headingProps, children }]}
 							<li class="mb-2">
-								<a class="hover:text-primary" href={headingProps.href}
-									>{headingProps.text}</a
+								<a
+									class={`${isNordOrValentine($themeStore) ? 'text-white hover:text-black' : 'text-neutral hover:text-white'} text-base font-medium`}
+									href={headingProps.href}>{headingProps.text}</a
 								>
 								{#if children}
 									<ol class="list-none pl-4">
 										{#each Object.values(children) as child}
 											<li class="mb-2">
 												<a
-													class="hover:text-primary"
+													class={`${isNordOrValentine($themeStore) ? 'text-white hover:text-black' : 'text-neutral hover:text-white'} text-base font-medium`}
 													href={child.headingProps.href}
 													>{child.headingProps.text}</a
 												>
@@ -184,9 +191,9 @@
 		<!-- <div
 			class="fixed transform right-1/2 bottom-8 translate-x-1/2 sm:right-0 sm:top-1/2 sm:-translate-y-1/2"
 		> -->
-		<div class="fixed right-0 top-1/2 -translate-y-1/2 transform">
+		<div class="z-10 fixed right-0 top-1/2 -translate-y-1/2 transform">
 			<button
-				class={`bg-neutral text-primary border border-primary px-2 py-2 rounded-2xl sm:mr-5 ${clicked ? 'scale-wiggle' : ''}`}
+				class={`${isNordOrValentine($themeStore) ? 'text-white bg-primary border-primary' : 'text-primary bg-neutral border-primary'} border-4 px-2 py-2 rounded-2xl mr-2 sm:mr-5 ${clicked ? 'scale-wiggle' : ''}`}
 				class:active={clicked}
 				on:click={toggleModal}
 			>

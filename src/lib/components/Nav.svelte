@@ -8,6 +8,7 @@
 	import elementInViewport from '../../actions/elementInViewport';
 	import { writable } from 'svelte/store';
 	import { onMount } from 'svelte';
+	import { isNordOrValentine } from '$lib';
 
 	let isDarkMode = browser ? Boolean(document.documentElement.classList.contains('dark')) : true;
 	// let $toggleNavSettings.nav = false;
@@ -38,6 +39,9 @@
 			document.documentElement.classList.remove('[&_*]:!transition-none');
 		}, 0);
 	}
+
+	const darkThemes = themes.filter(theme => theme.meta.mode === 'dark');
+	const lightThemes = themes.filter(theme => theme.meta.mode === 'light');
 </script>
 
 <!-- <div class="h-full items-center"> -->
@@ -194,40 +198,71 @@
 			<ul
 				class={`${$toggleNavSettings.theme ? 'block' : 'hidden'} w-52 absolute right-1 z-50 top-10 py-2 mt-2 mr-2 rounded-lg shadow-xl bg-primary bg-opacity-90`}
 			>
-				{#each themes as { theme } (theme)}
+				<li>
+					<p>Dark</p>
+					{#each darkThemes as { theme, meta } (theme)}
+						<ul>
+							<li class="mb-2">
+								<button
+									on:click={() => {
+										$themeStore = theme;
+										$toggleNavSettings.theme = false;
+									}}
+									class={`${theme === $themeStore ? 'text-base font-semibold' : 'text-sm'} ${isNordOrValentine($themeStore) ? 'text-base hover:bg-neutral hover:text-white' : 'text-neutral hover:bg-neutral hover:text-primary'} inline-block px-4 py-2 text-left rounded-sm w-full focus:relative`}
+								>
+									{`${meta.mode === 'dark' ? '🌚' : '☀️'} ${theme}`}
+								</button>
+							</li>
+						</ul>
+					{/each}
+				</li>
+				<li>
+					<p>Light</p>
+					{#each lightThemes as { theme, meta } (theme)}
+						<ul>
+							<li class="mb-2">
+								<button
+									on:click={() => {
+										$themeStore = theme;
+										$toggleNavSettings.theme = false;
+									}}
+									class={`${theme === $themeStore ? 'text-base font-semibold' : 'text-sm'} ${isNordOrValentine($themeStore) ? 'text-base hover:bg-neutral hover:text-white' : 'text-neutral hover:bg-neutral hover:text-primary'} inline-block px-4 py-2 text-left rounded-sm w-full focus:relative`}
+								>
+									{`${meta.mode === 'dark' ? '🌚' : '☀️'} ${theme}`}
+								</button>
+							</li>
+						</ul>
+					{/each}
+				</li>
+				<!-- <li class="mb-2">
+							<button
+								on:click={() => {
+									$themeStore = theme;
+									$toggleNavSettings.theme = false;
+								}}
+								class={`${theme === $themeStore ? 'text-base font-semibold' : 'text-sm'} ${isNordOrValentine($themeStore) ? 'text-base hover:bg-neutral hover:text-white' : 'text-neutral hover:bg-neutral hover:text-primary'} inline-block px-4 py-2 text-left rounded-sm w-full focus:relative`}
+							>
+								{`${meta.mode === 'dark' ? '🌚' : '☀️'} ${theme}`}
+							</button>
+						</li> -->
+			</ul>
+			<!-- <ul
+				class={`${$toggleNavSettings.theme ? 'block' : 'hidden'} w-52 absolute right-1 z-50 top-10 py-2 mt-2 mr-2 rounded-lg shadow-xl bg-primary bg-opacity-90`}
+			>
+				{#each themes as { theme, meta } (theme)}
 					<li class="mb-2">
 						<button
 							on:click={() => {
 								$themeStore = theme;
 								$toggleNavSettings.theme = false;
 							}}
-							class={`${theme === $themeStore ? 'text-base font-semibold' : 'text-sm'} text-neutral inline-block px-4 py-2 text-left rounded-sm w-full hover:bg-neutral hover:text-primary hover:text-base focus:relative`}
+							class={`${theme === $themeStore ? 'text-base font-semibold' : 'text-sm'} ${isNordOrValentine($themeStore) ? 'text-base hover:bg-neutral hover:text-white' : 'text-neutral hover:bg-neutral hover:text-primary'} inline-block px-4 py-2 text-left rounded-sm w-full focus:relative`}
 						>
-							{theme}
+							{`${meta.mode === 'dark' ? '🌚' : '☀️'} ${theme}`}
 						</button>
 					</li>
 				{/each}
-			</ul>
+			</ul> -->
 		</div>
-		<!-- <button
-			type="button"
-			role="switch"
-			aria-label="Toggle Dark Mode"
-			aria-checked={isDarkMode}
-			class="w-5 h-5 sm:h-8 sm:w-8 sm:p-1"
-			on:click={() => {
-				isDarkMode = !isDarkMode;
-				localStorage.setItem('isDarkMode', isDarkMode.toString());
-
-				disableTransitionsTemporarily();
-
-				if (isDarkMode) {
-					document.querySelector('html')?.classList.add('dark');
-				} else {
-					document.querySelector('html')?.classList.remove('dark');
-				}
-			}}
-		>
-		</button> -->
 	</div>
 </header>

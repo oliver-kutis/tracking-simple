@@ -28,5 +28,6 @@ export type Theme = {
 	theme: string;
 	meta: {
 		mode: string;
+		shikiTheme: string;
 	};
 };

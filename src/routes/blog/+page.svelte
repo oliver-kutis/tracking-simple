@@ -44,17 +44,19 @@
 <section class="grid gap-8 p-5 mt-20">
 	{#each data.posts as post}
 		<!-- class="post bg-neutral border-2 border-neutral shadow-lg shadow-base-300 rounded-3xl overflow-hidden flex flex-col md:flex-row" -->
-		<div class="post pb-8 border-b border-neutral overflow-hidden flex flex-col md:flex-row">
+		<div
+			class="bg-neutral bg-opacity-10 border border-neutral border-opacity-10 shadow-xl rounded-xl post p-2 border-b border-neutral overflow-hidden flex flex-col md:flex-row"
+		>
 			<!-- <a href={post.slug} class="w-1/4 md:w-full"> -->
-			<a href={post.slug} class="w-1/2">
+			<a href={post.slug} class="p-4 w-full sm:w-2/5">
 				<img
 					src={post.imgUrl}
 					alt={post.title}
 					loading="lazy"
-					class="w-full h-full object-cover"
+					class="w-full h-full object-cover rounded-md shadow-2xl md:shadow-none"
 				/>
 			</a>
-			<div class="p-6 w-1/2 md:w-full">
+			<div class="py-6 px-4 w-full sm:w-3/5 sm:p-6">
 				<a
 					href={post.slug}
 					class="text-2xl font-bold text-primary hover:text-accent transition-colors"

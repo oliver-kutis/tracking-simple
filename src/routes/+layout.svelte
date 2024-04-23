@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import '../app.css';
 	// import Logo from '../lib/components/Logo.svelte';
 	// import SearchIcon from '../lib/components/svg/SearchIcon.svelte';
@@ -9,9 +9,11 @@
 	// import { fly, slide } from 'svelte/transition';
 	// import { backOut } from 'svelte/easing';
 	import themeStore from '$stores/theme';
+	import { themes } from '$lib/themes';
 	import Nav from '../lib/components/Nav.svelte';
 	// import { createEventDispatcher } from 'svelte';
 	import toggleNavSettings from '$stores/toggleNavSettings';
+	import { getThemeType } from '$lib';
 
 	// import Footer from '../components/Footer.svelte';
 
@@ -21,6 +23,27 @@
 	$: {
 		if (typeof document !== 'undefined') {
 			document.documentElement.setAttribute('data-theme', $themeStore);
+			const currentTheme = themes.find(
+				(theme: { theme: string }) => theme.theme === $themeStore,
+			);
+			if (currentTheme) {
+				// delete the previous theme
+				const classList = Array.from(document.documentElement.classList);
+				const themeToRemove = classList.find((className: string) =>
+					className.startsWith('code-theme-'),
+				);
+				document.documentElement.classList.remove(themeToRemove);
+				document.documentElement.classList.add(
+					`code-theme-${currentTheme.meta.shikiTheme}`,
+				);
+			}
+			// if (getThemeType($themeStore) === 'dark') {
+			// 	document.documentElement.classList.add('dark');
+			// 	document.documentElement.classList.remove('light');
+			// } else {
+			// 	document.documentElement.classList.add('light');
+			// 	document.documentElement.classList.remove('dark');
+			// }
 		}
 	}
 </script>
