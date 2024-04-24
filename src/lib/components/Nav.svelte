@@ -199,7 +199,7 @@
 				class={`${$toggleNavSettings.theme ? 'block' : 'hidden'} w-52 absolute right-1 z-50 top-10 py-2 mt-2 mr-2 rounded-lg shadow-xl bg-primary bg-opacity-90`}
 			>
 				<li>
-					<p>Dark</p>
+					<p class="pl-3 py-1 text-neutral font-bold">🌛 Dark themes</p>
 					{#each darkThemes as { theme, meta } (theme)}
 						<ul>
 							<li class="mb-2">
@@ -210,14 +210,14 @@
 									}}
 									class={`${theme === $themeStore ? 'text-base font-semibold' : 'text-sm'} ${isNordOrValentine($themeStore) ? 'text-base hover:bg-neutral hover:text-white' : 'text-neutral hover:bg-neutral hover:text-primary'} inline-block px-4 py-2 text-left rounded-sm w-full focus:relative`}
 								>
-									{`${meta.mode === 'dark' ? '🌚' : '☀️'} ${theme}`}
+									{theme}
 								</button>
 							</li>
 						</ul>
 					{/each}
 				</li>
 				<li>
-					<p>Light</p>
+					<p class="pl-3 py-1 text-neutral font-bold">☀️ Light themes</p>
 					{#each lightThemes as { theme, meta } (theme)}
 						<ul>
 							<li class="mb-2">
@@ -228,7 +228,7 @@
 									}}
 									class={`${theme === $themeStore ? 'text-base font-semibold' : 'text-sm'} ${isNordOrValentine($themeStore) ? 'text-base hover:bg-neutral hover:text-white' : 'text-neutral hover:bg-neutral hover:text-primary'} inline-block px-4 py-2 text-left rounded-sm w-full focus:relative`}
 								>
-									{`${meta.mode === 'dark' ? '🌚' : '☀️'} ${theme}`}
+									{theme}
 								</button>
 							</li>
 						</ul>

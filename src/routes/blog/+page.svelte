@@ -48,7 +48,7 @@
 			class="bg-neutral bg-opacity-10 border border-neutral border-opacity-10 shadow-xl rounded-xl post p-2 border-b border-neutral overflow-hidden flex flex-col md:flex-row"
 		>
 			<!-- <a href={post.slug} class="w-1/4 md:w-full"> -->
-			<a href={post.slug} class="p-4 w-full sm:w-2/5">
+			<a href={post.slug} class="p-4 w-full md:w-2/5 md:p-6">
 				<img
 					src={post.imgUrl}
 					alt={post.title}
@@ -56,7 +56,7 @@
 					class="w-full h-full object-cover rounded-md shadow-2xl md:shadow-none"
 				/>
 			</a>
-			<div class="py-6 px-4 w-full sm:w-3/5 sm:p-6">
+			<div class="py-6 px-4 w-full md:w-3/5 md:p-6">
 				<a
 					href={post.slug}
 					class="text-2xl font-bold text-primary hover:text-accent transition-colors"
