@@ -1,15 +1,16 @@
 ---
 title: 'Tutorial, Enrich server-side GTM data in real-time with Azure Cosmos DB and Function App'
 alternativeTitle: 'How to enrich server-side data without using Firestore — A thorough guide.'
-imgUrl: 'static/img/bg-clouds.jpg'
+imgUrl: 'img/bg-clouds.jpg'
 published: true
 publishedDate: '2024-04-06'
 summary: 'some summary'
 tags: ['SGTM', 'Templates', 'Variables']
 ---
+
 Link to the template file: ![[Azure Cosmos DB - Fetch document.tpl]]
 
-# Intro
+# Introduction
 
 In the ever-evolving landscape of web analytics, Google introduced server containers in Google Tag Manager back in 2020, unlocking a realm of possibilities. Among these features is the capability to enrich real-time data using the Firestore API, a service nestled within Google Cloud Platform (GCP). Analysts worldwide have embraced this functionality, but what if your tech stack resides with other cloud vendors, like AWS or Azure? Navigating the server container setup and management in such scenarios can be a daunting task, with sparse resources available. Thanks to Simo Ahava, we can now setup the tagging server on [Azure](https://www.simoahava.com/analytics/server-side-tagging-azure-app-service/) or [AWS](https://www.simoahava.com/analytics/deploy-server-side-google-tag-manager-aws/) easily.
 
@@ -33,7 +34,7 @@ Navigate to Azure Cosmos DB and create new account. The click _create_ for “Az
 
 ![](https://cdn-images-1.medium.com/max/1600/1*7pEDSaDtm48O4ta0o0fwCQ.png)
 
-_Note: I recommend you to go for the serverless option as it’s better suited for unstable traffic._
+> _Note: I recommend you to go for the serverless option as it’s better suited for unstable traffic._
 
 Other setup options are up to your configuration and I won’t go into detail there.
 

@@ -18,8 +18,6 @@
 	// import Footer from '../components/Footer.svelte';
 
 	// const dispatch = createEventDispatcher();
-
-	$: console.log($themeStore);
 	$: {
 		if (typeof document !== 'undefined') {
 			document.documentElement.setAttribute('data-theme', $themeStore);

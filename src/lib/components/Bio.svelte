@@ -1,6 +1,7 @@
 <script>
 	// import SocialLinks from '$lib/components/SocialLinks.svelte';
 	import { langConfigs } from '$lib/info';
+	import img from '$lib/img/me.png';
 	export let lang = 'en';
 </script>
 
@@ -8,7 +9,7 @@
 <section class="flex justify-start items-center gap-16 pt-8 pb-16">
 	<div class="bio">
 		<img
-			src="../../static/img/me.png"
+			src={img}
 			alt="Oliver Kutis"
 			class="block h-24 w-24 mb-5 origin-left pointer-events-auto rounded-full border border-primary"
 		/>

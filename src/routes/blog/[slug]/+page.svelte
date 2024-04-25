@@ -9,7 +9,6 @@
 	import { onMount } from 'svelte';
 	import TableOfContents from '$lib/components/TableOfContents.svelte';
 	import CopyCodeButton from '$lib/components/CopyCodeButton.svelte';
-	// import theme from '$stores/theme';
 
 	interface Theme {
 		theme: string;
@@ -33,18 +32,18 @@
 
 	export let data: PageData;
 	const { metadata, post: Post } = data;
+
+	console.log('metadata');
+	console.log(metadata);
+
 	let headingElems;
 	let arr;
 	onMount(() => {
 		// Get code blocks
 		const preTags: HTMLCollectionOf<HTMLPreElement> = document.getElementsByTagName('pre');
-		console.log('preTags');
-		console.log(preTags);
 		for (let preTag of preTags) {
 			const classList = Array.from(preTag.classList);
 			const isCodeBlock = classList.some(className => className.startsWith('shiki'));
-			console.log('isCodeBlock');
-			console.log(isCodeBlock);
 			if (isCodeBlock) {
 				const preTagParent = preTag.parentElement;
 
@@ -62,61 +61,50 @@
 			}
 		}
 
-		// // Get headings for
-		// let headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6'));
-		// let obj = {};
-		// let currentHeading: Heading = {};
-		// let currentLevel = 1;
-		// headings.forEach((heading, index) => {
-		// 	let level = parseInt(heading.tagName.slice(1));
-		// 	if (level <= currentLevel) {
-		// 		currentLevel = level;
-		// 		currentHeading = {
-		// 			headingProps: {
-		// 				tagName: heading.tagName,
-		// 				id: heading.id,
-		// 				text: heading.textContent,
-		// 				href: heading.querySelector('a') ? heading.querySelector('a').href : null,
-		// 			},
-		// 			children: {},
-		// 		};
-		// 		obj[index] = currentHeading;
-		// 	} else if (currentHeading && level === currentLevel + 1) {
-		// 		currentHeading.children[index] = {
-		// 			headingProps: {
-		// 				tagName: heading.tagName,
-		// 				text: heading.textContent,
-		// 				id: heading.id,
-		// 				href: heading.querySelector('a') ? heading.querySelector('a').href : null,
-		// 			},
-		// 			children: {},
-		// 		};
-		// 	} else if (currentHeading && level > currentLevel + 1) {
-		// 		let parent = Object.values(currentHeading.children).slice(-1)[0];
-		// 		if (!parent) {
-		// 			parent = currentHeading;
-		// 		}
-		// 		parent.children[index] = {
-		// 			headingProps: {
-		// 				tagName: heading.tagName,
-		// 				id: heading.id,
-		// 				text: heading.textContent,
-		// 				href: heading.querySelector('a') ? heading.querySelector('a').href : null,
-		// 			},
-		// 			children: {},
-		// 		};
-		// 	}
-		// });
-		// arr = Object.entries(obj);
+		// get block quotes and remove '"' quotation marks
+		const blockQuotes: HTMLCollectionOf<HTMLQuoteElement> =
+			document.getElementsByTagName('blockquote');
+		for (let blockQuote of blockQuotes) {
+			const blockQuoteText = blockQuote.textContent;
+			if (blockQuoteText) {
+				blockQuote.textContent = blockQuoteText.replace(/"/g, '');
+				// blockQuote.classList.add('text-lg');
+			}
+		}
 	});
+
+	// function addTOC() {
+	// 	// const component = new TableOfContents({
+	// 	// 	target: document.querySelector('#post > h1:nth-of-type(2)'),
+	// 	// });
+	// 	const targetElement = document.querySelector('#post > h1:nth-of-type(2)');
+	// 	const container = document.createElement('div');
+
+	// 	if (targetElement && targetElement.parentNode) {
+	// 		targetElement.parentNode.insertBefore(container, targetElement.nextSibling);
+	// 	}
+
+	// 	const component = new TableOfContents({
+	// 		target: container,
+	// 	});
+	// }
 </script>
 
 <article>
+	<div class="mx-auto mt-5 mb-16">
+		<img src={`/static/${metadata.imgUrl}`} alt="Article image" class="w-4/5 mx-auto" />
+	</div>
 	<!-- <TableOfContents type="static"></TableOfContents> -->
 	<TableOfContents></TableOfContents>
 	<div
-		class={`shiki-${currentTheme?.meta.shikiTheme} prose py-2 px-2 max-w-none prose-p:text-neutral-content prose-p:text-lg prose-headings:font-bold`}
+		id="post"
+		class={`shiki-${currentTheme?.meta.shikiTheme} prose py-2 px-2 max-w-none prose-blockquote: text-lg prose-p:text-lg prose-headings:font-bold`}
 	>
+		<!-- <div
+		use:addTOC
+		id="post"
+		class={`shiki-${currentTheme?.meta.shikiTheme} prose py-2 px-2 max-w-none prose-blockquote: text-lg prose-p:text-lg prose-headings:font-bold`}
+	> -->
 		<Post />
 	</div>
 </article>
