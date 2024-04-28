@@ -2,7 +2,8 @@
 	import { onMount } from 'svelte';
 	import elementInViewport from '../../actions/elementInViewport';
 	import themeStore from '$stores/theme';
-	import { isNordOrValentine } from '$lib';
+	import { extractHeadings, isNordOrValentine } from '$lib';
+	import type { ArrayOfHeadings } from '$lib/types';
 
 	// animation start
 	let clicked = false;
@@ -24,61 +25,47 @@
 		isModalOpen = !isModalOpen;
 	}
 
-	let showModalTOC = false;
+	let showModalTOC = true;
+	let arr: ArrayOfHeadings = [];
 
-	let arr;
-
-	$: console.log(timeoutId);
-	onMount(() => {
-		let headings = Array.from(document.querySelectorAll('h1[id], h2[id]'));
-		let obj = {};
-		let currentHeading = null;
-		let currentLevel = 1;
-
-		headings.forEach((heading, index) => {
-			let level = parseInt(heading.tagName.slice(1));
-
-			if (level <= currentLevel) {
-				currentLevel = level;
-				currentHeading = {
-					headingProps: {
-						tagName: heading.tagName,
-						id: heading.id,
-						text: heading.textContent,
-						href: heading.querySelector('a') ? heading.querySelector('a').href : null,
-					},
-					children: {},
-				};
-
-				obj[index] = currentHeading;
-			} else if (currentHeading && level === currentLevel + 1) {
-				currentHeading.children[index] = {
-					headingProps: {
-						tagName: heading.tagName,
-						text: heading.textContent,
-						id: heading.id,
-						href: heading.querySelector('a') ? heading.querySelector('a').href : null,
-					},
-					children: {},
-				};
-			} else if (currentHeading && level > currentLevel + 1) {
-				let parent = Object.values(currentHeading.children).slice(-1)[0];
-				if (!parent) {
-					parent = currentHeading;
-				}
-				parent.children[index] = {
-					headingProps: {
-						tagName: heading.tagName,
-						id: heading.id,
-						text: heading.textContent,
-						href: heading.querySelector('a') ? heading.querySelector('a').href : null,
-					},
-					children: {},
-				};
-			}
+	function handleAnchorClick(event) {
+		event.preventDefault();
+		const link = event.currentTarget;
+		const anchorId = new URL(link.href).hash.replace('#', '');
+		const anchor = document.getElementById(anchorId);
+		window.scrollTo({
+			top: anchor.offsetTop,
+			behavior: 'smooth',
 		});
+	}
 
-		arr = Object.entries(obj);
+	function handleLeaveViewport(event) {
+		const element = event.target;
+		let top = 0;
+		let currentElement = element;
+
+		// add offset top of all parent elements
+		while (currentElement) {
+			top += currentElement.offsetTop;
+			currentElement = currentElement.offsetParent;
+		}
+		const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+		// show the modal only if the user has scrolled below the static TOC in the viewport
+		if (scrollPosition > top) {
+			isModalOpen = window.innerWidth >= 1200 ? true : false;
+		} else if (scrollPosition > top) {
+			isModalOpen = false;
+		}
+		if (timeoutId < 1) onClick();
+	}
+
+	// TODO:
+	// - add animations to the modal
+	// - make the modal button and modal itself smaller on mobile
+
+	onMount(() => {
+		arr = extractHeadings(arr);
 	});
 </script>
 
@@ -86,29 +73,31 @@
 
 {#if arr}
 	<div
+		class="toc-static"
 		use:elementInViewport
 		on:enterViewport={() => {
-			if (showModalTOC) showModalTOC = false;
+			isModalOpen = false;
 		}}
-		on:leaveViewport={() => {
-			if (!showModalTOC) showModalTOC = true;
-			if (timeoutId < 1) onClick();
-		}}
+		on:leaveViewport={handleLeaveViewport}
 	>
-		<h1 class="text-4xl font-bold mb-4">Table of Contents</h1>
+		<h1 class="text-4xl font-bold my-5 py-5 border-t border-neutral">Table of Contents</h1>
 		<ol class="pl-2 border-b border-neutral pb-5 mb-5">
 			{#each arr as [index, { headingProps, children }]}
-				<li class="my-2">
-					<a class=" hover:text-accent text-lg font-medium" href={headingProps.href}
-						>{headingProps.text}</a
+				<li class="list-none my-2">
+					<a
+						on:click={handleAnchorClick}
+						class="hover:text-accent text-lg font-medium no-underline"
+						href={`#${headingProps.id}`}>{headingProps.text}</a
 					>
 					{#if children}
 						<ol class="list-disc marker:text-secondary pl-5">
 							{#each Object.values(children) as child}
 								<li class="my-2">
 									<a
-										class="hover:text-accent text-md font-normal"
-										href={child.headingProps.href}>{child.headingProps.text}</a
+										on:click={handleAnchorClick}
+										class="hover:text-accent text-md font-normal no-underline"
+										href={`#${child.headingProps.id}`}
+										>{child.headingProps.text}</a
 									>
 								</li>
 							{/each}
@@ -151,30 +140,32 @@
 				</svg>
 			</button>
 			<div
-				class="relative break-words bg-primary bg-opacity-100 lg:bg-opacity-65 p-5 rounded-xl shadow-inner max-h-96 w-64 max-h-screen overflow-hidden"
+				class="relative break-words bg-primary bg-opacity-100 p-5 rounded-xl shadow-inner w-64 max-h-screen overflow-hidden"
 			>
 				<h1
-					class={`${isNordOrValentine($themeStore) ? 'text-white' : 'text-neutral'} text-xl font-bold mb-4`}
+					class={`${isNordOrValentine($themeStore) ? 'text-white' : 'text-neutral'} text-xl font-bold mb-2`}
 				>
 					Table of Contents
 				</h1>
 				<div
-					class="max-h-72 overflow-y-auto scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar scrollbar-thin scrollbar-track-neutral scrollbar-thumb-primary"
+					class="max-h-82 overflow-y-auto scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar-thin scrollbar-track-neutral scrollbar-thumb-primary"
 				>
 					<ol class="list-none pl-2 pr-5">
 						{#each arr as [index, { headingProps, children }]}
 							<li class="mb-2">
 								<a
-									class={`${isNordOrValentine($themeStore) ? 'text-white hover:text-black' : 'text-neutral hover:text-white'} text-base font-medium`}
-									href={headingProps.href}>{headingProps.text}</a
+									on:click={handleAnchorClick}
+									class={`${isNordOrValentine($themeStore) ? 'text-white hover:text-black' : 'text-neutral hover:text-white'} text-base font-medium no-underline`}
+									href={`#${headingProps.id}`}>{headingProps.text}</a
 								>
 								{#if children}
 									<ol class="list-none pl-4">
 										{#each Object.values(children) as child}
 											<li class="mb-2">
 												<a
-													class={`${isNordOrValentine($themeStore) ? 'text-white hover:text-black' : 'text-neutral hover:text-white'} text-base font-medium`}
-													href={child.headingProps.href}
+													on:click={handleAnchorClick}
+													class={`${isNordOrValentine($themeStore) ? 'text-white hover:text-black' : 'text-neutral hover:text-white'} text-base font-medium no-underline`}
+													href={`#${child.headingProps.href}`}
 													>{child.headingProps.text}</a
 												>
 											</li>

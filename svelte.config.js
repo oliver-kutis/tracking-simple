@@ -97,6 +97,7 @@ const config = {
 		alias: {
 			$components: './src/components',
 			$stores: './src/stores',
+			$actions: './src/actions',
 			// $library: './src/library',
 			// $models: './src/models',
 			// $pages: './src/pages',

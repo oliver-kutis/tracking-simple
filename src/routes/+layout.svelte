@@ -74,7 +74,7 @@
 />
 <div class="flex w-full h-full">
 	<!-- <div class="container inset-0 max-h-full py-5 px-10 rounded max-w-screen-xlg mx-auto"> -->
-	<div class="container inset-0 max-h-full py-5 px-5 rounded max-w-5xl mx-auto">
+	<div class="container items-center inset-0 max-h-full py-5 px-5 rounded max-w-5xl mx-auto">
 		<Nav></Nav>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->

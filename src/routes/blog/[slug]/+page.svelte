@@ -1,13 +1,9 @@
 <script lang="ts">
 	import themeStore from '$stores/theme';
 	import { themes } from '$lib/themes';
-	import type { Theme } from '../../../lib/types';
-	import './prism-coldark-dark.css';
-	// import './prism-dracula.css';
-	// import './prism-duotone-dark.css';
-	import type { PageData } from './$types';
+	import type { PageData, Theme } from './$types';
 	import { onMount } from 'svelte';
-	import TableOfContents from '$lib/components/TableOfContents.svelte';
+	import addTOC from '$actions/addTOC';
 	import CopyCodeButton from '$lib/components/CopyCodeButton.svelte';
 
 	interface Theme {
@@ -33,11 +29,6 @@
 	export let data: PageData;
 	const { metadata, post: Post } = data;
 
-	console.log('metadata');
-	console.log(metadata);
-
-	let headingElems;
-	let arr;
 	onMount(() => {
 		// Get code blocks
 		const preTags: HTMLCollectionOf<HTMLPreElement> = document.getElementsByTagName('pre');
@@ -48,7 +39,7 @@
 				const preTagParent = preTag.parentElement;
 
 				const newCodeBlockWrapper = document.createElement('div');
-				newCodeBlockWrapper.className = 'relative skap';
+				newCodeBlockWrapper.className = 'relative';
 
 				new CopyCodeButton({
 					target: newCodeBlockWrapper,
@@ -68,64 +59,35 @@
 			const blockQuoteText = blockQuote.textContent;
 			if (blockQuoteText) {
 				blockQuote.textContent = blockQuoteText.replace(/"/g, '');
-				// blockQuote.classList.add('text-lg');
 			}
 		}
 	});
-
-	// function addTOC() {
-	// 	// const component = new TableOfContents({
-	// 	// 	target: document.querySelector('#post > h1:nth-of-type(2)'),
-	// 	// });
-	// 	const targetElement = document.querySelector('#post > h1:nth-of-type(2)');
-	// 	const container = document.createElement('div');
-
-	// 	if (targetElement && targetElement.parentNode) {
-	// 		targetElement.parentNode.insertBefore(container, targetElement.nextSibling);
-	// 	}
-
-	// 	const component = new TableOfContents({
-	// 		target: container,
-	// 	});
-	// }
 </script>
 
 <article>
 	<div class="mx-auto mt-5 mb-16">
-		<img src={`/static/${metadata.imgUrl}`} alt="Article image" class="w-4/5 mx-auto" />
+		<!-- svelte-ignore a11y-img-redundant-alt -->
+		<img src={`/${metadata?.imgUrl}`} alt="Article image" class="w-4/5 mx-auto" />
 	</div>
-	<!-- <TableOfContents type="static"></TableOfContents> -->
-	<TableOfContents></TableOfContents>
-	<div
+	<!-- <TableOfContents></TableOfContents> -->
+	<!-- <div
 		id="post"
 		class={`shiki-${currentTheme?.meta.shikiTheme} prose py-2 px-2 max-w-none prose-blockquote: text-lg prose-p:text-lg prose-headings:font-bold`}
+	> -->
+	<div
+		use:addTOC
+		id="post"
+		class={`shiki-${currentTheme?.meta.shikiTheme} prose md:prose-lg py-2 px-2 max-w-none prose-blockquote:prose-lg md:prose-blockquote:prose-2xl prose-headings:font-bold`}
 	>
 		<!-- <div
 		use:addTOC
 		id="post"
-		class={`shiki-${currentTheme?.meta.shikiTheme} prose py-2 px-2 max-w-none prose-blockquote: text-lg prose-p:text-lg prose-headings:font-bold`}
+		class={`shiki-${currentTheme?.meta.shikiTheme} prose py-2 px-2 max-w-none prose-blockquote:text-lg text-lg prose-headings:font-bold`}
 	> -->
 		<Post />
 	</div>
 </article>
 
-<!-- <div class="root max-w-5xl mx-auto lg:max-w-none">
-	<div class="w-full mx-auto overflow-x-hidden">
-		<div class="prose">
-			<article>
-				<Post />
-			</article>
-		</div>
-		<div class="hidden xl:block pt-10">
-			<aside
-				class="sticky hidden w-48 ml-8 xl:block top-8"
-				aria-label="Table of Contents"
-			></aside>
-			<p>Text</p>
-		</div>
-	</div>
-</div>
--->
 <style>
 	:global(html.code-theme-vesper .shiki-vesper div > pre, html.code-theme-vesper .shiki span) {
 		color: var(--shiki-vesper) !important;
@@ -206,47 +168,4 @@
 		font-weight: var(--shiki-red-font-weight) !important;
 		text-decoration: var(--shiki-red-text-decoration) !important;
 	}
-
-	/* :global(.prose h1 a),
-  	:global(.prose h2 a),
-  	:global(.prose h3 a),
-  	:global(.prose h4 a),
-  	:global(.prose h5 a),
-  	:global(.prose h6 a) {
-    	padding-left: 30px;
-  	} */
-	/* &:hover .icon-link::before {
-		 	opacity: 1;
-		 } */
-
-	/* .shiki-darshiki {
-		color: var(--shiki-dark) !important;
-		background-color: var(--shiki-dark-bg) !important;
-		font-style: var(--shiki-dark-font-style) !important;
-		font-weight: var(--shiki-dark-font-weight) !important;
-		text-decoration: var(--shiki-dark-text-decoration) !important;
-	}
-	.shiki-dark > .shiki span.line > span {
-		color: var(--shiki-dark) !important;
-		background-color: var(--shiki-dark-bg) !important;
-		font-style: var(--shiki-dark-font-style) !important;
-		font-weight: var(--shiki-dark-font-weight) !important;
-		text-decoration: var(--shiki-dark-text-decoration) !important;
-	}
-
-	.shiki-light.shiki {
-		color: var(--shiki-light) !important;
-		background-color: var(--shiki-light-bg) !important;
-		font-style: var(--shiki-light-font-style) !important;
-		font-weight: var(--shiki-light-font-weight) !important;
-		text-decoration: var(--shiki-light-text-decoration) !important;
-	}
-
-	.shiki-light > .shiki span.line > span {
-		color: var(--shiki-light) !important;
-		background-color: var(--shiki-light-bg) !important;
-		font-style: var(--shiki-light-font-style) !important;
-		font-weight: var(--shiki-light-font-weight) !important;
-		text-decoration: var(--shiki-light-text-decoration) !important;
-	} */
 </style>

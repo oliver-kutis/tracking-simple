@@ -1,12 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 import { themes as daisyThemes } from './src/lib/themes.ts';
 export default {
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+	content: ['./src/**/*.{html,js,svelte,ts}', './src/compontents/**/*.svelte'],
 	theme: {
 		backgroundImage: {
 			image: "url('./src/lib/img/background-main.jpg')",
 			'bg-alt': "url('./src/lib/img/bg-alt.jpg')",
 		},
+
 		extend: {
 			fontFamilys: {
 				sans: ['Inter', 'sans-serif'],
