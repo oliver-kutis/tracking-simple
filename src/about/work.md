@@ -3,6 +3,8 @@
 import RoleDetails from '$lib/components/RoleDetails.svelte'
 </script>
 
+<span class="divider before:bg-primary after:bg-primary mb-6 print:mb-0" />
+
 <RoleDetails 
     position="Web analyst"
     company="Databy & Freelance"

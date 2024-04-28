@@ -34,6 +34,5 @@
 
 <div class="prose md:prose-lg prose-headings:font-bold max-w-none">
 	<Intro></Intro>
-	<span class="divider before:bg-primary after:bg-primary mb-6 print:mb-0" />
 	<Work></Work>
 </div>

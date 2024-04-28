@@ -33,11 +33,11 @@
 	{/if}
 </div>
 
-<div class="mb-6 print:mb-4">
-	<span class="divider before:bg-primary after:bg-primary print:hidden" />
+<div class="mb-10 print:mb-4">
+	<span class="mb-6 divider before:bg-primary after:bg-primary print:hidden" />
 
 	<div class="mb-5 print:mb-1">
-		<h2 class="text-3xl font-bold tracking-wide text-primary print:text-xl print:text-black">
+		<h2 class="text-4xl font-bold tracking-wide text-primary print:text-xl print:text-black">
 			{label}
 		</h2>
 	</div>

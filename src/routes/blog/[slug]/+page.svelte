@@ -39,7 +39,7 @@
 				const preTagParent = preTag.parentElement;
 
 				const newCodeBlockWrapper = document.createElement('div');
-				newCodeBlockWrapper.className = 'relative';
+				newCodeBlockWrapper.className = 'relative z-[-1]';
 
 				new CopyCodeButton({
 					target: newCodeBlockWrapper,
@@ -77,7 +77,7 @@
 	<div
 		use:addTOC
 		id="post"
-		class={`shiki-${currentTheme?.meta.shikiTheme} prose md:prose-lg py-2 px-2 max-w-none prose-blockquote:prose-lg md:prose-blockquote:prose-2xl prose-headings:font-bold`}
+		class={`shiki-${currentTheme?.meta.shikiTheme} prose prose-base lg:prose-lg py-2 px-2 max-w-none prose-blockquote:prose-lg md:prose-blockquote:prose-2xl prose-headings:font-bold`}
 	>
 		<!-- <div
 		use:addTOC

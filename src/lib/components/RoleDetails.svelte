@@ -40,10 +40,12 @@
 <div
 	class="mb-2 flex flex-col justify-between md:flex-row md:items-center print:mb-0 print:flex-row"
 >
-	<h2 class="my-4 text-4xl font-bold tracking-wide text-primary print:text-2xl print:text-black">
+	<h2
+		class="my-2 text-4xl font-bold tracking-wide text-primary print:text-2xl print:text-black not-prose"
+	>
 		{position}
 	</h2>
-	<span class="text-2xl font-bold print:text-xl print:text-black">
+	<span class="text-2xl font-bold print:text-xl print:text-black not-prose">
 		{company}
 	</span>
 </div>
@@ -51,4 +53,4 @@
 <span class="font-bold text-accent print:text-xs print:font-medium print:text-black">
 	{formatDates(startDate, endDate === null ? '' : endDate)}
 </span>
-<div class="mb-4 print:mb-2" />
+<div class="mb-6 print:mb-2" />
