@@ -8,9 +8,13 @@ summary: 'some summary'
 tags: ['SGTM', 'Templates', 'Variables']
 ---
 
+<script lang="ts">
+  import Img from '$lib/components/Img.svelte';
+</script>
+
 Link to the template file: ![[Azure Cosmos DB - Fetch document.tpl]]
 
-# Introduction
+# 1. Introduction
 
 In the ever-evolving landscape of web analytics, Google introduced server containers in Google Tag Manager back in 2020, unlocking a realm of possibilities. Among these features is the capability to enrich real-time data using the Firestore API, a service nestled within Google Cloud Platform (GCP). Analysts worldwide have embraced this functionality, but what if your tech stack resides with other cloud vendors, like AWS or Azure? Navigating the server container setup and management in such scenarios can be a daunting task, with sparse resources available. Thanks to Simo Ahava, we can now setup the tagging server on [Azure](https://www.simoahava.com/analytics/server-side-tagging-azure-app-service/) or [AWS](https://www.simoahava.com/analytics/deploy-server-side-google-tag-manager-aws/) easily.
 
@@ -24,15 +28,15 @@ Before we delve into the tutorial, let’s set the stage. I **don’t** **assume
 
 Additionally, I am not going to show how to migrate the data to Cosmos DB (maybe in some other article). 
 
-# Setup Cosmos DB and Function App
+# 2. Setup Cosmos DB and Function App
 
 In this section, we’ll focus on how to setup your own Cosmos DB account and use some sample data. I recommend you to work with sample data as well so you can validate your setup. 
 
-## Azure Cosmos DB setup
+## 2.1. Azure Cosmos DB setup
 
 Navigate to Azure Cosmos DB and create new account. The click _create_ for “Azure Cosmos DB for NoSQL”. 
 
-![](https://cdn-images-1.medium.com/max/1600/1*7pEDSaDtm48O4ta0o0fwCQ.png)
+<Img src="/img/azure-real-time-sgtm/azure-cosmos-db-setup-account.png" alt="Azure Cosmos DB - Account setup"/>
 
 > _Note: I recommend you to go for the serverless option as it’s better suited for unstable traffic._
 
@@ -40,7 +44,7 @@ Other setup options are up to your configuration and I won’t go into detail th
 
 Next, navigate to your newly created Cosmos DB account and in the “Quick start” section. Create a sample “Items” container. 
 
-![](https://cdn-images-1.medium.com/max/1600/1*ohRWwR4Sz91h6ZoUPJ039w.png)
+<Img src="/img/azure-real-time-sgtm/azure-cosmos-db-setup-container.png" alt="Azure Cosmos DB - Container setup"/>
 
 After it’s created, go to “Data Explorer” section and the container will be located under “ToDoList” database. You can either generate sample data manually, upload it or use the option to download a simple app which will insert sample data using language of your choice. Here I have decided to go with Node.js application. After you’ve downloaded the sample app, you should open editor of your choice (I use VS Code) and do the following:
 
@@ -54,7 +58,7 @@ node -v
 2. Move yourself to the home directory with `cd ~` command
 3. Navigate yourself to directory where the app has been downloaded. In my case it’s “Downloads”. Extract the path to the folder.
 
-![](https://cdn-images-1.medium.com/max/1600/1*HldPBIU1zxXVBU19lO9xrw.png)
+<Img src="/img/azure-real-time-sgtm/directory-mac.png" alt="Project directory on my PC"/>
 
 4. In terminal, type your path into terminal:
 
@@ -78,7 +82,7 @@ node app.js
 
 Next, go back to Azure Cosmos DB account and navigate to “Data Explorer”. I’ve also manually added one document just for fun. You should see something like this:
 
-![](https://cdn-images-1.medium.com/max/1600/1*Ln3F3bldJ3pH0q6QBVWh1Q.png)
+<Img src="/img/azure-real-time-sgtm/azure-cosmos-db-demo-document.png" alt="Azure Cosmos DB document demo"/>
 
 You can see that one of the documents has a **partitionKey** while the other does not. This will be important when querying the data. 
 
@@ -86,14 +90,12 @@ Now that we have succesfully managed to create a sample database, we’ll move o
 
 > Note: I’ve tried to retrieve the documents from Cosmos DB directly using their REST API. After reading through not ideally written documentation, I’ve found out that you need to generate an Authentication token using the Primary key and some other information. This wouldn’t necessarily be a problem, however server-side GTM Templates API doesn’t offer required hashing algorithm to generate the token. More on this can be found on following links in case you figure out a way to make request directly using the REST API:
 
-> [- Guide on querying documents from Cosmos DB](https://learn.microsoft.com/en-us/rest/api/cosmos-db/query-documents)
+- [Guide on querying documents from Cosmos DB](https://learn.microsoft.com/en-us/rest/api/cosmos-db/query-documents)
+- [Required request headers](https://learn.microsoft.com/en-us/rest/api/cosmos-db/common-cosmosdb-rest-request-headers)
+- [Generating the Authorization token](https://learn.microsoft.com/en-us/rest/api/cosmos-db/access-control-on-cosmosdb-resources?redirectedfrom=MSDN)  
+- The required hashing algorithm is HMAC and I am no cryptograph to create it on my own (not even sure if it’s possible).
 
-> [- Required request headers](https://learn.microsoft.com/en-us/rest/api/cosmos-db/common-cosmosdb-rest-request-headers)
-
-> [- Generating the Authorization token](https://learn.microsoft.com/en-us/rest/api/cosmos-db/access-control-on-cosmosdb-resources?redirectedfrom=MSDN)  
->  - The required hashing algorithm is HMAC and I am no cryptograph to create it on my own (not even sure if it’s possible).
-
-## Azure Function App setup
+## 2.2. Azure Function App setup
 
 We’ll now proceed to create a Function App which will pass requests to _“@azure/cosmos”_ SDK and retrieve the data. Get your fingers ready(or toes if you prefer) because we’re going to do some coding!
 
@@ -103,7 +105,7 @@ _Note: All steps in the previous section could be done in the IDE terminal as we
 
 In the following sections we’ll go through the setup of your local development worskpace (Section **1.2.1 — Basic setup**). In the second section, we’ll generate the code (Section **1.2.2 — Coding**) and in the last section we’ll test the app (Section **1.2.3 — Debugging**). Let’s begin. 
 
-## Basic setup
+## 2.3. Basic setup
 
 Now, let’s go step by step to setup the Function App:
 
@@ -155,7 +157,7 @@ New local project should be setup.
 
 ![](https://cdn-images-1.medium.com/max/1600/1*iMS7HwxI0ede7aWeEFtC2A.png)
 
-##  Coding
+## 2.4. Coding
 
 After you’ve completed the process, it is time to finally “get our hands dirty”. In the next parts, I’ll not only provide the code, but also take you through all the setup and I will explain what the code is doing. 
 
@@ -184,7 +186,7 @@ In next piece of code, we’ll finaly get to the final `index.js` which is respo
 
 Finally, we export the module where more of the data checks are performed. 
 
-## Debugging
+## 2.5. Debugging
 
 In this part, we’ll focus on debugging the function directly in VS Code. Thus, we’ll verify if the code works on you local machine before deploying the function to production. 
 

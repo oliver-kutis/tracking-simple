@@ -1,6 +1,7 @@
 ---
 title: 'Root Domain Extractor - Server-side GTM Variable Template'
 imgUrl: 'img/bg-clouds.jpg'
+imgAlt: 'Article image - Storm clouds'
 published: true
 publishedDate: '2024-04-06'
 summary: 'This variable can be used to extract only the root domain from URL so that you could unify traffic sources (e.g. from facebook or instagram).'

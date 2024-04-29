@@ -20,12 +20,14 @@
 	};
 	// animation end
 
-	export let isModalOpen = false;
+	let isModalOpen = false;
+	let wasClosedByUser = false;
+	let showModalTOC = true;
 	function toggleModal() {
 		isModalOpen = !isModalOpen;
+		wasClosedByUser = false;
 	}
 
-	let showModalTOC = true;
 	let arr: ArrayOfHeadings = [];
 
 	function handleAnchorClick(event) {
@@ -66,8 +68,7 @@
 	// 	}
 	// 	if (timeoutId < 1) onClick();
 	// }
-	function handleLeaveViewport(event) {
-		console.log('leave');
+	function handleLeaveViewport(event, wasClosedByUser) {
 		const element = event.target;
 		let top = 0;
 		let currentElement = element;
@@ -80,19 +81,14 @@
 		const bottom = top + element.offsetHeight;
 		const scrollPosition =
 			window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-		console.log(`scrollPosition: ${scrollPosition}`);
-		console.log(`top: ${top}`);
-		console.log(`bottom: ${bottom}`);
 
 		// Do thing A if the current TOP is above the TOP of the target element
 		if (scrollPosition < top) {
-			console.log('above');
 			isModalOpen = false;
 		}
 		// Do thing B when current TOP is below the BOTTOM of the target element
 		else if (scrollPosition > bottom) {
-			console.log('below');
-			isModalOpen = window.innerWidth >= 1200;
+			isModalOpen = window.innerWidth >= 1200 && !wasClosedByUser;
 		}
 		if (timeoutId < 1) onClick();
 	}
@@ -108,33 +104,46 @@
 </script>
 
 <!-- <svelte:window bind:scrollY={scrollY} /> -->
-
+<svelte:body
+	on:click={e => {
+		if (!isModalOpen) return;
+		const target = e.target;
+		if (target instanceof Element) {
+			if (
+				target.closest('.toc-modal') === null ||
+				target.parentElement.closest('.toc-modal') === null
+			) {
+				isModalOpen = false;
+			}
+		}
+		// isModalOpen = false
+	}}
+/>
 {#if arr}
 	<div
-		class="toc-static"
+		class="prose prose-h1:-mb-5 toc toc-static my-10"
 		use:elementInViewport
 		on:enterViewport={() => {
-			console.log('enter');
 			isModalOpen = false;
 		}}
-		on:leaveViewport={handleLeaveViewport}
+		on:leaveViewport={e => handleLeaveViewport(e, wasClosedByUser)}
 	>
-		<h1 class="text-4xl font-bold my-5 py-5 border-t border-neutral">Table of Contents</h1>
-		<ol class="pl-2 border-b border-neutral pb-5 mb-5">
+		<h1 class="py-5 border-t border-neutral">Table of Contents</h1>
+		<ol class="border-b border-neutral pb-5 mb-5 prose-li:pl-[0px]">
 			{#each arr as [index, { headingProps, children }]}
-				<li class="list-none my-2">
+				<li class="list-none">
 					<a
 						on:click={handleAnchorClick}
-						class="hover:text-accent text-lg font-medium no-underline"
+						class="hover:text-accent prose-base md:prose-lg font-medium no-underline"
 						href={`#${headingProps.id}`}>{headingProps.text}</a
 					>
 					{#if children}
-						<ol class="list-disc marker:text-secondary pl-5">
+						<ol class="list-disc marker:text-secondary pl-6 prose-base md:prose-lg">
 							{#each Object.values(children) as child}
-								<li class="my-2">
+								<li class="list-none">
 									<a
 										on:click={handleAnchorClick}
-										class="hover:text-accent text-md font-normal no-underline"
+										class="hover:text-accent font-normal no-underline"
 										href={`#${child.headingProps.id}`}
 										>{child.headingProps.text}</a
 									>
@@ -154,14 +163,14 @@
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<!-- class={`bg-neutral text-primary border border-primary px-2 py-2 rounded-2xl sm:mr-5 ${clicked ? 'scale-wiggle' : ''}`} -->
 		<div
-			class="z-100 toc-modal fixed mr-6 inset-0 flex items-center justify-end text-sm pointer-events-none"
-			on:click={() => {
-				if (isModalOpen) toggleModal();
-			}}
+			class="z-100 toc toc-modal fixed mr-6 inset-0 flex items-center justify-end text-sm pointer-events-none"
 		>
 			<button
-				class={`${isNordOrValentine($themeStore) ? 'text-white bg-primary border-primary' : 'text-primary bg-neutral border-primary'} relative -inset-x-1 border-4 px-2 py-2 rounded-2xl pointer-events-auto`}
-				on:click={toggleModal}
+				class={`${isNordOrValentine($themeStore) ? 'text-white bg-primary border-primary' : 'text-primary bg-neutral border-primary'} toc-modal-close relative -inset-x-1 border-4 px-2 py-2 rounded-2xl pointer-events-auto`}
+				on:click={() => {
+					toggleModal();
+					wasClosedByUser = true;
+				}}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -221,7 +230,9 @@
 		<!-- <div
 			class="fixed transform right-1/2 bottom-8 translate-x-1/2 sm:right-0 sm:top-1/2 sm:-translate-y-1/2"
 		> -->
-		<div class="z-10 fixed right-0 top-1/2 -translate-y-1/2 transform">
+		<div
+			class="toc toc-modal toc-modal-open z-10 fixed right-0 top-1/2 -translate-y-1/2 transform"
+		>
 			<button
 				class={`${isNordOrValentine($themeStore) ? 'text-white bg-primary border-primary' : 'text-primary bg-neutral border-primary'} border-4 px-2 py-2 rounded-2xl mr-2 sm:mr-5 ${clicked ? 'scale-wiggle' : ''}`}
 				class:active={clicked}

@@ -22,6 +22,8 @@
 		children: Record<string, Heading>;
 	}
 
+	let isModalOpen = false;
+
 	$: currentTheme = themes.find((theme: Theme) => theme.theme === $themeStore);
 	$: currentThemeMode = currentTheme ? currentTheme.meta.mode : 'light';
 	$: console.log(currentThemeMode);
@@ -67,7 +69,13 @@
 <article>
 	<div class="mx-auto mt-5 mb-16">
 		<!-- svelte-ignore a11y-img-redundant-alt -->
-		<img src={`/${metadata?.imgUrl}`} alt="Article image" class="w-4/5 mx-auto" />
+		<img
+			src={`/${metadata?.imgUrl}`}
+			alt={metadata?.imgAlt}
+			class="object-fill w-full h-fit"
+			loading="lazy"
+		/>
+		<span class="text-base font-light italic">Taken from SOME WEBSITE</span>
 	</div>
 	<!-- <TableOfContents></TableOfContents> -->
 	<!-- <div
@@ -77,7 +85,7 @@
 	<div
 		use:addTOC
 		id="post"
-		class={`shiki-${currentTheme?.meta.shikiTheme} prose prose-base lg:prose-lg py-2 px-2 max-w-none prose-blockquote:prose-lg md:prose-blockquote:prose-2xl prose-headings:font-bold`}
+		class={`shiki-${currentTheme?.meta.shikiTheme} prose prose-base md:prose-lg prose-headings:prose-2xl md:prose-headings:prose-2xl py-2 px-2 max-w-none prose-blockquote:prose-base md:prose-blockquote:prose-lg prose-headings:font-bold prose-headings:my-4`}
 	>
 		<!-- <div
 		use:addTOC
@@ -89,6 +97,9 @@
 </article>
 
 <style>
+	:global(h2) {
+		line-height: 1;
+	}
 	:global(html.code-theme-vesper .shiki-vesper div > pre, html.code-theme-vesper .shiki span) {
 		color: var(--shiki-vesper) !important;
 		/* background-color: var(--shiki-vesper-bg) !important; */

@@ -25,8 +25,8 @@ export default {
 	},
 	plugins: [
 		require('daisyui'),
-		require('@tailwindcss/typography'),
 		require('tailwind-scrollbar'),
+		require('@tailwindcss/typography'),
 	],
 	daisyui: {
 		// styled: true,
