@@ -1,5 +1,6 @@
 <script lang="ts">
-	// import { Email, Globe, Mobile } from '$lib/icons'
+	import Email from '$lib/components/svg/Email.svelte';
+	import Globe from '$lib/components/svg/Globe.svelte';
 
 	// const { name, label, email, phone, website, imgSrc } = $$props;
 	// const { name, label, email, phone, website, imgSrc } = $props<{
@@ -12,59 +13,58 @@
 	// }>();
 
 	const name: string = 'Oliver Kutis';
-	const label = 'Web Developer';
+	const label = 'Web Analyst';
 	const email = 'test@test.cz';
 	const phone = '+420 123 456 789';
 	const website = 'example.com';
 	const imgSrc: string = '/img/me.png';
 </script>
 
-<div class="flex items-center justify-between print:-mt-6">
-	<h1 class="text-5xl font-bold uppercase tracking-wide print:text-2xl print:text-black">
-		{name}
-	</h1>
-
-	{#if imgSrc !== undefined}
-		<div class="avatar print:hidden">
-			<div class="mask mask-circle h-24 w-24 transform transition">
-				<img src={imgSrc} alt={name} />
-			</div>
-		</div>
-	{/if}
-</div>
-
-<div class="mb-10 print:mb-4">
-	<span class="mb-6 divider before:bg-primary after:bg-primary print:hidden" />
-
-	<div class="mb-5 print:mb-1">
-		<h2 class="text-4xl font-bold tracking-wide text-primary print:text-xl print:text-black">
-			{label}
-		</h2>
-	</div>
-
-	<div
-		class="text-accent-focus mt-2 flex flex-col justify-start gap-x-10 tracking-wide sm:flex-row print:mb-4 print:flex-row print:justify-start"
-	>
-		<div class="print:text-black">
-			<dt><span class="sr-only">Email address</span></dt>
-			<dd class="mb-2 flex items-end text-base print:mr-2 print:text-sm">
-				<!-- <Email /> -->
-				<span class="ml-3 print:ml-0">
-					<a href="mailto: {email}" class="text-md">{email}</a>
-				</span>
-			</dd>
-		</div>
-
-		<div class="print:text-black">
-			<dt><span class="sr-only">Website</span></dt>
-			<dd class="mb-2 flex items-end text-base print:text-sm">
-				<!-- <Globe /> -->
-				<span class="ml-3 print:ml-0">
-					<a href="https://{website}" class="text-md block">
-						{website}
-					</a>
-				</span>
-			</dd>
-		</div>
+<div class="mb-6 mt-10 print:mb-4">
+	<!-- <span
+		class="mb-6 divider before:bg-opacity-100 after:bg-opacity-100 before:bg-neutral after:bg-neutral print:hidden"
+	/> -->
+	<div class="mb-2 print:mb-1">
+		<h1 class="font-bold tracking-wide text-primary print:text-xl print:text-black">
+			Past Experience & Projects
+		</h1>
+		<p>Below is a list of projects and clients I have worked with in the past.</p>
 	</div>
 </div>
+
+<!-- .divider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: stretch;
+    margin-top: 1rem/* 16px */;
+    margin-bottom: 1rem/* 16px */;
+    height: 1rem/* 16px */;
+    white-space: nowrap;
+}
+.divider:before,
+  .divider:after {
+    height: 0.125rem/* 2px */;
+    width: 100%;
+    flex-grow: 1;
+    --tw-content: '';
+    content: var(--tw-content);
+    background-color: var(--fallback-bc,oklch(var(--bc)/0.1));
+}
+.divider:before,
+  .divider:after {
+    height: 0.125rem/* 2px */;
+    width: 100%;
+    flex-grow: 1;
+    --tw-content: '';
+    content: var(--tw-content);
+    background-color: var(--fallback-bc,oklch(var(--bc)/0.1));
+}
+.divider:not(:empty) {
+    gap: 1rem/* 16px */; -->
+<!-- 
+<style>
+	:global(.divider:before, .divider:after) {
+		height: 0.075rem;
+	}
+</style> -->

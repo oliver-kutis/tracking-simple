@@ -121,26 +121,27 @@
 />
 {#if arr}
 	<div
-		class="prose prose-h1:-mb-5 toc toc-static my-10"
+		class="prose prose-h1:-mb-5 toc toc-static my-10 w-full max-w-4xl prose-h1:text-3xl"
 		use:elementInViewport
 		on:enterViewport={() => {
 			isModalOpen = false;
 		}}
 		on:leaveViewport={e => handleLeaveViewport(e, wasClosedByUser)}
 	>
-		<h1 class="py-5 border-t border-neutral">Table of Contents</h1>
-		<ol class="border-b border-neutral pb-5 mb-5 prose-li:pl-[0px]">
+		<span class="divider before:bg-primary after:bg-primary mb-6 print:mb-0" />
+		<h1 class="pt-2">Table of Contents</h1>
+		<ol class="py-2 prose-li:pl-[0px">
 			{#each arr as [index, { headingProps, children }]}
-				<li class="list-none">
+				<li class="list-none prose-a:font-bold">
 					<a
 						on:click={handleAnchorClick}
-						class="hover:text-accent prose-base md:prose-lg font-medium no-underline"
+						class="hover:text-accent prose-base md:prose-lg no-underline"
 						href={`#${headingProps.id}`}>{headingProps.text}</a
 					>
 					{#if children}
 						<ol class="list-disc marker:text-secondary pl-6 prose-base md:prose-lg">
 							{#each Object.values(children) as child}
-								<li class="list-none">
+								<li class="list-none prose-a:font-semibold">
 									<a
 										on:click={handleAnchorClick}
 										class="hover:text-accent font-normal no-underline"
@@ -154,6 +155,7 @@
 				</li>
 			{/each}
 		</ol>
+		<span class="divider before:bg-primary after:bg-primary mb-6 print:mb-0" />
 	</div>
 {/if}
 

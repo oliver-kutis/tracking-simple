@@ -1,15 +1,15 @@
-Dedicated Web Analyst with over 2.5 years of experience in the field. I've had the privilege of immersing myself in the world of digital analytics, where I've focused on optimizing web tracking mechanisms and offering guidance on effective tag management practices.
+<script lang="ts">
+    import {socials} from '$lib/info'
+</script>
 
-📊 In my role as a web analyst, I've had the opportunity to work with various tracking codes and analytics using GA4. My responsibilities have extended beyond tracking, as I've assisted in troubleshooting website-related issues and ensuring compliance with data privacy regulations. I've also been fortunate to lead projects involving offline conversion imports and leveraging GA4 BigQuery export for enhanced analysis.
+# Who Am I?
 
-🔗 I've had the opportunity to work on both client-side and server-side implementations of Google Tag Manager, including multidomain and cross-domain setup. These experiences have taught me the importance of adaptability and continuous learning.
+> For more in-depth overview of my work experience and skills, checkout my [LinkedIn](socials.linkedin)
 
-💻 My journey has led me to explore the realm of Google Cloud Platform (GCP), where I've navigated tools like BigQuery and Dataform to extract insights. Through ETL tasks for clients, I've contributed to warehousing and BI reporting solutions. Additionally, I've gained proficiency in Google Looker Studio for reporting functionalities.
+**_Web Analyst:_** My primary focus in on Google Analytics 4 (GA4) & Google Tag Manager (GTM). I have no problem using other tracking mechanisms and I am able to recreate the whole tracking architecture with my own backend. I am no stranger to server-side tracking and modern solutions which can help you get the most accurate data possible. 
 
-📈 Beyond analytics, I've delved into Marketing Mix Modeling (MMM) and developed models showcased in my diploma thesis, utilizing Python and R. My journey is marked by a commitment to learning and growth.
+**_Marketing Analyst:_** Buidling marketing dashboards including Extraction, Transformation and Loading (ETL) of data to comprehensive dashboards. I manage these flows primarily in Google Cloud Platform (GCP) and present final reports in Google Looker Studio. I have also implemented numerous Reverse-ETL jobs concerning enrichment of data in marketing platforms - the perfect example of this is Offline Conversion Import using both 1st party identifiers and/or cookies.
 
-⚽ Outside of work, I find joy in sports like football, swimming, and cycling. Currently, I'm exploring system design and frontend development with Svelte, as I undertake the challenge of building my own blog. 
+**_Marketing Data Scientist:_** Experience using most MMM and Causal Inference frameworks (Robyn, Lightweight MMM, Orbit, PyMC Marketing, CausalPy, CausalImpact, GeoLift, ...). I have also developed my own models for purposes of my Diploma thesis.
 
-📚 In my downtime, I enjoy philosophical discussions and immersing myself in captivating books. Music is another passion of mine, with artists like Radiohead, James Blake, and Michael Kiwanuka resonating with me. And of course, I have a soft spot for dogs, delectable burgers, and the soulful melodies of Max Richter's "Four Seasons."
-
-🌟 I'm always eager to connect with like-minded professionals and explore opportunities for collaboration. Feel free to reach out—I'd love to engage in meaningful conversations and learn from your experiences.
+**_Life-long learner:_** I consume a lot of news and articles related to web tracking and marketing measurement. I studied econometrics and I am eager to learn anything that could help optimize digital marketing activities. 

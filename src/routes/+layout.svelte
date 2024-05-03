@@ -15,9 +15,8 @@
 	import toggleNavSettings from '$stores/toggleNavSettings';
 	import { getThemeType } from '$lib';
 
-	// import Footer from '../components/Footer.svelte';
+	let scrollY = 0;
 
-	// const dispatch = createEventDispatcher();
 	$: {
 		if (typeof document !== 'undefined') {
 			document.documentElement.setAttribute('data-theme', $themeStore);
@@ -35,13 +34,6 @@
 					`code-theme-${currentTheme.meta.shikiTheme}`,
 				);
 			}
-			// if (getThemeType($themeStore) === 'dark') {
-			// 	document.documentElement.classList.add('dark');
-			// 	document.documentElement.classList.remove('light');
-			// } else {
-			// 	document.documentElement.classList.add('light');
-			// 	document.documentElement.classList.remove('dark');
-			// }
 		}
 	}
 </script>
@@ -50,6 +42,9 @@
 <!-- <div class="bg-info bg-opacity-10 h-full items-center"> -->
 <!-- <div class="bg-clouds bg-repeat-space bg-cover bg-fixed bg-opacity-10 h-full items-center"> -->
 <svelte:body
+	on:scroll={e => {
+		scrollY = e.target.scrollTop / e.target.scrollHeight;
+	}}
 	data-theme={$themeStore}
 	on:click={event => {
 		if (event.target instanceof Element) {
@@ -72,10 +67,11 @@
 		}
 	}}
 />
+<Nav bind:bodyScrollY={scrollY}></Nav>
 <div class="flex w-full h-full">
 	<!-- <div class="container inset-0 max-h-full py-5 px-10 rounded max-w-screen-xlg mx-auto"> -->
 	<div class="container items-center inset-0 max-h-full py-5 px-5 rounded max-w-4xl mx-auto">
-		<Nav></Nav>
+		<!-- <Nav></Nav> -->
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 		<main class="flex mt-5 flex-col flex-grow w-full mx-auto">
@@ -135,8 +131,13 @@
 
 <!-- <Footer></Footer> -->
 
-<!-- <style>
-	:global(html)
-
-
-</style> -->
+<style>
+	:global(blockquote > p):after {
+		content: '' !important;
+		/* display: block; */
+	}
+	:global(blockquote > p):before {
+		content: '' !important;
+		/* display: block; */
+	}
+</style>

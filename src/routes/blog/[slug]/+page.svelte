@@ -5,6 +5,8 @@
 	import { onMount } from 'svelte';
 	import addTOC from '$actions/addTOC';
 	import CopyCodeButton from '$lib/components/CopyCodeButton.svelte';
+	import TagsIcon from '$lib/components/svg/TagsIcon.svelte';
+	import DateIcon from '$lib/components/svg/DateIcon.svelte';
 
 	interface Theme {
 		theme: string;
@@ -54,52 +56,84 @@
 			}
 		}
 
-		// get block quotes and remove '"' quotation marks
-		const blockQuotes: HTMLCollectionOf<HTMLQuoteElement> =
-			document.getElementsByTagName('blockquote');
-		for (let blockQuote of blockQuotes) {
-			const blockQuoteText = blockQuote.textContent;
-			if (blockQuoteText) {
-				blockQuote.textContent = blockQuoteText.replace(/"/g, '');
-			}
-		}
+		// // get block quotes and remove '"' quotation marks
+		// const blockQuotes: HTMLCollectionOf<HTMLQuoteElement> =
+		// 	document.getElementsByTagName('blockquote');
+		// for (let blockQuote of blockQuotes) {
+		// 	const blockQuoteText = blockQuote.textContent;
+		// 	if (blockQuoteText) {
+		// 		blockQuote.textContent = blockQuoteText.replace(/"/g, '');
+		// 	}
+		// }
+		// augmentMdsvexBlockQuoutes();
 	});
 </script>
 
-<article>
-	<div class="mx-auto mt-5 mb-16">
-		<!-- svelte-ignore a11y-img-redundant-alt -->
+<article class="">
+	<div class="mx-auto mb-6">
+		<!-- TODO: Place these items in the components, use module context and differentiate type using props -->
+		<h1 class="text-base-content text-3xl md:text-4xl font-extrabold mb-4">{metadata.title}</h1>
+		<div class="flex flex-col md:flex-row gap-2 justify-star mb-2">
+			<div class="flex flex-row gap-2 items-center">
+				<DateIcon />
+				<time
+					datetime={metadata.datePublished}
+					class="text-base-content text-sm md:text-base font-light italic pr-4"
+				>
+					{metadata.datePublished}
+				</time>
+				{#if metadata.dateEdited}
+					<DateIcon />
+					<time
+						datetime={metadata.datePublished}
+						class="text-base-content text-sm md:text-base font-light italic pr-4"
+					>
+						{metadata.dateEdited}
+					</time>
+				{/if}
+			</div>
+			{#if metadata.tags}
+				<div class="flex flex-row gap-2 items-center">
+					<TagsIcon />
+					<p class="text-base-content text-sm md:text-base font-light italic pr-4">
+						{metadata.tags.join(' x ')}
+					</p>
+				</div>
+			{/if}
+		</div>
 		<img
 			src={`/${metadata?.imgUrl}`}
 			alt={metadata?.imgAlt}
-			class="object-fill w-full h-fit"
+			class="object-fill w-full h-fit aspect-video"
 			loading="lazy"
 		/>
-		<span class="text-base font-light italic">Taken from SOME WEBSITE</span>
+		<div class="flex justify-end items-right prose max-w-full prose-a:text-primary">
+			<span class="text-base font-light italic text-right"
+				>TAKEN from <a class="prose">SOME WEBSITE</a></span
+			>
+		</div>
 	</div>
-	<!-- <TableOfContents></TableOfContents> -->
-	<!-- <div
-		id="post"
-		class={`shiki-${currentTheme?.meta.shikiTheme} prose py-2 px-2 max-w-none prose-blockquote: text-lg prose-p:text-lg prose-headings:font-bold`}
-	> -->
+
 	<div
 		use:addTOC
 		id="post"
-		class={`shiki-${currentTheme?.meta.shikiTheme} prose prose-base md:prose-lg prose-headings:prose-2xl md:prose-headings:prose-2xl py-2 px-2 max-w-none prose-blockquote:prose-base md:prose-blockquote:prose-lg prose-headings:font-bold prose-headings:my-4`}
+		class={`
+
+			shiki-${currentTheme?.meta.shikiTheme} prose prose-base md:prose-lg 
+			prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg md:prose-h1:text-3xl md:prose-h2:text-2xl md:prose-h3:text-xl
+			py-2 px-2 max-w-none prose-headings:prose-2xl md:prose-headings:prose-2xl
+			prose-blockquote:prose-base md:prose-blockquote:prose-lg prose-headings:font-bold prose-headings:my-4 
+			hover:prose-a:text-accent prose-a:text-primary`}
 	>
-		<!-- <div
-		use:addTOC
-		id="post"
-		class={`shiki-${currentTheme?.meta.shikiTheme} prose py-2 px-2 max-w-none prose-blockquote:text-lg text-lg prose-headings:font-bold`}
-	> -->
 		<Post />
 	</div>
 </article>
 
 <style>
-	:global(h2) {
+	/* :global(h2) {
 		line-height: 1;
-	}
+	} */
+
 	:global(html.code-theme-vesper .shiki-vesper div > pre, html.code-theme-vesper .shiki span) {
 		color: var(--shiki-vesper) !important;
 		/* background-color: var(--shiki-vesper-bg) !important; */

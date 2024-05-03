@@ -16,7 +16,7 @@
 		border: 'border border-neutral border-opacity-10',
 		shadow: 'shadow-xl',
 		p: 'p-6',
-		rounded: 'rounded-2xl',
+		rounded: 'rounded-3xl',
 	};
 
 	const cardClasses: string = Object.entries({ ...cardClassesDefault, ...cardStyling })

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Logo from './Logo.svelte';
 	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
@@ -9,9 +9,42 @@
 	import { writable } from 'svelte/store';
 	import { onMount } from 'svelte';
 	import { isNordOrValentine } from '$lib';
+	import Bio from './Bio.svelte';
 
 	let isDarkMode = browser ? Boolean(document.documentElement.classList.contains('dark')) : true;
 	// let $toggleNavSettings.nav = false;
+	export let bodyScrollY = 0;
+	let headerElement: HTMLHeadElement;
+	const classesOnScroll = {
+		add: [
+			'bg-base-100/75',
+			'bg-blur',
+			'rounded-badge',
+			'shadow-2xl',
+			'top-2',
+			'border',
+			'border-primary',
+			'sm:border-neutral',
+		],
+		remove: ['border-b', 'border-neutral', 'top-0'],
+	};
+	$: {
+		if (headerElement) {
+			if (bodyScrollY > 0.001) {
+				classesOnScroll.add.forEach(className => headerElement.classList.add(className));
+				classesOnScroll.remove.forEach(className => {
+					if (className !== 'rounded-badge') {
+						headerElement.classList.remove(className);
+					}
+				});
+				// headerElement.classList.add(classesOnScroll);
+			} else {
+				classesOnScroll.add.forEach(className => headerElement.classList.remove(className));
+				classesOnScroll.remove.forEach(className => headerElement.classList.add(className));
+				// headerElement.classList.remove(classesOnScroll);
+			}
+		}
+	}
 
 	const navMenu = [
 		{
@@ -42,6 +75,14 @@
 
 	const darkThemes = themes.filter(theme => theme.meta.mode === 'dark');
 	const lightThemes = themes.filter(theme => theme.meta.mode === 'light');
+
+	// $: {
+	// 	if (bodyScrollY > 0.01) {
+	// 		headerElement.classList.add('bg-primary');
+	// 	} else {
+	// 		headerElement.classList.remove('bg-primary');
+	// 	}
+	// }
 </script>
 
 <!-- <div class="h-full items-center"> -->
@@ -49,8 +90,16 @@
 <!-- <div class="bg-clouds bg-repeat-space bg-cover bg-fixed bg-opacity-10 h-full items-center"> -->
 
 <header
-	class="flex border-b border-neutral items-center justify-between w-full px-4 py-2 mx-auto lg:mb-8 gap-16"
+	class="
+		container sticky top-0 bg-base-100 flex border-b border-neutral backdrop-blur-xl
+		items-center justify-between px-3 sm:px-6 py-2
+		max-w-[94%] sm:max-w-[88%] mx-auto lg:mb-8 gap-16
+	"
+	bind:this={headerElement}
 >
+	<!-- <header
+	class="container fixed left-0 right-0 top-0 bg-base-100 flex border-b border-neutral items-center justify-between w-full max-w-4xl px-4 py-2 mx-auto lg:mb-8 gap-16"
+> -->
 	<!-- <a class="text-lg font-bold sm:text-2xl dark:text-indigo-500 text-indigo-700" href="/"> -->
 	<a class="text-lg font-bold sm:text-2xl text-primary font" href="/"> oliver kutis </a>
 
@@ -64,7 +113,7 @@
 						<li>
 							<a
 								href={item.link}
-								class={`${$page.url.pathname === item.link ? 'border-2 border-primary text-primary' : 'bg-transparent'} inline-block px-4 py-2 text-sm rounded-full font-medium hover:bg-primary hover:text-base-100 focus:relative`}
+								class={`${$page.url.pathname === item.link ? 'border-2 border-primary text-primary' : 'bg-transparent'} inline-block px-4 py-2 text-sm rounded-full font-medium hover:text-accent hover:border-accent focus:relative`}
 							>
 								{item.title}
 							</a>
@@ -111,7 +160,7 @@
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
-						class="nav-settings inline-block h-6 w-6 stroke-current"
+						class="nav-settings inline-block h-6 w-6 stroke-current hover:stroke-accent"
 					>
 						<title>Open Dropdown</title>
 						<path
@@ -162,7 +211,7 @@
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
-						class="theme-settings inline-block h-6 w-6 stroke-current"
+						class="theme-settings inline-block h-6 w-6 stroke-current hover:stroke-accent"
 					>
 						<title>Close Dropdown</title>
 						<path
@@ -177,12 +226,11 @@
 						xmlns="http://www.w3.org/2000/svg"
 						viewBox="0 0 24 24"
 						stroke-width="2"
-						stroke="currentColor"
 						fill="none"
 						width="24"
 						height="24"
 						aria-hidden="true"
-						class="theme-settings"
+						class="theme-settings stroke-current hover:stroke-accent"
 						><path
 							stroke-linecap="round"
 							stroke-linejoin="round"
@@ -196,10 +244,24 @@
 				{/if}
 			</button>
 			<ul
-				class={`${$toggleNavSettings.theme ? 'block' : 'hidden'} w-52 absolute right-1 z-50 top-10 py-2 mt-2 mr-2 rounded-lg shadow-xl bg-primary bg-opacity-90`}
+				class={`${$toggleNavSettings.theme ? 'block' : 'hidden'} w-52 absolute right-1 z-50 top-10 py-2 mt-2 mr-2 rounded-lg shadow-xl bg-primary bg-opacity-100`}
 			>
 				<li>
-					<p class="pl-3 py-1 text-neutral font-bold">🌛 Dark themes</p>
+					<div class="pl-3 py-1 flex flex-row items-center">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 512 512 "
+							class="w-5 h-5 fill-base pr-1"
+							><path
+								d="M283.211 512c78.962 0 151.079-35.925 198.857-94.792 7.068-8.708-.639-21.43-11.562-19.35-124.203 23.654-238.262-71.576-238.262-196.954 0-72.222 38.662-138.635 101.498-174.394 9.686-5.512 7.25-20.197-3.756-22.23A258.156 258.156 0 0 0 283.211 0c-141.309 0-256 114.511-256 256 0 141.309 114.511 256 256 256z"
+							/></svg
+						>
+						<p
+							class={`${isNordOrValentine($themeStore) ? 'text-base' : 'text-neutral'} font-bold`}
+						>
+							Dark themes
+						</p>
+					</div>
 					{#each darkThemes as { theme, meta } (theme)}
 						<ul>
 							<li class="mb-2">
@@ -217,7 +279,21 @@
 					{/each}
 				</li>
 				<li>
-					<p class="pl-3 py-1 text-neutral font-bold">☀️ Light themes</p>
+					<div class="pl-3 py-1 flex flex-row items-center">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 512 512"
+							class="w-5 h-5 fill-base pr-1"
+							><path
+								d="M256 160c-52.9 0-96 43.1-96 96s43.1 96 96 96 96-43.1 96-96-43.1-96-96-96zm246.4 80.5l-94.7-47.3 33.5-100.4c4.5-13.6-8.4-26.5-21.9-21.9l-100.4 33.5-47.4-94.8c-6.4-12.8-24.6-12.8-31 0l-47.3 94.7L92.7 70.8c-13.6-4.5-26.5 8.4-21.9 21.9l33.5 100.4-94.7 47.4c-12.8 6.4-12.8 24.6 0 31l94.7 47.3-33.5 100.5c-4.5 13.6 8.4 26.5 21.9 21.9l100.4-33.5 47.3 94.7c6.4 12.8 24.6 12.8 31 0l47.3-94.7 100.4 33.5c13.6 4.5 26.5-8.4 21.9-21.9l-33.5-100.4 94.7-47.3c13-6.5 13-24.7.2-31.1zm-155.9 106c-49.9 49.9-131.1 49.9-181 0-49.9-49.9-49.9-131.1 0-181 49.9-49.9 131.1-49.9 181 0 49.9 49.9 49.9 131.1 0 181z"
+							/></svg
+						>
+						<p
+							class={`${isNordOrValentine($themeStore) ? 'text-base' : 'text-neutral'} font-bold`}
+						>
+							Light themes
+						</p>
+					</div>
 					{#each lightThemes as { theme, meta } (theme)}
 						<ul>
 							<li class="mb-2">
@@ -266,3 +342,9 @@
 		</div>
 	</div>
 </header>
+
+<!-- <style>
+	header {
+		z-index: 1000000000000000;
+	}
+</style> -->

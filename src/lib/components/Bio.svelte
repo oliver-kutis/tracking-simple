@@ -1,5 +1,5 @@
 <script>
-	// import SocialLinks from '$lib/components/SocialLinks.svelte';
+	import SocialLinks from '$lib/components/SocialLinks.svelte';
 	import { langConfigs } from '$lib/info';
 	import img from '$lib/img/me.png';
 	export let lang = 'en';
@@ -22,7 +22,7 @@
 					{langConfigs[lang].bioDescription}
 				</p>
 				<div class="mt-6 flex items-center gap-6">
-					<!-- <SocialLinks /> -->
+					<SocialLinks />
 				</div>
 			</div>
 		</div>

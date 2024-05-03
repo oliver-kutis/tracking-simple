@@ -38,7 +38,3 @@ As a seasoned Web Analytics Specialist, I've navigated the digital landscape bot
 </section>
 
 <span class="divider before:bg-primary after:bg-primary mb-6 print:mb-0" />
-
-# Work 2 
-
-some text 2

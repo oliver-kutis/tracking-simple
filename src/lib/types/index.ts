@@ -4,8 +4,8 @@ export type Post = {
 	imgUrl: string;
 	title: string;
 	imrUrl: string;
-	publishDate: string;
-	editDate?: string;
+	datePublished: string;
+	dateEdited?: string;
 	published: boolean;
 	summary: string;
 	tags?: string[];

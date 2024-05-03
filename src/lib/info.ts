@@ -1,11 +1,10 @@
 import { dev } from '$app/environment';
 
 export const websiteURL = dev ? 'http://localhost:5173/' : 'https://oliverkutis.blog';
-
-export const githubURL = 'https://github.com/oliver-kutis';
-export const linkedinURL = 'https://linkedin.com/in/oliver-kuti%C5%A1-5248a1179';
-export const twitterURL = 'https://twitter.com/oliverkutis';
-export const emailAddress = 'oliver.kutis@gmail.com';
+// export const githubURL = 'https://github.com/oliver-kutis';
+// export const linkedinURL = 'https://linkedin.com/in/oliver-kuti%C5%A1-5248a1179';
+// export const twitterURL = 'https://twitter.com/oliverkutis';
+// export const emailAddress = 'oliver.kutis@gmail.com';
 
 type LangConfigsType = {
 	[key: string]: {
@@ -34,4 +33,12 @@ export const langConfigs: LangConfigsType = {
 		bioDescription:
 			'Som špecialista na webové sledovanie a marketingový analytik. Pomáham firmám pochopiť ich zákazníkov a zlepšiť ich online prítomnosť.',
 	},
+};
+
+export const socials = {
+	github: 'https://github.com/oliver-kutis',
+	linkedin: 'https://linkedin.com/in/oliver-kuti%C5%A1-5248a1179',
+	twitter: 'https://twitter.com/oliverkutis',
+	email: 'analytika.oliver.kutis@gmail.com',
+	medium: 'https://medium.com/@oliverkutis',
 };
