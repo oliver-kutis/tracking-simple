@@ -165,7 +165,7 @@
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<!-- class={`bg-neutral text-primary border border-primary px-2 py-2 rounded-2xl sm:mr-5 ${clicked ? 'scale-wiggle' : ''}`} -->
 		<div
-			class="z-100 toc toc-modal fixed mr-6 inset-0 flex items-center justify-end text-sm pointer-events-none"
+			class="z-2 toc toc-modal fixed mr-6 inset-0 flex items-center justify-end text-sm pointer-events-none"
 		>
 			<button
 				class={`${isNordOrValentine($themeStore) ? 'text-white bg-primary border-primary' : 'text-primary bg-neutral border-primary'} toc-modal-close relative -inset-x-1 border-4 px-2 py-2 rounded-2xl pointer-events-auto`}
@@ -190,7 +190,7 @@
 				</svg>
 			</button>
 			<div
-				class="z-200 toc-modal relative break-words bg-primary bg-opacity-100 p-4 rounded-xl shadow-inner w-64 max-h-screen pointer-events-auto"
+				class="z-2 toc-modal relative break-words bg-primary bg-opacity-100 p-4 rounded-xl shadow-inner w-64 max-h-screen pointer-events-auto"
 			>
 				<h1
 					class={`${isNordOrValentine($themeStore) ? 'text-white' : 'text-neutral'} not-prose text-lg font-bold mb-2`}
@@ -260,6 +260,9 @@
 {/if}
 
 <style>
+	.toc-modal {
+		z-index: 100;
+	}
 	.active {
 		animation-duration: 1s;
 		animation-play-state: paused;

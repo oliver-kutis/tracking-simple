@@ -50,6 +50,11 @@ body {
 	padding: 0;
 }
 
+/* set variable rounded badge */
+:root {
+	--rounded-badge: 1.9rem;
+}
+
 /* :root[data-theme='sunset'] .shiki span {
 	color: var(--shiki-dark) !important;
 	background-color: var(--shiki-dark-bg) !important;

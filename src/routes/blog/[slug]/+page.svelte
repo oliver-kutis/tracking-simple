@@ -43,7 +43,7 @@
 				const preTagParent = preTag.parentElement;
 
 				const newCodeBlockWrapper = document.createElement('div');
-				newCodeBlockWrapper.className = 'relative z-[-1]';
+				newCodeBlockWrapper.className = 'relative z-1';
 
 				new CopyCodeButton({
 					target: newCodeBlockWrapper,
@@ -155,7 +155,7 @@
 	}
 
 	:global(
-			html.code-theme-min-light .shiki-minight div > pre,
+			html.code-theme-min-light .shiki-min-light div > pre,
 			html.code-theme-min-light .shiki span
 		) {
 		color: var(--shiki-min-light) !important;
@@ -183,7 +183,7 @@
 		text-decoration: var(--shiki-ayu-dark-text-decoration) !important;
 	}
 	:global(
-			html.code-theme-solarized-dark .shiki-solized-dark div > pre,
+			html.code-theme-solarized-dark .shiki-solarized-dark div > pre,
 			html.code-theme-solarized-dark .shiki span
 		) {
 		color: var(--shiki-solarized-dark) !important;

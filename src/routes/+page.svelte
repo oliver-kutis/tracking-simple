@@ -44,7 +44,7 @@
 	<title>{langConfigs.en.title}</title>
 	<meta name="description" content={langConfigs.en.description} />
 </svelte:head>
-<div class="mt-4 container justify-center mx-auto">
+<div class="mt-4 justify-center mx">
 	<h1 class="text-3xl md:text-4xl text-base-content font-bold">
 		Blog about web analytics, tracking and marketing measurement in general.
 	</h1>

@@ -6,35 +6,45 @@
 	import themeStore from '../../stores/theme';
 	import toggleNavSettings from '../../stores/toggleNavSettings';
 	import elementInViewport from '../../actions/elementInViewport';
-	import { writable } from 'svelte/store';
-	import { onMount } from 'svelte';
+	import { get, writable } from 'svelte/store';
+	import { getContext, onMount } from 'svelte';
 	import { isNordOrValentine } from '$lib';
 	import Bio from './Bio.svelte';
 
 	let isDarkMode = browser ? Boolean(document.documentElement.classList.contains('dark')) : true;
 	// let $toggleNavSettings.nav = false;
 	export let bodyScrollY = 0;
+	let mainClientWidth = getContext('mainClientWidth');
+	// $: console.log($mainClientWidth);
+
 	let headerElement: HTMLHeadElement;
 	const classesOnScroll = {
 		add: [
-			'bg-base-100/75',
-			'bg-blur',
+			// 'bg-base-100/95',
+			'bg-base-100/85',
 			'rounded-badge',
-			'shadow-2xl',
+			'shadow-3xl',
 			'top-2',
 			'border',
 			'border-primary',
-			'sm:border-neutral',
+			// 'sm:border-neutral',
+			'border-neutral-content/10',
 		],
 		remove: ['border-b', 'border-neutral', 'top-0'],
 	};
 	$: {
 		if (headerElement) {
 			if (bodyScrollY > 0.001) {
-				classesOnScroll.add.forEach(className => headerElement.classList.add(className));
+				classesOnScroll.add.forEach(className => {
+					if (!headerElement.classList.contains(className)) {
+						headerElement.classList.add(className);
+					}
+				});
 				classesOnScroll.remove.forEach(className => {
-					if (className !== 'rounded-badge') {
-						headerElement.classList.remove(className);
+					if (headerElement.classList.contains(className)) {
+						if (className !== 'rounded-badge') {
+							headerElement.classList.remove(className);
+						}
 					}
 				});
 				// headerElement.classList.add(classesOnScroll);
@@ -88,13 +98,14 @@
 <!-- <div class="h-full items-center"> -->
 <!-- <div class="bg-info bg-opacity-10 h-full items-center"> -->
 <!-- <div class="bg-clouds bg-repeat-space bg-cover bg-fixed bg-opacity-10 h-full items-center"> -->
-
+<!-- max-w-[94%] sm:max-w-[88%]  -->
 <header
 	class="
-		container sticky top-0 bg-base-100 flex border-b border-neutral backdrop-blur-xl
-		items-center justify-between px-3 sm:px-6 py-2
-		max-w-[94%] sm:max-w-[88%] mx-auto lg:mb-8 gap-16
-	"
+		 sticky top-0 bg-base-100 flex border-b border-neutral backdrop-blur-sm
+		 items-center justify-between px-3 sm:px-6 py-2
+		 mx-auto lg:mb-8 gap-16
+		"
+	style:width={$mainClientWidth + 0 + 'px'}
 	bind:this={headerElement}
 >
 	<!-- <header
@@ -343,8 +354,8 @@
 	</div>
 </header>
 
-<!-- <style>
+<style>
 	header {
-		z-index: 1000000000000000;
+		z-index: 1;
 	}
-</style> -->
+</style>

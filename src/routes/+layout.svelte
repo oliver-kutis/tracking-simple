@@ -1,21 +1,26 @@
 <script lang="ts">
 	import '../app.css';
-	// import Logo from '../lib/components/Logo.svelte';
-	// import SearchIcon from '../lib/components/svg/SearchIcon.svelte';
-	// import LinkedIn from '../lib/components/svg/LinkedIn.svelte';
-	// import Bio from '../lib/components/Bio.svelte';
-	// import X from '../lib/components/svg/X.svelte';
-	// import Medium from '../lib/components/svg/Medium.svelte';
-	// import { fly, slide } from 'svelte/transition';
-	// import { backOut } from 'svelte/easing';
 	import themeStore from '$stores/theme';
 	import { themes } from '$lib/themes';
 	import Nav from '../lib/components/Nav.svelte';
-	// import { createEventDispatcher } from 'svelte';
 	import toggleNavSettings from '$stores/toggleNavSettings';
-	import { getThemeType } from '$lib';
+	import { setContext } from 'svelte';
+	import { writable } from 'svelte/store';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
 
+	beforeNavigate(() => {
+		document.body.scrollTop = 0;
+	});
+
+	// For passing the scrollY value to the Nav component
 	let scrollY = 0;
+
+	// For passing width to the Nav component
+	let mainElement: HTMLElement;
+	let mainClientWidth = writable(0);
+	$: $mainClientWidth = mainElement?.clientWidth;
+	// $: console.log($mainClientWidth);
+	$: setContext('mainClientWidth', mainClientWidth);
 
 	$: {
 		if (typeof document !== 'undefined') {
@@ -74,7 +79,10 @@
 		<!-- <Nav></Nav> -->
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-		<main class="flex mt-5 flex-col flex-grow w-full mx-auto">
+		<main
+			bind:clientWidth={$mainClientWidth}
+			class="flex mt-5 flex-col flex-grow w-full mx-auto"
+		>
 			<slot />
 		</main>
 	</div>
