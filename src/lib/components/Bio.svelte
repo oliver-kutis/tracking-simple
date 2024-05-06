@@ -1,8 +1,10 @@
-<script>
+<script lang="ts">
 	import SocialLinks from '$lib/components/SocialLinks.svelte';
-	import { langConfigs } from '$lib/info';
+	import { langConfigs } from '$lib/config';
+	import type { Language } from '$lib/types';
 	import img from '$lib/img/me.png';
-	export let lang = 'en';
+
+	export let lang: Language = 'en';
 </script>
 
 <!-- bio -->

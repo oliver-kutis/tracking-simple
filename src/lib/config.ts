@@ -1,4 +1,5 @@
 import { dev } from '$app/environment';
+import type { Language } from './types';
 
 export const websiteURL = dev ? 'http://localhost:5173/' : 'https://oliverkutis.blog';
 // export const githubURL = 'https://github.com/oliver-kutis';
@@ -7,7 +8,7 @@ export const websiteURL = dev ? 'http://localhost:5173/' : 'https://oliverkutis.
 // export const emailAddress = 'oliver.kutis@gmail.com';
 
 type LangConfigsType = {
-	[key: string]: {
+	[key in Language]: {
 		name: string;
 		title: string;
 		description: string;

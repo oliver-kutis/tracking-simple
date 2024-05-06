@@ -3,7 +3,7 @@
 	// import { fly, slide } from 'svelte/transition';
 	// import { backOut } from 'svelte/easing';
 	// import Service from '$components/Service.svelte';
-	import { langConfigs } from '$lib/info';
+	import { langConfigs } from '$lib/config';
 	import Bio from '$lib/components/Bio.svelte';
 
 	export let mainHeading: string;

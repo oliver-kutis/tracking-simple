@@ -9,11 +9,12 @@ export default {
 		},
 
 		extend: {
-			fontFamilys: {
+			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
 				montserrat: ['Montserrat', 'sans-serif'],
 				roboto: ['Roboto', 'sans-serif'],
 				poppins: ['Poppins', 'sans-serif'],
+				lexend: ['Lexend', 'sans-serif'],
 			},
 			backgroundImage: {
 				clouds: "url('/src/lib/img/bg-clouds.jpg');",

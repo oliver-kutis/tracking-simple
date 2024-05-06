@@ -1,9 +1,24 @@
 import type { ComponentType } from 'svelte';
 
+export type CardData = {
+	mainHeading: {
+		en: string;
+		sk: string;
+	};
+	subHeadings: {
+		en: string[];
+		sk: string[];
+	};
+	subParagraphs: {
+		en: string[];
+		sk: string[];
+	};
+}[];
+
 export type Post = {
 	imgUrl: string;
+	imgAlt: string;
 	title: string;
-	imrUrl: string;
 	datePublished: string;
 	dateEdited?: string;
 	published: boolean;
@@ -44,3 +59,4 @@ export type Heading = {
 };
 
 export type ArrayOfHeadings = [string, Heading][];
+export type Language = 'en' | 'sk';

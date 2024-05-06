@@ -1,14 +1,20 @@
 import { json } from '@sveltejs/kit';
-import type { Post } from '$lib/types';
+import type { Post, Language } from '$lib/types';
 
-async function getPosts() {
+async function getPosts(lang: Language) {
 	let posts: Post[] = [];
 
-	const paths = import.meta.glob('/src/posts/*.md', { eager: true });
+	let paths;
+	if (lang === 'sk') {
+		paths = import.meta.glob('/src/posts/sk/*.md', { eager: true });
+	} else {
+		paths = import.meta.glob('/src/posts/*.md', { eager: true });
+	}
 
 	for (const path in paths) {
 		const file = paths[path];
-		const slug = '/blog/' + path.split('/').at(-1)?.replace('.md', '');
+		const slug =
+			`${lang === 'sk' ? '/sk' : ''}` + '/blog/' + path.split('/').at(-1)?.replace('.md', '');
 
 		if (file && typeof file === 'object' && 'metadata' in file && slug) {
 			const metadata = file.metadata as Omit<Post, 'slug'>;
@@ -25,7 +31,10 @@ async function getPosts() {
 	return posts;
 }
 
-export async function GET() {
-	const posts = await getPosts();
+export async function GET({ url }) {
+	const lang: Language = url.searchParams.get('lang') as Language;
+
+	const posts = await getPosts(lang);
+
 	return json(posts);
 }

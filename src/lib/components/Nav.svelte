@@ -2,25 +2,30 @@
 	import Logo from './Logo.svelte';
 	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
+	import { langConfigs } from '$lib/config';
 	import { themes } from '$lib/themes';
-	import themeStore from '../../stores/theme';
-	import toggleNavSettings from '../../stores/toggleNavSettings';
-	import elementInViewport from '../../actions/elementInViewport';
-	import { get, writable } from 'svelte/store';
-	import { getContext, onMount } from 'svelte';
-	import { isNordOrValentine } from '$lib';
-	import Bio from './Bio.svelte';
+	import themeStore from '$stores/theme';
+	import toggleNavSettings from '$stores/toggleNavSettings';
+	import { getContext } from 'svelte';
+	import { getThemeType } from '$lib';
+	import Settings from '$lib/components/Settings.svelte';
+	import type { Language } from '$lib/types';
+	import type { Writable } from 'svelte/store';
 
-	let isDarkMode = browser ? Boolean(document.documentElement.classList.contains('dark')) : true;
 	// let $toggleNavSettings.nav = false;
+	export let lang: Language = 'en';
 	export let bodyScrollY = 0;
-	let mainClientWidth = getContext('mainClientWidth');
+
+	let mainClientWidth: Writable<Number> = getContext('mainClientWidth');
 	// $: console.log($mainClientWidth);
 
 	let headerElement: HTMLHeadElement;
+
+	$: themeType = getThemeType($themeStore);
+	$: console.log(themeType);
+
 	const classesOnScroll = {
 		add: [
-			// 'bg-base-100/95',
 			'bg-base-100/85',
 			'rounded-badge',
 			'shadow-3xl',
@@ -28,7 +33,7 @@
 			'border',
 			'border-primary',
 			// 'sm:border-neutral',
-			'border-neutral-content/10',
+			themeType === 'dark' ? 'sm:border-neutral-content/20' : 'sm:border-primary/75',
 		],
 		remove: ['border-b', 'border-neutral', 'top-0'],
 	};
@@ -58,15 +63,24 @@
 
 	const navMenu = [
 		{
-			title: 'Home',
+			title: {
+				en: 'Home',
+				sk: 'Domov',
+			},
 			link: '/',
 		},
 		{
-			title: 'Blog',
+			title: {
+				en: 'Blog',
+				sk: 'Blog',
+			},
 			link: '/blog',
 		},
 		{
-			title: 'About',
+			title: {
+				en: 'About',
+				sk: 'O mne',
+			},
 			link: '/about',
 		},
 	];
@@ -75,24 +89,6 @@
 		nav: false,
 		theme: false,
 	};
-
-	function disableTransitionsTemporarily() {
-		document.documentElement.classList.add('[&_*]:!transition-none');
-		window.setTimeout(() => {
-			document.documentElement.classList.remove('[&_*]:!transition-none');
-		}, 0);
-	}
-
-	const darkThemes = themes.filter(theme => theme.meta.mode === 'dark');
-	const lightThemes = themes.filter(theme => theme.meta.mode === 'light');
-
-	// $: {
-	// 	if (bodyScrollY > 0.01) {
-	// 		headerElement.classList.add('bg-primary');
-	// 	} else {
-	// 		headerElement.classList.remove('bg-primary');
-	// 	}
-	// }
 </script>
 
 <!-- <div class="h-full items-center"> -->
@@ -105,14 +101,16 @@
 		 items-center justify-between px-3 sm:px-6 py-2
 		 mx-auto lg:mb-8 gap-16
 		"
-	style:width={$mainClientWidth + 0 + 'px'}
+	style:width={Number($mainClientWidth) + 0 + 'px'}
 	bind:this={headerElement}
 >
 	<!-- <header
 	class="container fixed left-0 right-0 top-0 bg-base-100 flex border-b border-neutral items-center justify-between w-full max-w-4xl px-4 py-2 mx-auto lg:mb-8 gap-16"
 > -->
 	<!-- <a class="text-lg font-bold sm:text-2xl dark:text-indigo-500 text-indigo-700" href="/"> -->
-	<a class="text-lg font-bold sm:text-2xl text-primary font" href="/"> oliver kutis </a>
+	<a class="text-lg font-bold sm:text-2xl text-primary font lowercase" href="/">
+		{langConfigs[lang].name}
+	</a>
 
 	<div class="flex justify-around gap-2 items-center">
 		<div
@@ -123,10 +121,12 @@
 					{#each navMenu as item}
 						<li>
 							<a
-								href={item.link}
-								class={`${$page.url.pathname === item.link ? 'border-2 border-primary text-primary' : 'bg-transparent'} inline-block px-4 py-2 text-sm rounded-full font-medium hover:text-accent hover:border-accent focus:relative`}
+								href={lang === 'sk'
+									? `/sk${item.link === '/' ? '' : item.link}`
+									: item.link}
+								class={`${[(item.link, '/sk' + item.link.slice(1))].includes($page.url.pathname) ? 'border-2 border-primary text-primary' : 'bg-transparent'} inline-block px-4 py-2 text-sm rounded-full font-medium hover:text-accent hover:border-accent focus:relative`}
 							>
-								{item.title}
+								{item.title[lang]}
 							</a>
 						</li>
 					{/each}
@@ -134,7 +134,7 @@
 						<a
 							href="mailto:jranand.py@gmail.com"
 							class="inline-block px-4 py-2 text-sm rounded-full font-medium hover:bg-secondary hover:text-base-100 focus:relative"
-							>Say Hello</a
+							>{lang === 'en' ? 'Say hello' : 'Pozdravte ma'}</a
 						>
 					</li>
 				</ul>
@@ -192,10 +192,10 @@
 							on:blur={() => {
 								$toggleNavSettings.nav = false;
 							}}
-							href={item.link}
+							href={lang === 'sk' ? `/sk${item.link}` : item.link}
 							class={`${item.link === $page.url.pathname ? 'text-base font-semibold' : 'text-sm'} inline-block px-4 py-2  rounded-sm font-medium text-neutral w-full hover:bg-neutral hover:text-primary hover:text-base focus:relative`}
 						>
-							{item.title}
+							{item.title[lang]}
 						</a>
 					</li>
 				{/each}
@@ -203,13 +203,14 @@
 					<a
 						href="mailto:jranand.py@gmail.com"
 						class="inline-block px-4 py-2 text-sm rounded-sm w-full font-medium text-neutral hover:bg-neutral hover:text-primary hover:text-base focus:relative"
-						>Say Hello</a
+						>{lang === 'en' ? 'Say hello' : 'Pozdravte ma'}</a
 					>
 				</li>
 			</ul>
 		</div>
-		<div class="theme-settings dropdown flex mr-2 gap-2">
-			<!-- svelte-ignore a11y-label-has-associated-control -->
+		<!-- Theme settings -->
+		<Settings lang={lang} />
+		<!-- <div class="theme-settings dropdown flex mr-2 gap-2">
 			<button
 				on:click={() => {
 					$toggleNavSettings.theme = !$toggleNavSettings.theme;
@@ -321,41 +322,15 @@
 						</ul>
 					{/each}
 				</li>
-				<!-- <li class="mb-2">
-							<button
-								on:click={() => {
-									$themeStore = theme;
-									$toggleNavSettings.theme = false;
-								}}
-								class={`${theme === $themeStore ? 'text-base font-semibold' : 'text-sm'} ${isNordOrValentine($themeStore) ? 'text-base hover:bg-neutral hover:text-white' : 'text-neutral hover:bg-neutral hover:text-primary'} inline-block px-4 py-2 text-left rounded-sm w-full focus:relative`}
-							>
-								{`${meta.mode === 'dark' ? '🌚' : '☀️'} ${theme}`}
-							</button>
-						</li> -->
 			</ul>
-			<!-- <ul
-				class={`${$toggleNavSettings.theme ? 'block' : 'hidden'} w-52 absolute right-1 z-50 top-10 py-2 mt-2 mr-2 rounded-lg shadow-xl bg-primary bg-opacity-90`}
-			>
-				{#each themes as { theme, meta } (theme)}
-					<li class="mb-2">
-						<button
-							on:click={() => {
-								$themeStore = theme;
-								$toggleNavSettings.theme = false;
-							}}
-							class={`${theme === $themeStore ? 'text-base font-semibold' : 'text-sm'} ${isNordOrValentine($themeStore) ? 'text-base hover:bg-neutral hover:text-white' : 'text-neutral hover:bg-neutral hover:text-primary'} inline-block px-4 py-2 text-left rounded-sm w-full focus:relative`}
-						>
-							{`${meta.mode === 'dark' ? '🌚' : '☀️'} ${theme}`}
-						</button>
-					</li>
-				{/each}
-			</ul> -->
-		</div>
+		</div> -->
 	</div>
 </header>
 
 <style>
 	header {
 		z-index: 1;
+		/* add transition */
+		transition: all 0.3s ease-in-out;
 	}
 </style>

@@ -30,8 +30,8 @@
 	style="background: url('/src/lib/img/bg-clouds.jpg') no-repeat center center fixed; background-size: cover;"
 > -->
 <svelte:head>
-	<title>{langConfigs[lang].title}</title>
-	<meta name="description" content={langConfigs[lang].description} />
+	<title>{title}</title>
+	<meta name="description" content={description} />
 </svelte:head>
 <div class="mt-4 justify-center mx">
 	<h1 class="text-3xl md:text-4xl text-base-content font-bold">
@@ -86,31 +86,28 @@
 			<div class="text-lg flex flex-col gap-y-3 justify-center my-2 h-1/3 sm:w-1/3">
 				<div class="">
 					<span
-						>Get to know <a
-							class="text-primary text-xl hover:text-accent"
-							href="/about"
-						>
-							me</a
+						>Spoznajte <a class="text-primary text-xl hover:text-accent" href="/about">
+							ma</a
 						></span
 					>
 				</div>
 				<div class="">
 					<span
-						>For updates, subscribe to <a
+						>Pre novinky sa prihláste ku <a
 							class="text-primary text-xl hover:text-accent"
-							href="">RSS feed</a
+							href="">RSS feed-u</a
 						>
 					</span>
 				</div>
 				<div class="">
 					<span
-						>Contact me on <a
+						>Kontaktuje ma na <a
 							class="text-primary text-xl hover:text-accent"
 							href={socials.linkedin}>LinkedIn</a
 						>
-						or by
+						alebo
 						<a class="text-primary text-xl hover:text-accent" href={socials.email}
-							>Email</a
+							>Mailom</a
 						>
 					</span>
 				</div>

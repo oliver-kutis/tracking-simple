@@ -1,10 +1,10 @@
 <script>
-	import { socials } from '$lib/info';
+	import { socials } from '$lib/config';
 	import Email from '$lib/components/svg/Email.svelte';
 	import LinkedIn from '$lib/components/svg/LinkedIn.svelte';
-	import X from './svg/X.svelte';
-	import Github from './svg/Github.svelte';
-	import Medium from './svg/Medium.svelte';
+	import X from '$lib/components/svg/X.svelte';
+	import Github from '$lib/components/svg/Github.svelte';
+	import Medium from '$lib/components/svg/Medium.svelte';
 </script>
 
 {#if socials.email}

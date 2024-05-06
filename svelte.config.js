@@ -1,7 +1,5 @@
 import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-// import sveltePreprocess from 'svelte-preprocess';
-// import autoprefixer from 'autoprefixer';
 import { mdsvex, escapeSvelte } from 'mdsvex';
 import { getHighlighter } from 'shiki';
 import remarkUnwrapImages from 'remark-unwrap-images';

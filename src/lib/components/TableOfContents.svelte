@@ -4,6 +4,11 @@
 	import themeStore from '$stores/theme';
 	import { extractHeadings, isNordOrValentine } from '$lib';
 	import type { ArrayOfHeadings } from '$lib/types';
+	import { fly, slide } from 'svelte/transition';
+	import { bounceIn, cubicIn, cubicInOut } from 'svelte/easing';
+
+	let disableOpenButton = false;
+	let disableCloseButton = false;
 
 	// animation start
 	let clicked = false;
@@ -166,6 +171,7 @@
 		<!-- class={`bg-neutral text-primary border border-primary px-2 py-2 rounded-2xl sm:mr-5 ${clicked ? 'scale-wiggle' : ''}`} -->
 		<div
 			class="z-2 toc toc-modal fixed mr-6 inset-0 flex items-center justify-end text-sm pointer-events-none"
+			transition:fly={{ duration: 500, delay: 50, x: 100 }}
 		>
 			<button
 				class={`${isNordOrValentine($themeStore) ? 'text-white bg-primary border-primary' : 'text-primary bg-neutral border-primary'} toc-modal-close relative -inset-x-1 border-4 px-2 py-2 rounded-2xl pointer-events-auto`}
@@ -173,6 +179,7 @@
 					toggleModal();
 					wasClosedByUser = true;
 				}}
+				in:fly={{ duration: 300, delay: 250, x: -20 }}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -190,7 +197,7 @@
 				</svg>
 			</button>
 			<div
-				class="z-2 toc-modal relative break-words bg-primary bg-opacity-100 p-4 rounded-xl shadow-inner w-64 max-h-screen pointer-events-auto"
+				class="z-2 toc-modal relative break-words bg-primary bg-opacity-100 p-4 rounded-xl shadow-inner max-h-96 w-64 pointer-events-auto"
 			>
 				<h1
 					class={`${isNordOrValentine($themeStore) ? 'text-white' : 'text-neutral'} not-prose text-lg font-bold mb-2`}
@@ -239,6 +246,7 @@
 				class={`${isNordOrValentine($themeStore) ? 'text-white bg-primary border-primary' : 'text-primary bg-neutral border-primary'} border-4 px-2 py-2 rounded-2xl mr-2 sm:mr-5 ${clicked ? 'scale-wiggle' : ''}`}
 				class:active={clicked}
 				on:click={toggleModal}
+				in:fly={{ duration: 500, delay: 200, x: 100 }}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

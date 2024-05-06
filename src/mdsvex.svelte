@@ -1,6 +1,14 @@
 <script context="module" lang="ts">
 	import img from '$lib/components/Img.svelte';
 	export { img };
+	export let title;
+	export let alternativeTitle;
+	export let imgUrl;
+	export let imgAlt;
+	export let datePublished;
+	export let dateEdited;
+	export let tags;
+	export let summary;
 </script>
 
 <slot />
