@@ -78,7 +78,9 @@
 				event.target?.closest('.theme-settings') != null ||
 				event.target.classList.contains('theme-settings') ||
 				event.target?.closest('.nav-settings') != null ||
-				event.target.classList.contains('theme-settings')
+				event.target.classList.contains('theme-settings') ||
+				event.target?.closest('.font-settings') != null ||
+				event.target.classList.contains('font-settings')
 			)
 				return;
 

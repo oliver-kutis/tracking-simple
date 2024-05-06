@@ -1,9 +1,16 @@
-<script lang="ts" context='module'> 
-    import Moon from '$lib/components/svg/Moon.svelte';
+<script lang="ts">
+	import Moon from '$lib/components/svg/Moon.svelte';
+	import Sun from '$lib/components/svg/Sun.svelte';
+	import type { Theme } from '$lib/types';
+	import themeStore from '$stores/theme';
 
-    export let lang: string;
-    export const handleSelectChange;
+	export let lang: string;
+	export let themeType: string;
+	export let themeMode: string;
+	export let themes: Theme[];
+	export let selectHandler: (e: Event) => void;
 </script>
+
 <div
 	class="
                 flex flex-row justify-start items-center
@@ -11,9 +18,13 @@
                 m-2 gap-2
             "
 >
-	<Moon></Moon>
+	{#if themeMode === 'dark'}
+		<Moon></Moon>
+	{:else}
+		<Sun></Sun>
+	{/if}
 	<select
-		id="themedark"
+		id={themeMode === 'dark' ? 'themedark' : 'themelight'}
 		class="
                         cursor-pointer
                         w-32
@@ -25,24 +36,19 @@
                         hover:text-base-100
                         outline-primary/50
                     "
-		on:change={handleSelectChange}
+		on:change={selectHandler}
 	>
-		{#if themeType !== 'dark'}
+		{#if themeType !== themeMode}
 			<option value="" disabled selected>{lang === 'en' ? 'Pick one' : 'Vyber'}</option>
 		{:else}
 			<option value="" disabled>{lang === 'en' ? 'Pick one' : 'Vyber'}</option>
 		{/if}
-		{#each darkThemes as { theme } (theme)}
+		{#each themes as { theme } (theme)}
 			{#if theme === $themeStore}
 				<option value={theme} selected>{theme}</option>
 			{:else}
 				<option value={theme}>{theme}</option>
 			{/if}
 		{/each}
-		<!-- <option value="" disabled>Select a theme</option>
-                    <option value="system">System</option>
-                    <option value="auto">Auto</option>
-                    <option value="dark">Dark</option>
-                    <option value="light">Light</option> -->
 	</select>
 </div>

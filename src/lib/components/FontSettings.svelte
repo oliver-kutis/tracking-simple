@@ -38,7 +38,9 @@
                     class="toggle w-6 row-start-1 col-start-1 col-span-1"
                 /> -->
 
-				<label class="flex mx-2 gap-2 w-42 items-center justify-between cursor-pointer">
+				<label
+					class="flex ml-2 mr-0 gap-1 w-36 items-center justify-between cursor-pointer"
+				>
 					<span
 						class={`text-sm text-base-100 ${fontToggleOn ? 'font-montserrat' : 'font-lexend'}`}
 						>{selectText}</span

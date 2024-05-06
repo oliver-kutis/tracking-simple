@@ -11,6 +11,7 @@
 	import Settings from '$lib/components/Settings.svelte';
 	import type { Language } from '$lib/types';
 	import type { Writable } from 'svelte/store';
+	import Toggle from './Toggle.svelte';
 
 	// let $toggleNavSettings.nav = false;
 	export let lang: Language = 'en';
@@ -108,11 +109,14 @@
 	class="container fixed left-0 right-0 top-0 bg-base-100 flex border-b border-neutral items-center justify-between w-full max-w-4xl px-4 py-2 mx-auto lg:mb-8 gap-16"
 > -->
 	<!-- <a class="text-lg font-bold sm:text-2xl dark:text-indigo-500 text-indigo-700" href="/"> -->
-	<a class="text-lg font-bold sm:text-2xl text-primary font lowercase" href="/">
+	<a
+		class="text-lg font-bold sm:text-2xl text-primary font lowercase"
+		href={lang === 'sk' ? '/sk' : '/'}
+	>
 		{langConfigs[lang].name}
 	</a>
 
-	<div class="flex justify-around gap-2 items-center">
+	<div class="flex justify-around gap-0 sm:gap-4 items-center">
 		<div
 			class="sm:flex hidden justify-center p-1 relative sm:w-auto sm:-space-x-px overflow-hidden sm:rounded-xl"
 		>
@@ -141,6 +145,7 @@
 			</nav>
 		</div>
 		<!-- <div class="nav-settings dropdown flex mr-2 gap-2"> -->
+		<Toggle lang={lang} path={$page.url.pathname}></Toggle>
 		<div class="nav-settings dropdown flex mr-2 sm:hidden gap-2">
 			<!-- svelte-ignore a11y-label-has-associated-control -->
 			<button

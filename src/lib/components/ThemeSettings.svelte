@@ -3,8 +3,7 @@
 	import type { Language } from '$lib/types';
 	import themeStore from '$stores/theme';
 	import { getThemeType } from '$lib';
-	import Moon from '$lib/components/svg/Moon.svelte';
-	import Sun from '$lib/components/svg/Sun.svelte';
+	import ThemeSelect from '$lib/components/ThemeSelect.svelte';
 
 	export let lang: Language;
 
@@ -29,90 +28,20 @@
 			<h1 class="inline-block mb-1 text-left font-bold text-base-100">
 				{lang === 'en' ? 'Themes selection' : 'Vizuálny štýl'}
 			</h1>
-            <ThemeSelect lang={lang} />
-			<div
-				class="
-                flex flex-row justify-start items-center
-                text-neutral text-base font-semibold
-                m-2 gap-2
-            "
-			>
-				<Moon></Moon>
-				<select
-					id="themedark"
-					class="
-                        cursor-pointer
-                        w-32
-                        shadow-md
-                        text-neutral text-sm text-left font-semibold
-                        bg-primary rounded-badge px-2
-                        border border-neutral border-opacity-25
-                        hover:bg-primary hover:border-neutral hover:border-opacity-100 hover:shadow-lg
-                        hover:text-base-100
-                        outline-primary/50
-                    "
-					on:change={handleSelectChange}
-				>
-					{#if themeType !== 'dark'}
-						<option value="" disabled selected
-							>{lang === 'en' ? 'Pick one' : 'Vyber'}</option
-						>
-					{:else}
-						<option value="" disabled>{lang === 'en' ? 'Pick one' : 'Vyber'}</option>
-					{/if}
-					{#each darkThemes as { theme } (theme)}
-						{#if theme === $themeStore}
-							<option value={theme} selected>{theme}</option>
-						{:else}
-							<option value={theme}>{theme}</option>
-						{/if}
-					{/each}
-					<!-- <option value="" disabled>Select a theme</option>
-                    <option value="system">System</option>
-                    <option value="auto">Auto</option>
-                    <option value="dark">Dark</option>
-                    <option value="light">Light</option> -->
-				</select>
-			</div>
-			<div
-				class="
-                    flex flex-row justify-start items-center
-                    text-neutral text-base font-semibold
-                    m-2 gap-2
-                "
-			>
-				<Sun></Sun>
-				<select
-					id="themelight"
-					class="
-                        cursor-pointer
-                        w-32
-                        shadow-md
-                        text-neutral text-sm text-left font-semibold
-                        bg-primary rounded-badge px-2
-                        border border-neutral border-opacity-25
-                        hover:bg-primary hover:border-neutral hover:border-opacity-100 hover:shadow-lg
-                        hover:text-base-100
-                        outline-primary/50
-                    "
-					on:change={handleSelectChange}
-				>
-					{#if themeType !== 'light'}
-						<option value="" disabled selected
-							>{lang === 'en' ? 'Pick one' : 'Vyber'}</option
-						>
-					{:else}
-						<option value="" disabled>{lang === 'en' ? 'Pick one' : 'Vyber'}</option>
-					{/if}
-					{#each lightThemes as { theme, meta } (theme)}
-						{#if theme === $themeStore}
-							<option value={theme} selected>{theme}</option>
-						{:else}
-							<option value={theme}>{theme}</option>
-						{/if}
-					{/each}
-				</select>
-			</div>
+			<ThemeSelect
+				lang={lang}
+				selectHandler={handleSelectChange}
+				themeMode="dark"
+				themeType={themeType}
+				themes={darkThemes}
+			/>
+			<ThemeSelect
+				lang={lang}
+				selectHandler={handleSelectChange}
+				themeMode="light"
+				themeType={themeType}
+				themes={lightThemes}
+			/>
 		</div>
 	</div>
 </li>
