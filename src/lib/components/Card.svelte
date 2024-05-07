@@ -5,40 +5,14 @@
 	// import Service from '$components/Service.svelte';
 	import { langConfigs } from '$lib/config';
 	import Bio from '$lib/components/Bio.svelte';
+	import themeStore from '$stores/theme';
+	import { getThemeType } from '$lib';
 
 	export let mainHeading: string;
 	export let subHeadings: string[] = [];
 	export let subParagraphs: string[] = [];
-	// export let cardClass: string = 'bg-neutral rounded-2xl border shadow-2xl p-6 border-neutral';
-	export let cardStyling: Record<string, string> = {};
-	const cardClassesDefault = {
-		bg: 'bg-neutral bg-opacity-10',
-		border: 'border border-neutral border-opacity-10',
-		shadow: 'shadow-xl',
-		p: 'p-6',
-		rounded: 'rounded-3xl',
-	};
 
-	const cardClasses: string = Object.entries({ ...cardClassesDefault, ...cardStyling })
-		.map(([key, value]) => {
-			return value;
-		})
-		.join(' ');
-
-	// TODO: Make this dynamic
-	let lang = 'en';
-
-	// let categories: string[] = ['Web tracking', 'Tag management', 'Marketing analytics'];
-	// let currentCategoryIndex = 0;
-	// let showText: boolean = false;
-
-	// onMount(() => {
-	// 	showText = true;
-	// 	const interval = setInterval(() => {
-	// 		currentCategoryIndex = (currentCategoryIndex + 1) % categories.length;
-	// 		// clearTimeout(timer);
-	// 	}, 5000);
-	// });
+	const cardClasses = `bg-neutral bg-opacity-10 ${getThemeType($themeStore) === 'dark' ? 'border-neutral/30' : 'border-neutral/10'} border shadow-xl p-6 rounded-3xl`;
 </script>
 
 <li class={cardClasses}>

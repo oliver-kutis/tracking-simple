@@ -186,7 +186,7 @@
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
-					class="h-6 w-6"
+					class="h-5 w-5 md:h-6 md:w-6"
 				>
 					<path
 						stroke-linecap="round"
@@ -197,15 +197,15 @@
 				</svg>
 			</button>
 			<div
-				class="z-2 toc-modal relative break-words bg-primary bg-opacity-100 p-4 rounded-xl shadow-inner max-h-96 w-64 pointer-events-auto"
+				class="z-2 toc-modal relative break-words bg-primary bg-opacity-100 py-4 px-2 rounded-xl shadow-inner max-h-96 w-64 pointer-events-auto"
 			>
 				<h1
-					class={`${isNordOrValentine($themeStore) ? 'text-white' : 'text-neutral'} not-prose text-lg font-bold mb-2`}
+					class={`${isNordOrValentine($themeStore) ? 'text-white' : 'text-neutral'} not-prose text-xl font-bold mb-2 mx-4`}
 				>
 					Table of Contents
 				</h1>
 				<div
-					class="max-h-82 overflow-y-auto scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar-thin scrollbar-track-neutral scrollbar-thumb-primary"
+					class="px-4 max-h-64 md:max-h-80 overflow-y-auto scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar-thin scrollbar-track-neutral scrollbar-thumb-primary"
 				>
 					<ol class="list-none not-prose">
 						{#each arr as [index, { headingProps, children }]}
@@ -253,7 +253,7 @@
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
-					class="h-6 w-6"
+					class="h-5 w-5 md:h-6 md:w-6"
 				>
 					<path
 						stroke-linecap="round"

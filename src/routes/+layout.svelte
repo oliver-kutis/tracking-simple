@@ -5,10 +5,13 @@
 	import { themes } from '$lib/themes';
 	import Nav from '../lib/components/Nav.svelte';
 	import toggleNavSettings from '$stores/toggleNavSettings';
-	import { setContext } from 'svelte';
+	import { afterUpdate, setContext } from 'svelte';
 	import { writable } from 'svelte/store';
-	import { beforeNavigate } from '$app/navigation';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import PageTransition from '$lib/components/PageTransition.svelte';
+	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+	import type { Writable } from 'svelte/store';
 
 	export let data;
 
@@ -67,6 +70,23 @@
 	function handleBodyScroll(e: Event) {
 		scrollY = (e.target as HTMLElement).scrollTop / (e.target as HTMLElement).scrollHeight;
 	}
+
+	const referrer: Writable<string | null> = writable(null);
+
+	beforeNavigate(() => referrer.set($page.url.href));
+	afterNavigate(() => {
+		window.dataLayer = window.dataLayer || [];
+		window.dataLayer.push({
+			event: 'pageview',
+			page: {
+				path: $page.url.pathname,
+				url: $page.url.href,
+				referrer: $referrer,
+				title: document.title,
+				// url: $page.path,
+			},
+		});
+	});
 </script>
 
 <svelte:body
@@ -103,7 +123,7 @@
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 			<main
 				bind:clientWidth={$mainClientWidth}
-				class="flex mt-5 flex-col flex-grow w-full mx-auto"
+				class="flex flex-col flex-grow w-full mx-auto"
 			>
 				<slot />
 			</main>

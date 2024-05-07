@@ -1,19 +1,22 @@
 <script lang="ts">
-	// import {formatDate } from '$lib/utils';
+	import { preloadData } from '$app/navigation';
+	import { getThemeType } from '$lib';
+	import themeStore from '$stores/theme';
 
-	import PostMeta from './PostMeta.svelte';
 	import DateIcon from './svg/DateIcon.svelte';
 	import TagsIcon from './svg/TagsIcon.svelte';
 
-	// import type { Post } from '$lib/types';
 	export let post;
 </script>
 
 <div
-	class="
-		bg-neutral bg-opacity-10 border border-neutral border-opacity-10 shadow-xl rounded-3xl
+	class={`
+		bg-neutral bg-opacity-10 border ${getThemeType($themeStore) === 'dark' ? 'border-neutral/30' : 'border-neutral/10'} shadow-xl rounded-3xl
 		post overflow-hidden flex flex-col sm:flex-row
-	"
+	`}
+	on:hover|once={() => {
+		preloadData(post.slug);
+	}}
 >
 	<!-- <a href={post.slug} class="w-1/4 md:w-full"> -->
 	<!-- <a href={post.slug} class="p-4 w-full sm:w-2/5 sm:p-6">

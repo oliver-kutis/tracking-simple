@@ -6,7 +6,7 @@ published: true
 datePublished: '2024-04-06'
 dateEdited: '2024-05-02'
 summary: 'some summary'
-tags: ['SGTM', 'Templates', 'Variables']
+tags: ['SGTM', 'Templates', 'Variables', 'JustForTesting']
 ---
 
 <script lang="ts">

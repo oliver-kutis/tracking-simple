@@ -60,3 +60,10 @@ export type Heading = {
 
 export type ArrayOfHeadings = [string, Heading][];
 export type Language = 'en' | 'sk';
+
+// types/index.ts
+declare global {
+	interface Window {
+		dataLayer?: object[];
+	}
+}

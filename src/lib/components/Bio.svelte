@@ -8,7 +8,7 @@
 </script>
 
 <!-- bio -->
-<section class="flex justify-start items-center gap-16 pt-8 pb-16">
+<section class="flex justify-start items-center gap-16 pb-16">
 	<div class="bio">
 		<img
 			src={img}
