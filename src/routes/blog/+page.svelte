@@ -1,58 +1,63 @@
-<!-- <script lang="ts" context="module">
-	import type { Post } from '$lib/types';
-	import type { PageData } from '../$types';
-
-	console.log(data);
-	let posts: Post[] = data.posts;
-	posts = posts.sort((a, b) => b.datePublished - a.datePublished);
-	const tagsSet = new Set();
-	posts.forEach(post => {
-		post.tags.forEach(tag => tagsSet.add(tag));
-	});
-	const tagsArr = Array.from(tagsSet);
-</script> -->
-
 <script lang="ts">
 	import BlogPostCard from '$lib/components/BlogPostCard.svelte';
 	import type { Post } from '$lib/types';
 	import type { PageData } from '../$types';
-	import { getContext } from 'svelte';
+	import { getContext, onMount } from 'svelte';
 	import type { Writable } from 'svelte/store';
+	import { writable } from 'svelte/store';
+	import { tags } from '../../mdsvex.svelte';
 
 	export let data: PageData;
 
 	let posts: Post[] = data.posts;
 	posts = posts.sort((a, b) => b.datePublished - a.datePublished);
 	// get all the tags and put them in a set
-	const tagsFilter = {};
+	let tagsFilter: Writable<object> = writable({});
 	posts.forEach(post => {
-		post.tags.forEach(tag => (tagsFilter[tag] = false));
+		post.tags.forEach(tag => ($tagsFilter[tag] = false));
 	});
-	// console.log(tagsArr);
-	// console.log(posts);
 
-	let searchInput = '';
-	let selected = null;
+	// let searchInput = '';
+	let searchInput: Writable<string> = writable('');
 
-	function filterPosts(tag: string) {
-		if (selected === tag) {
-			selected = null;
+	// create a function that will filter based on the search input
+	// make it clever and not just use it as a whole string but as a list of words
+	function filterPostsOnSearch(search: string) {
+		if (search === '') {
 			posts = data.posts;
 			return;
 		}
-		selected = tag;
-		posts = posts.filter(post => post.tags.includes(tag));
+		posts = posts.filter(post => {
+			const searchWords = search.split(' ');
+			return searchWords.some(word => {
+				return (
+					post.title.toLowerCase().includes(word.toLowerCase()) ||
+					post.summary.toLowerCase().includes(word.toLowerCase())
+				);
+			});
+		});
 	}
-	console.log(posts);
 
-	$: width = window.innerWidth;
-	$: console.log(width);
+	function filterPostsOnTags(tag: string) {
+		$tagsFilter[tag] = !$tagsFilter[tag];
+		posts = posts.filter(post => {
+			let isTrue = false;
+			post.tags.forEach(tag => {
+				isTrue = Array.from(Object.keys($tagsFilter)).some(keyTag => keyTag === tag);
+			});
+			return isTrue;
+		});
+	}
 
-	// let mainClientWidth: Writable<Number> = getContext('mainClientWidth');
-	// $: console.log($mainClientWidth);
+	let width: Writable<number> = writable(0);
+	onMount(() => {
+		width.set(window.innerWidth);
+	});
+
+	$: console.log($width);
 </script>
 
-<svelte:window on:resize={() => (width = window.innerWidth)} />
+<svelte:window on:resize={() => ($width = window.innerWidth)} />
 <svelte:head>
 	<title>My awesome blog posts</title>
 </svelte:head>
@@ -62,33 +67,39 @@
 		type="text"
 		placeholder="Search for a post"
 		class="w-56 p-2 border border-neutral/30 rounded-xl shadow-md bg-neutral/10 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:border-primary focus:bg-neutral/25"
-		bind:value={searchInput}
+		bind:value={$searchInput}
+		on:input={() => filterPostsOnSearch($searchInput)}
 	/>
 	<div
 		class="relative w-full flex flex-col items-start justify-between sm:flex-row sm:items-center sm:mx-2 gap-6"
 	>
 		<div class="flex flex-row items-center gap-2">
-			{#if width < 768}
+			<!-- TODO: How to create a GRID from the tags instead of having 
+			a dropdown select for smaller screens? I won't to be able to make the tags filter
+			look good on mobiles as well. I'd probably make it somehow collabsable (not modal) -->
+			{#if $width < 768}
 				<select
 					class="w-56 px-1 py-2 border border-neutral/30 rounded-xl shadow-md bg-neutral/10 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:border-primary focus:bg-neutral/25"
-					on:change={e => filterPosts(e.target.value)}
+					on:change={e => filterPostsOnTags(e.target.value)}
 				>
 					<option value="">Filter tags</option>
-					{#each Object.keys(tagsFilter) as tag}
+					{#each Object.keys($tagsFilter) as tag}
 						<option value={tag}>{tag}</option>
 					{/each}
 				</select>
 			{:else}
 				<span class="mr-4">Filter tags</span>
-				{#each Object.keys(tagsFilter) as tag}
+				{#each Object.keys($tagsFilter) as tag}
 					<button
 						class={`
-					${selected === tag ? 'bg-primary text-neutral font-semibold' : 'bg-neutral/10 text-neutral-content'}
+					${$tagsFilter[tag] ? 'bg-primary text-neutral font-semibold' : 'bg-neutral/10 text-neutral-content'}
 					px-2 py-1 border border-neutral/30 rounded-xl shadow-lg
 					focus:outline-none 
 				`}
-						class:active={selected === tag}
-						on:click={e => filterPosts(tag)}
+						class:active={$tagsFilter[tag]}
+						on:click={() => {
+							filterPostsOnTags(tag);
+						}}
 					>
 						{tag}
 					</button>
@@ -100,6 +111,9 @@
 </div>
 <section class="grid grid-cols-1 auto-rows-fr gap-x-4 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 mb-12">
 	{#each posts as post}
-		<BlogPostCard post={post}></BlogPostCard>
+		{#if post.tags.some(postTag => $tagsFilter[postTag]) || (Object.values($tagsFilter).every(tag => tag === false) && $searchInput === '')}
+			<BlogPostCard post={post}></BlogPostCard>
+		{/if}
+		<!-- <BlogPostCard post={post}></BlogPostCard> -->
 	{/each}
 </section>
