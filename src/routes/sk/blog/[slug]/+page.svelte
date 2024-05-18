@@ -57,7 +57,7 @@
 <article class="">
 	<div class="mx-auto mb-6">
 		<!-- TODO: Place these items in the components, use module context and differentiate type using props -->
-		<h1 class="text-base-content text-3xl md:text-4xl font-extrabold mb-4">{metadata.title}</h1>
+		<h1 class="text-base-content text-3xl md:text-4xl font-bold mb-4">{metadata.title}</h1>
 		<div class="flex flex-col md:flex-row gap-2 justify-star mb-2">
 			<div class="flex flex-row gap-2 items-center">
 				<DateIcon />
@@ -92,7 +92,7 @@
 			class="object-fill w-full h-fit aspect-video"
 			loading="lazy"
 		/>
-		<div class="flex justify-end items-right prose max-w-full prose-a:text-primary">
+		<div class="flex justify-end items-right prose max-w-full prose-a:text-60">
 			<span class="text-base font-light italic text-right"
 				>TAKEN from <a href="" class="prose">SOME WEBSITE</a></span
 			>

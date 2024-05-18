@@ -57,7 +57,7 @@
 <article class="">
 	<div class="mx-auto mb-6">
 		<!-- TODO: Place these items in the components, use module context and differentiate type using props -->
-		<h1 class="text-base-content text-3xl md:text-4xl font-extrabold mb-4">{metadata.title}</h1>
+		<h1 class="text-base-content text-3xl md:text-4xl font-bold mb-4">{metadata.title}</h1>
 		<div class="flex flex-col md:flex-row gap-2 justify-star mb-2">
 			<div class="flex flex-row gap-2 items-center">
 				<DateIcon />

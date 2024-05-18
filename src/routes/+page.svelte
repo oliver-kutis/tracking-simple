@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import { socials } from '$lib/config';
+	import PageTitle from '$lib/components/PageTitle.svelte';
 
 	export let data: PageData;
 
@@ -15,8 +16,9 @@
 	let description = langConfigs[lang].description;
 	let h1 =
 		lang === 'en'
-			? 'Blog about web analytics, tracking and marketing measurement in general.'
-			: 'Blog o webovej analytike, sledovaní a všeobecnej analýze marketingu .';
+			? // ? 'Blog about web analytics, tracking and marketing measurement in general.'
+				'Web analytics, tagging & marketing measurement blog'
+			: 'Webová analytika, tagging a marketingová analýza';
 	let latestBlogPost = lang === 'en' ? 'Latest blog post' : 'Najnovší článok';
 
 	onMount(() => {
@@ -34,7 +36,7 @@
 	<meta name="description" content={langConfigs[lang].description} />
 </svelte:head>
 <div class="mt-4 justify-center mx">
-	<h1 class="text-3xl md:text-4xl text-base-content font-bold">
+	<h1 class="text-3xl md:text-4xl text-base-content font-semibold text-center sm:px-5">
 		{h1}
 	</h1>
 	<!-- <div class="grid gap-8 p-5 mt-20"> -->

@@ -129,7 +129,7 @@
 								href={lang === 'sk'
 									? `/sk${item.link === '/' ? '' : item.link}`
 									: item.link}
-								class={`${[(item.link, '/sk' + item.link.slice(1))].includes($page.url.pathname) ? 'border-2 border-primary text-primary' : 'bg-transparent'} inline-block px-4 py-2 text-sm rounded-full font-medium hover:text-accent hover:border-accent focus:relative`}
+								class={`${[item.link, `/sk${item.link === '/' ? '' : `/${item.link.slice(1)}`}`].includes($page.url.pathname) ? 'border-2 border-primary text-primary' : 'bg-transparent'} inline-block px-4 py-2 text-sm rounded-full font-medium hover:text-accent hover:border-accent focus:relative`}
 							>
 								{item.title[lang]}
 							</a>
