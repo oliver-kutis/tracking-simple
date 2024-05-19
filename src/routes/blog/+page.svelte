@@ -10,6 +10,8 @@
 	import PageTitle from '$lib/components/PageTitle.svelte';
 	import { slide } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
+	import { isNordOrValentine } from '$lib';
+	import themeStore from '$stores/theme';
 
 	export let data: PageData;
 
@@ -53,6 +55,22 @@
 		});
 	}
 
+	function classesForTags(theme: string, tag: string): string {
+		const isNordOrValentineResult = isNordOrValentine(theme);
+		const defaultClasses = `px-2 py-1 rounded-xl focus:outline-none`;
+		let inactiveClasses = `bg-base-300 text-base-content`;
+		let activeClasses = `bg-primary text-base-100 font-semibold`;
+		if (isNordOrValentineResult) {
+			inactiveClasses = `bg-primary/25 text-base-content`;
+			activeClasses = `bg-primary/75 text-base-content font-semibold`;
+		}
+
+		return `
+			${defaultClasses}
+			${$tagsFilter[tag] ? activeClasses : inactiveClasses}
+		`;
+	}
+
 	let width: Writable<number> = writable(0);
 	onMount(() => {
 		width.set(window.innerWidth);
@@ -87,11 +105,7 @@
 						<!-- <div class="p-2 grid grid-cols-2 auto-cols-fr gap-x-2 gap-y-1"> -->
 						{#each Object.keys($tagsFilter) as tag}
 							<button
-								class={`
-							${$tagsFilter[tag] ? 'bg-primary text-neutral' : 'bg-base-300 text-base-content'}
-							px-2 py-1 rounded-xl
-							focus:outline-none 
-						`}
+								class={classesForTags($themeStore, tag)}
 								class:active={$tagsFilter[tag]}
 								on:click={() => {
 									filterPostsOnTags(tag);
@@ -113,11 +127,7 @@
 					<div class="flex flex-wrap gap-1">
 						{#each Object.keys($tagsFilter) as tag}
 							<button
-								class={`
-					${$tagsFilter[tag] ? 'bg-primary text-neutral' : 'bg-base-300 text-base-content'}
-					px-3 py-1 rounded-xl shadow-md
-					focus:outline-none 
-				`}
+								class={classesForTags($themeStore, tag)}
 								class:active={$tagsFilter[tag]}
 								on:click={() => {
 									filterPostsOnTags(tag);
