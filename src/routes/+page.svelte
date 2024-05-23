@@ -5,6 +5,7 @@
 	import type { PageData } from './$types';
 	import { socials } from '$lib/config';
 	import PageTitle from '$lib/components/PageTitle.svelte';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
 
@@ -25,6 +26,8 @@
 		lastPost = posts.slice(0, 1)[0];
 		// console.log(lastThreePosts);
 	});
+
+	$: console.log($page);
 </script>
 
 <!-- <div
@@ -100,7 +103,7 @@
 					<span
 						>For updates, subscribe to <a
 							class="text-primary text-xl hover:text-accent"
-							href="">RSS feed</a
+							href="{$page.url.origin}/rss.xml?lang={lang}">RSS feed</a
 						>
 					</span>
 				</div>

@@ -12,8 +12,13 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import type { Writable } from 'svelte/store';
+	import type { Language } from '$lib/types';
+	import type { PageData } from './$types';
 
-	export let data;
+	// export let data;
+	export let data: PageData;
+	let lang: Language = data.lang;
+	$: lang = data.lang;
 
 	beforeNavigate(() => {
 		document.body.scrollTop = 0;
@@ -31,6 +36,10 @@
 
 	$: {
 		if (typeof document !== 'undefined') {
+			// change html lang attribute
+			document.documentElement.lang = lang;
+
+			// set the theme and font
 			document.documentElement.setAttribute('data-theme', $themeStore);
 			const currentTheme = themes.find(
 				(theme: { theme: string }) => theme.theme === $themeStore,
@@ -88,6 +97,10 @@
 		});
 	});
 </script>
+
+<svelte:head>
+	<link rel="alternate" type="application/atom+xml" href={`/rss.xml?lang=${lang}`} />
+</svelte:head>
 
 <svelte:body
 	on:scroll={handleBodyScroll}

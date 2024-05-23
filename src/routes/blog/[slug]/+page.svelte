@@ -29,6 +29,8 @@
 	export let data: PageData;
 	const { metadata, post: Post } = data;
 
+	let readTime: number = 0;
+
 	onMount(() => {
 		// Get code blocks
 		const preTags: HTMLCollectionOf<HTMLPreElement> = document.getElementsByTagName('pre');
@@ -51,23 +53,37 @@
 				}
 			}
 		}
+
+		const text: string = document.querySelector('article')?.innerText || '';
+		const wordsPerMinute: number = text.split(' ').length / 200;
+		readTime = Math.round(wordsPerMinute);
 	});
 </script>
 
 <article class="">
 	<div class="mx-auto mb-6">
-		<!-- TODO: Place these items in the components, use module context and differentiate type using props -->
+		<!-- TODO: Place these items in the components, use module context and differentiate type using props 
+			TODO: Style this shit properly, it looks like garbage
+		-->
 		<h1 class="text-base-content text-3xl md:text-4xl font-bold mb-4">{metadata.title}</h1>
 		<div class="flex flex-col md:flex-row gap-2 justify-star mb-2">
-			<div class="flex flex-row gap-2 items-center">
-				<DateIcon />
+			<div class="flex flex-row gap-2 items-center text-nowrap">
+				<!-- <DateIcon /> -->
+				<!-- <div class="inline-block"> -->
 				<time
 					datetime={metadata.datePublished}
-					class="text-base-content text-sm md:text-base font-light italic pr-4"
+					class="text-base-content text-sm md:text-base font-light"
 				>
 					{metadata.datePublished}
 				</time>
-				{#if metadata.dateEdited}
+				{#if readTime}
+					<p class="text-base-content text-sm md:text-base font-light">
+						/ Read time: {readTime} minutes
+					</p>
+				{/if}
+				<!-- </div> -->
+				<!-- {#} -->
+				<!-- {#if metadata.dateEdited}
 					<Pencil />
 					<time
 						datetime={metadata.datePublished}
@@ -75,16 +91,16 @@
 					>
 						{metadata.dateEdited}
 					</time>
-				{/if}
+				{/if} -->
 			</div>
-			{#if metadata.tags}
+			<!-- {#if metadata.tags}
 				<div class="flex flex-row gap-2 items-center">
 					<TagsIcon />
 					<p class="text-base-content text-sm md:text-base font-light italic pr-4">
 						{metadata.tags.join(' x ')}
 					</p>
 				</div>
-			{/if}
+			{/if} -->
 		</div>
 		<img
 			src={`/${metadata?.imgUrl}`}

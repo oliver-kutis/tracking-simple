@@ -29,6 +29,8 @@
 	export let data: PageData;
 	const { metadata, post: Post } = data;
 
+	let readTime: number = 0;
+
 	onMount(() => {
 		// Get code blocks
 		const preTags: HTMLCollectionOf<HTMLPreElement> = document.getElementsByTagName('pre');
@@ -51,6 +53,10 @@
 				}
 			}
 		}
+
+		const text: string = document.querySelector('article')?.innerText || '';
+		const wordsPerMinute: number = text.split(' ').length / 200;
+		readTime = Math.round(wordsPerMinute);
 	});
 </script>
 
@@ -60,14 +66,18 @@
 		<h1 class="text-base-content text-3xl md:text-4xl font-bold mb-4">{metadata.title}</h1>
 		<div class="flex flex-col md:flex-row gap-2 justify-star mb-2">
 			<div class="flex flex-row gap-2 items-center">
-				<DateIcon />
 				<time
 					datetime={metadata.datePublished}
-					class="text-base-content text-sm md:text-base font-light italic pr-4"
+					class="text-base-content text-sm md:text-base font-light"
 				>
 					{metadata.datePublished}
 				</time>
-				{#if metadata.dateEdited}
+				{#if readTime}
+					<p class="text-base-content text-sm md:text-base font-light">
+						/ Čas čítania: {readTime} minút
+					</p>
+				{/if}
+				<!-- {#if metadata.dateEdited}
 					<Pencil />
 					<time
 						datetime={metadata.datePublished}
@@ -75,16 +85,16 @@
 					>
 						{metadata.dateEdited}
 					</time>
-				{/if}
+				{/if} -->
 			</div>
-			{#if metadata.tags}
+			<!-- {#if metadata.tags}
 				<div class="flex flex-row gap-2 items-center">
 					<TagsIcon />
 					<p class="text-base-content text-sm md:text-base font-light italic pr-4">
 						{metadata.tags.join(' x ')}
 					</p>
 				</div>
-			{/if}
+			{/if} -->
 		</div>
 		<img
 			src={`/${metadata?.imgUrl}`}
@@ -94,7 +104,8 @@
 		/>
 		<div class="flex justify-end items-right prose max-w-full prose-a:text-60">
 			<span class="text-base font-light italic text-right"
-				>TAKEN from <a href="" class="prose">SOME WEBSITE</a></span
+				>TAKEN from <a href="" class="prose text-primary hover:text-accent">SOME WEBSITE</a
+				></span
 			>
 		</div>
 	</div>
