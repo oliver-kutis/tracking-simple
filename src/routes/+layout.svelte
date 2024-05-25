@@ -14,6 +14,7 @@
 	import type { Writable } from 'svelte/store';
 	import type { Language } from '$lib/types';
 	import type { PageData } from './$types';
+	import { langConfigs, socials } from '$lib/config';
 
 	// export let data;
 	export let data: PageData;
@@ -100,6 +101,12 @@
 
 <svelte:head>
 	<link rel="alternate" type="application/atom+xml" href={`/rss.xml?lang=${lang}`} />
+	<meta name="robots" content="follow, index, max-snippet:-1, max-image-preview:large" />
+	<link rel="canonical" href={`${$page.url.origin}${$page.url.pathname}`} />
+	<meta property="og:site_name" content={langConfigs[lang].name} />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content={`@${socials.twitter.split('/').slice(-1)}`} />
+	<meta name="twitter:creator" content={`@${socials.twitter.split('/').slice(-1)}`} />
 </svelte:head>
 
 <svelte:body

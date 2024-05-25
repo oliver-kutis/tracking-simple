@@ -22,7 +22,7 @@ export type Post = {
 	datePublished: string;
 	dateEdited?: string;
 	published: boolean;
-	summary: string;
+	description: string;
 	tags?: string[];
 	slug?: string;
 };

@@ -9,6 +9,10 @@
 	import TagsIcon from '$lib/components/svg/TagsIcon.svelte';
 	import DateIcon from '$lib/components/svg/DateIcon.svelte';
 	import Pencil from '$lib/components/svg/Pencil.svelte';
+	import { page } from '$app/stores';
+	import { langConfigs } from '$lib/config';
+	import lang from '$stores/lang';
+	import { dateEdited } from '../../../mdsvex.svelte';
 
 	// interface Heading {
 	// 	headingProps: {
@@ -60,6 +64,45 @@
 	});
 </script>
 
+<svelte:head>
+	<title>{metadata.title}</title>
+	<meta name="author" content={langConfigs[data.lang].name} />
+	<meta name="description" content={metadata.description} />
+	<meta
+		property="article:published_time"
+		content={new Date(metadata.datePublished).toISOString()}
+	/>
+	{#if metadata.dateEdited}
+		<meta
+			property="article:modifited_time"
+			content={new Date(metadata.dateEdited).toISOString()}
+		/>
+	{/if}
+	{#if metadata.tags}
+		{#each metadata.tags as tag}
+			<meta property="article:tag" content={tag.toLowerCase()} />
+		{/each}
+	{/if}
+	<meta
+		property="og_updated_time"
+		content={`${metadata.dateEdited ? new Date(metadata.dateEdited).toISOString() : new Date(metadata.datePublished).toISOString()}`}
+	/>
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content={metadata.title} />
+	<meta property="og:description" content={metadata.description} />
+	<meta property="og:url" content={`${$page.url.origin}${$page.url.pathname}`} />
+	<meta name="twitter:title" content={metadata.title} />
+	<meta name="twitter:description" content={metadata.description} />
+	{#if metadata.imgUrl}
+		<meta property="og:image" content={`/${metadata.imgUrl}`} />
+		{#if metadata.imgAlt}
+			<meta name="twitter:image" content={`/${metadata.imgUrl}`} />
+			<meta property="og:image:alt" content={`/${metadata.imgAlt}`} />
+			<meta name="twitter:image:alt" content={`/${metadata.imgAlt}`} />
+		{/if}
+	{/if}
+</svelte:head>
+
 <article class="">
 	<div class="mx-auto mb-6">
 		<!-- TODO: Place these items in the components, use module context and differentiate type using props 
@@ -102,15 +145,17 @@
 				</div>
 			{/if} -->
 		</div>
+		<!-- <span class="prose prose-base md:prose-lg">{metadata.description}</span> -->
 		<img
 			src={`/${metadata?.imgUrl}`}
 			alt={metadata?.imgAlt}
 			class="object-fill w-full h-fit aspect-video"
 			loading="lazy"
 		/>
-		<div class="flex justify-end items-right prose max-w-full prose-a:text-primary">
-			<span class="text-base font-light italic text-right"
-				>TAKEN from <a href="" class="prose">SOME WEBSITE</a></span
+		<div class="flex justify-end items-right prose max-w-full prose-a:text-60">
+			<span class="prose prose-sm md:prose-base font-light text-right"
+				>TAKEN from <a href="" class="prose text-primary hover:text-accent">SOME WEBSITE</a
+				></span
 			>
 		</div>
 	</div>

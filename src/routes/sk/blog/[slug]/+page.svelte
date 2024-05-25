@@ -60,6 +60,27 @@
 	});
 </script>
 
+<svelte:head>
+	<title>{metadata.title}</title>
+	<meta name="description" content={metadata.description} />
+	<meta property="og:locale" content="sk_SK" />
+	<meta property="og:locale:alternate" content="cs_CZ" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content={metadata.title} />
+	<meta property="og:description" content={metadata.description} />
+	<meta property="og:url" content={`${$page.url.origin}${$page.url.pathname}`} />
+	<meta name="twitter:title" content={metadata.title} />
+	<meta name="twitter:description" content={metadata.description} />
+	{#if metadata.imgUrl}
+		<meta property="og:image" content={`/${metadata.imgUrl}`} />
+		{#if metadata.imgAlt}
+			<meta name="twitter:image" content={`/${metadata.imgUrl}`} />
+			<meta property="og:image:alt" content={`/${metadata.imgAlt}`} />
+			<meta name="twitter:image:alt" content={`/${metadata.imgAlt}`} />
+		{/if}
+	{/if}
+</svelte:head>
+
 <article class="">
 	<div class="mx-auto mb-6">
 		<!-- TODO: Place these items in the components, use module context and differentiate type using props -->
@@ -103,7 +124,7 @@
 			loading="lazy"
 		/>
 		<div class="flex justify-end items-right prose max-w-full prose-a:text-60">
-			<span class="text-base font-light italic text-right"
+			<span class="prose prose-sm md:prose-base font-light italic text-right"
 				>TAKEN from <a href="" class="prose text-primary hover:text-accent">SOME WEBSITE</a
 				></span
 			>
