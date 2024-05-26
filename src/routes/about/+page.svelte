@@ -3,7 +3,7 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	const { work: Work, intro: Intro } = data;
+	const { work: Work, intro: Intro, whereToMeetMe: WhereToMeetMe } = data;
 	let lang: Language = data.lang;
 
 	// import { authorName, siteName } from '$lib/config';
@@ -159,8 +159,28 @@
 	prose-headings:my-4 hover:prose-a:text-accent prose-a:text-primary max-w-none"
 >
 	<Intro></Intro>
-	<ResumeBasics></ResumeBasics>
+	<!-- <ResumeBasics></ResumeBasics>
+	<div class="mb-6 mt-10 print:mb-4">
+	<!-- <span
+		class="mb-6 divider before:bg-opacity-100 after:bg-opacity-100 before:bg-neutral after:bg-neutral print:hidden"
+	/> -->
+	<div class="mb-2 print:mb-1">
+		<h1 class="font-bold tracking-wide text-primary print:text-xl print:text-black">
+			Past Experience & Projects
+		</h1>
+		<p>Below is a list of projects and clients I have worked with in the past.</p>
+	</div>
 	<Work></Work>
+	<div class="mb-2 print:mb-1">
+		<h1 class="font-bold tracking-wide text-primary print:text-xl print:text-black">
+			Where can you meet me?
+		</h1>
+		<p>
+			I attend marketing & analytics conferences regulary. You can usually see me on
+			Measurecamp within the CEE region.
+		</p>
+	</div>
+	<WhereToMeetMe></WhereToMeetMe>
 </div>
 
 <style>

@@ -3,7 +3,7 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	const { work: Work, intro: Intro } = data;
+	const { work: Work, intro: Intro, whereToMeetMe: WhereToMeetMe } = data;
 	let lang: Language = data.lang;
 
 	// import { authorName, siteName } from '$lib/config';
@@ -159,8 +159,27 @@
 	prose-headings:my-4 hover:prose-a:text-accent prose-a:text-primary max-w-none"
 >
 	<Intro></Intro>
-	<ResumeBasics></ResumeBasics>
+	<div class="mb-2 print:mb-1">
+		<h1 class="font-bold tracking-wide text-primary print:text-xl print:text-black">
+			Predošlé skúsenosti a projekty
+		</h1>
+		<p>
+			Nižšie nájdete stručný popis zodpovedností a úkonov na bývalých aj existujúcich
+			projektoch.
+		</p>
+	</div>
+	<!-- <ResumeBasics></ResumeBasics> -->
 	<Work></Work>
+	<div class="mb-2 print:mb-1">
+		<h1 class="font-bold tracking-wide text-primary print:text-xl print:text-black">
+			Kde na mňa môžete naraziť?
+		</h1>
+		<p>
+			Pravideľne navštevujem analytické a marketingové konferencie. Najčastejšie ma môžete
+			stretnúť na Measurecampe v rámci CEE regiónu.
+		</p>
+	</div>
+	<WhereToMeetMe></WhereToMeetMe>
 </div>
 
 <style>

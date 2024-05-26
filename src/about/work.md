@@ -1,9 +1,8 @@
 <script lang="ts">
-//   import { DD, Collapse, RoleDetails } from '$lib/components'
-import RoleDetails from '$lib/components/RoleDetails.svelte'
+    import RoleDetails from '$lib/components/RoleDetails.svelte'
 </script>
 
-<span class="divider before:bg-primary after:bg-primary mb-6 print:mb-0" />
+<span class="divider mb-6 print:mb-0" />
 
 <RoleDetails 
     position="Web analyst"

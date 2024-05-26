@@ -1,7 +1,17 @@
 <script lang="ts">
 	import { format, intervalToDuration, isValid } from 'date-fns';
 
-	const { position, company, startDate, endDate } = $$props;
+	const {
+		position,
+		company,
+		startDate,
+		endDate,
+		eventName,
+		eventTopic,
+		eventClassification,
+		eventLocation,
+		eventDate,
+	} = $$props;
 
 	const formatDates = (startDate: string | number | Date, endDate: string | number | Date) => {
 		const formatedDateStart = format(new Date(startDate), 'MMMM yyyy');
@@ -38,21 +48,51 @@
 </script>
 
 <div
-	class="mb-2 flex flex-col justify-between md:flex-row md:items-center print:mb-0 print:flex-row"
+	class="mb-2 flex flex-col justify-between md:flex-row md:items-start print:mb-0 print:flex-row"
 >
-	<h2
-		class="my-2 text-2xl md:text-3xl font-bold tracking-wide text-primary print:text-2xl print:text-black not-prose"
-	>
-		{position}
-	</h2>
-	<span class="text-lg md:text-2xl font-bold print:text-xl print:text-black not-prose">
-		{company}
-	</span>
+	{#if position}
+		<h2
+			class="my-2 text-2xl md:text-3xl font-bold tracking-wide text-primary print:text-2xl print:text-black not-prose"
+		>
+			{position}
+		</h2>
+	{/if}
+	{#if eventName}
+		<div class="flex flex-col">
+			<h2
+				class="my-2 text-2xl md:text-3xl font-bold tracking-wide text-primary print:text-2xl print:text-black not-prose"
+			>
+				{eventName}
+			</h2>
+			<h3
+				class="text-xl md:text-2xl font-normal tracking-wide text-primary print:text-xl print:text-black not-prose"
+			>
+				{eventClassification} - {eventLocation}
+			</h3>
+			<h4
+				class="mt-2 text-xl md:text-2xl font-bold tracking-wide text-base-content print:text-xl print:text-black not-prose"
+			>
+				{eventTopic}
+			</h4>
+		</div>
+	{/if}
+	{#if company}
+		<span
+			class="text-nowrap text-lg md:text-2xl font-bold print:text-xl print:text-black not-prose"
+		>
+			{company}
+		</span>
+	{/if}
 </div>
 
 <span
 	class="text-base md:text-lg font-bold text-accent print:text-xs print:font-medium print:text-black"
 >
-	{formatDates(startDate, endDate === null ? '' : endDate)}
+	{#if startDate}
+		{formatDates(startDate, endDate === null ? '' : endDate)}
+	{:else if eventDate}
+		{format(new Date(eventDate), 'MMMM dd, yyyy')}
+	{/if}
+	<!-- {formatDates(startDate, endDate === null ? '' : endDate)} -->
 </span>
 <div class="mb-6 print:mb-2" />

@@ -9,6 +9,7 @@
 	import TagsIcon from '$lib/components/svg/TagsIcon.svelte';
 	import DateIcon from '$lib/components/svg/DateIcon.svelte';
 	import Pencil from '$lib/components/svg/Pencil.svelte';
+	import { page } from '$app/stores';
 
 	// interface Heading {
 	// 	headingProps: {

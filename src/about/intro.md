@@ -13,3 +13,5 @@
 **_Marketing Data Scientist:_** Experience using most MMM and Causal Inference frameworks (Robyn, Lightweight MMM, Orbit, PyMC Marketing, CausalPy, CausalImpact, GeoLift, ...). I have also developed my own models for purposes of my Diploma thesis.
 
 **_Life-long learner:_** I consume a lot of news and articles related to web tracking and marketing measurement. I studied econometrics and I am eager to learn anything that could help optimize digital marketing activities. 
+
+<span class="divider before:bg-primary after:bg-primary mb-6 print:mb-0" />
