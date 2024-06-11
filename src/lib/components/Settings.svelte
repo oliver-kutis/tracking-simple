@@ -4,16 +4,8 @@
 	import SettingsWheel from '$lib/components/svg/SettingsWheel.svelte';
 	import ThemeSettings from './ThemeSettings.svelte';
 	import FontSettings from './FontSettings.svelte';
-	// import { themes } from '$lib/themes';
-	// import themeStore from '$stores/theme';
-	// import { getThemeType } from '$lib';
 
 	export let lang;
-
-	console.log($toggleNavSettings);
-	// $: themeType = getThemeType($themeStore);
-	// const darkThemes = themes.filter(theme => theme.meta.mode === 'dark');
-	// const lightThemes = themes.filter(theme => theme.meta.mode === 'light');
 </script>
 
 <div class="settings dropdown flex mr-2 gap-2">

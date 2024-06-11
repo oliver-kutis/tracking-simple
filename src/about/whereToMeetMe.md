@@ -3,18 +3,14 @@
     import Img from '$lib/components/Img.svelte';
     import Youtube from '$lib/components/Youtube.svelte';
 
-    let player
-    let ytPlayerId = "BrvlIUvdncQ";
-    const toggle = () => {
-        console.log('changing video id')
-        player.loadVideoById(ytPlayerId);
-    }
+    const lang = "en"
 </script>
 
 <span class="divider mb-2 print:mb-0" />
 
 <section class="all-prose mb-4">
-    <RoleDetails 
+    <RoleDetails
+        lang={lang} 
         position=""
         company=""
         startDate=""
@@ -28,7 +24,7 @@
 You can find a recording for the presentation below. 
 The video is available for Slovak and Czech speakers only.
 
-<iframe class="w-full aspect-video" src="https://www.youtube-nocookie.com/embed/BrvlIUvdncQ?si=wsrGqaqWRuWwP5BZ&amp;start=20" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<Youtube srcLink="https://www.youtube-nocookie.com/embed/BrvlIUvdncQ?si=wsrGqaqWRuWwP5BZ&amp;start=20"/>
 
 The slides can be found on this [link](https://docs.google.com/presentation/d/1aju--ZQpLDNuz6VDuZYtcexNk-zupnBn1IQp8dWiVNw/edit?usp=sharing). Again, only for Slovak and Czech speakers only.
 </section>
@@ -37,7 +33,8 @@ The slides can be found on this [link](https://docs.google.com/presentation/d/1a
 
 <span class="divider mb-2 print:mb-0" />
 
-<RoleDetails 
+<RoleDetails
+    lang={lang}
     position=""
     company=""
     startDate=""

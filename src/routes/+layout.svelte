@@ -5,6 +5,7 @@
 	import { themes } from '$lib/themes';
 	import Nav from '../lib/components/Nav.svelte';
 	import toggleNavSettings from '$stores/toggleNavSettings';
+	// import lang from '$stores/lang';
 	import { afterUpdate, setContext } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
@@ -13,16 +14,18 @@
 	import { page } from '$app/stores';
 	import type { Writable } from 'svelte/store';
 	import type { Language } from '$lib/types';
-	import type { PageData } from './$types';
+	import type { LayoutData, PageData } from './$types';
 	import { langConfigs, socials } from '$lib/config';
+	import CookieDialog from '$lib/components/CookieDialog.svelte';
 
-	// export let data;
-	export let data: PageData;
-	let lang: Language = data.lang;
+	export let data: LayoutData;
 	$: lang = data.lang;
 
-	beforeNavigate(() => {
-		document.body.scrollTop = 0;
+	beforeNavigate(navigation => {
+		const goFromPathEnd = navigation.from.url.pathname.split('/').slice(-1)[0];
+		const goToPathEnd = navigation.to.url.pathname.split('/').slice(-1)[0];
+
+		if (goFromPathEnd !== goToPathEnd) document.body.scrollTop = 0;
 	});
 
 	// For passing the scrollY value to the Nav component
@@ -81,6 +84,10 @@
 		scrollY = (e.target as HTMLElement).scrollTop / (e.target as HTMLElement).scrollHeight;
 	}
 
+	function getLanguage(page = $page) {
+		return $page.url.pathname.split('/')[1] === 'sk' ? 'sk' : 'en';
+	}
+
 	const referrer: Writable<string | null> = writable(null);
 
 	beforeNavigate(() => referrer.set($page.url.href));
@@ -135,7 +142,7 @@
 		}
 	}}
 />
-<Nav bind:bodyScrollY={scrollY} lang={data.lang}></Nav>
+<Nav bind:bodyScrollY={scrollY} lang={lang}></Nav>
 <PageTransition url={data.url}>
 	<div class="flex w-full h-full">
 		<div class="container items-center inset-0 max-h-full py-5 px-5 rounded max-w-4xl mx-auto">
@@ -145,6 +152,7 @@
 				bind:clientWidth={$mainClientWidth}
 				class="flex flex-col flex-grow w-full mx-auto"
 			>
+				<CookieDialog></CookieDialog>
 				<slot />
 			</main>
 		</div>
@@ -156,10 +164,8 @@
 <style>
 	:global(blockquote > p):after {
 		content: '' !important;
-		/* display: block; */
 	}
 	:global(blockquote > p):before {
 		content: '' !important;
-		/* display: block; */
 	}
 </style>

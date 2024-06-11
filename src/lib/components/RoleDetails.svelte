@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { format, intervalToDuration, isValid } from 'date-fns';
+	// import { format } from 'date-fns/fp/formatWithOptions';
+	import { sk, enGB } from 'date-fns/locale';
 
 	const {
+		lang,
 		position,
 		company,
 		startDate,
@@ -13,13 +16,47 @@
 		eventDate,
 	} = $$props;
 
-	const formatDates = (startDate: string | number | Date, endDate: string | number | Date) => {
-		const formatedDateStart = format(new Date(startDate), 'MMMM yyyy');
-		const formatedDateEnd = () => {
+	const formatDates = (
+		startDate: string | number | Date,
+		endDate: string | number | Date,
+		formatType: string = 'range', // 'range' | 'single'
+		lang = 'en',
+	) => {
+		const dateOptions = {
+			locale: lang === 'sk' ? sk : enGB,
+			localize: true,
+		};
+
+		let dateFormat;
+		if (formatType === 'range') {
+			dateFormat = 'LLLL yyyy';
+		} else {
+			dateFormat = 'd. LLLL, yyyy';
+		}
+		let formatedDateStart = format(new Date(startDate), dateFormat, dateOptions);
+		formatedDateStart = formatedDateStart.charAt(0).toUpperCase() + formatedDateStart.slice(1);
+
+		if (formatType === 'single') {
+			if (lang === 'en') {
+				if (formatedDateStart.startsWith('1.')) {
+					formatedDateStart = formatedDateStart.replace('1.', '1st of');
+				} else if (formatedDateStart.startsWith('2.')) {
+					formatedDateStart = formatedDateStart.replace('2.', '2nd of');
+				} else if (formatedDateStart.startsWith('3.')) {
+					formatedDateStart = formatedDateStart.replace('3.', '3rd of');
+				} else {
+					formatedDateStart = formatedDateStart.replace('4.', '4th of');
+				}
+			}
+
+			return formatedDateStart;
+		}
+
+		let formatedDateEnd = () => {
 			if (isValid(new Date(endDate))) {
-				return format(new Date(endDate), 'MMMM yyyy');
+				return format(new Date(endDate), 'LLLL yyyy', dateOptions);
 			} else {
-				return 'Present';
+				return lang === 'sk' ? 'Súčasnosť' : 'Present';
 			}
 		};
 		const intervalEndDate = endDate === '' ? new Date() : endDate;
@@ -28,8 +65,13 @@
 			end: new Date(intervalEndDate),
 		});
 		const yearsAndMonths = () => {
-			const intervalYears = years ? `${years}${years === 1 ? 'yr' : 'yrs'}` : '';
-			const intervalMonths = months ? `${months}${months === 1 ? 'mo' : 'mos'}` : '';
+			const yrsLoc = lang === 'sk' ? 'roky' : 'years';
+			const yrLoc = lang === 'sk' ? 'rok' : 'year';
+			const mosLoc = lang === 'sk' ? 'mesiace' : 'months';
+			const moLoc = lang === 'sk' ? 'mesiac' : 'month';
+
+			const intervalYears = years ? `${years} ${years === 1 ? yrLoc : yrsLoc}` : '';
+			const intervalMonths = months ? `${months} ${months === 1 ? moLoc : mosLoc}` : '';
 
 			if (intervalYears === '' && intervalMonths !== '') {
 				return `(${intervalMonths})`;
@@ -38,7 +80,7 @@
 				return `(${intervalYears})`;
 			}
 			if (intervalYears !== '' && intervalMonths !== '') {
-				return `(${intervalYears} ${intervalMonths})`;
+				return `(${intervalYears} + ${intervalMonths})`;
 			}
 			return '';
 		};
@@ -89,9 +131,9 @@
 	class="text-base md:text-lg font-bold text-accent print:text-xs print:font-medium print:text-black"
 >
 	{#if startDate}
-		{formatDates(startDate, endDate === null ? '' : endDate)}
+		{formatDates(startDate, endDate === null ? '' : endDate, 'range', lang)}
 	{:else if eventDate}
-		{format(new Date(eventDate), 'MMMM dd, yyyy')}
+		{formatDates(new Date(eventDate), '', 'single', lang)}
 	{/if}
 	<!-- {formatDates(startDate, endDate === null ? '' : endDate)} -->
 </span>

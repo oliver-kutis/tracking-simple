@@ -3,29 +3,7 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	const { work: Work, intro: Intro, whereToMeetMe: WhereToMeetMe } = data;
-	let lang: Language = data.lang;
-
-	// import { authorName, siteName } from '$lib/config';
-	// import { Basics, Interests, Work } from '$lib/copy'
-	// import { Head } from 'svead'
-
-	// let title = `Web Development Related Experience · ${siteName}`;
-	// let description = `Relevant web development experience for JavaScript developer ${authorName}`;
-	// let url = $page.url.toString();
-	// let paymentPointer = `$ilp.uphold.com/bzPBWkMBzLmN`;
-
-	// import { Email, Globe, Mobile } from '$lib/icons'
-
-	// const { name, label, email, phone, website, imgSrc } = $$props;
-	// const { name, label, email, phone, website, imgSrc } = $props<{
-	// 	name: string;
-	// 	label: string;
-	// 	email: string;
-	// 	phone: string;
-	// 	website: string;
-	// 	imgSrc: string;
-	// }>();
+	const { work: Work, intro: Intro, whereToMeetMe: WhereToMeetMe, lang: lang } = data;
 
 	import Card from '$lib/components/Card.svelte';
 

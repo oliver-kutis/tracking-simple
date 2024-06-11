@@ -1,5 +1,5 @@
 ---
-title: 'Root Domain Extractor - Server-side GTM Variable Template'
+title: '[SK] Root Domain Extractor - Server-side GTM Variable Template'
 imgUrl: 'img/bg-clouds.jpg'
 imgAlt: 'Article image - Storm clouds'
 published: true

@@ -48,11 +48,7 @@
 			>
 			<div class="flex flex-row gap-2 items-center">
 				<DateIcon />
-				<time datetime={post.date} class="text-sm">{post.date}</time>
-			</div>
-			<div class="flex flex-row gap-2 items-center">
-				<TagsIcon />
-				<p class="text-sm">{post.tags.join(' x ')}</p>
+				<time datetime={post.datePublished} class="text-sm">{post.datePublished}</time>
 			</div>
 		</div>
 	</div>

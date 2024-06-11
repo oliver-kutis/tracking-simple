@@ -9,12 +9,14 @@
         console.log('changing video id')
         player.loadVideoById(ytPlayerId);
     }
+    const lang = 'sk'
 </script>
 
 <span class="divider mb-2 print:mb-0" />
 
 <section class="all-prose mb-4">
-    <RoleDetails 
+    <RoleDetails
+        lang={lang} 
         position=""
         company=""
         startDate=""
@@ -27,7 +29,7 @@
     />
 Video z prezentácie nájdete nižšie.
 
-<iframe class="w-full aspect-video" src="https://www.youtube-nocookie.com/embed/BrvlIUvdncQ?si=wsrGqaqWRuWwP5BZ&amp;start=20" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<Youtube srcLink="https://www.youtube-nocookie.com/embed/BrvlIUvdncQ?si=wsrGqaqWRuWwP5BZ&amp;start=20"/>
 
 Samotnú prezentáciu nájdete na tomto [odkaze](https://docs.google.com/presentation/d/1aju--ZQpLDNuz6VDuZYtcexNk-zupnBn1IQp8dWiVNw/edit?usp=sharing). 
 </section>
@@ -36,7 +38,8 @@ Samotnú prezentáciu nájdete na tomto [odkaze](https://docs.google.com/present
 
 <span class="divider mb-2 print:mb-0" />
 
-<RoleDetails 
+<RoleDetails
+    lang={lang}
     position=""
     company=""
     startDate=""

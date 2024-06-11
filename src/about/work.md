@@ -5,6 +5,7 @@
 <span class="divider mb-6 print:mb-0" />
 
 <RoleDetails 
+    lang="en"
     position="Web analyst"
     company="Databy & Freelance"
     startDate="2022-02-01"

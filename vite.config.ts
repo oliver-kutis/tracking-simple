@@ -7,6 +7,11 @@ export default defineConfig({
 		fs: {
 			allow: ['..'],
 		},
+		// proxy: {
+		// 	'/sgtm': {
+		// 		target: 'https://server-side-tagging-oliverkutisblog-3f5b72f3oq-lm.a.run.app',
+		// 	},
+		// },
 	},
 	// test: {
 	// 	include: ['src/**/*.{test,spec}.{js,ts}']

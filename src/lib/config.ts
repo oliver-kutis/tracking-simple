@@ -2,10 +2,6 @@ import { dev } from '$app/environment';
 import type { Language } from './types';
 
 export const websiteURL = dev ? 'http://localhost:5173/' : 'https://oliverkutis.blog';
-// export const githubURL = 'https://github.com/oliver-kutis';
-// export const linkedinURL = 'https://linkedin.com/in/oliver-kuti%C5%A1-5248a1179';
-// export const twitterURL = 'https://twitter.com/oliverkutis';
-// export const emailAddress = 'oliver.kutis@gmail.com';
 
 type LangConfigsType = {
 	[key in Language]: {
@@ -24,7 +20,7 @@ export const langConfigs: LangConfigsType = {
 		description: 'Oliver Kutis personal website | Blog about web analytics',
 		bio: 'Web tracking specialist and marketing analyst',
 		bioDescription:
-			'I am a web tracking specialist and marketing analyst. I help businesses to understand their customers and improve their online presence.',
+			'I am a web tracking specialist and marketing analyst. I help companies to understand their customers and improve their online presence.',
 	},
 	sk: {
 		name: 'Oliver Kutiš',
@@ -32,7 +28,7 @@ export const langConfigs: LangConfigsType = {
 		description: 'Osobná webstránka Olivera Kutiša | Blog o webovej analytike',
 		bio: 'Špecialista na webové sledovanie a marketingový analytik',
 		bioDescription:
-			'Som špecialista na webové sledovanie a marketingový analytik. Pomáham firmám pochopiť ich zákazníkov a zlepšiť ich online prítomnosť.',
+			'Som špecialistom na webovú analytiku a marketingový analytik. Pomáham firmám pochopiť ich zákazníkov a zlepšiť ich online prítomnosť.',
 	},
 };
 

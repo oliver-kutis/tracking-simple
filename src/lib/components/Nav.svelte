@@ -23,7 +23,6 @@
 	let headerElement: HTMLHeadElement;
 
 	$: themeType = getThemeType($themeStore);
-	$: console.log(themeType);
 
 	$: classesOnScroll = {
 		add: [

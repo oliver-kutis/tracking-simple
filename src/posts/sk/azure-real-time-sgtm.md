@@ -1,5 +1,5 @@
 ---
-title: 'Tutorial, Enrich server-side GTM data in real-time with Azure Cosmos DB and Function App'
+title: '[SK] Tutorial, Enrich server-side GTM data in real-time with Azure Cosmos DB and Function App'
 alternativeTitle: 'How to enrich server-side data without using Firestore — A thorough guide.'
 imgUrl: 'img/bg-clouds.jpg'
 published: true
