@@ -142,9 +142,11 @@
 		}
 	}}
 />
+<!-- <CookieDialog></CookieDialog> -->
 <Nav bind:bodyScrollY={scrollY} lang={lang}></Nav>
 <PageTransition url={data.url}>
 	<div class="flex w-full h-full">
+		<CookieDialog></CookieDialog>
 		<div class="container items-center inset-0 max-h-full py-5 px-5 rounded max-w-4xl mx-auto">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -152,7 +154,6 @@
 				bind:clientWidth={$mainClientWidth}
 				class="flex flex-col flex-grow w-full mx-auto"
 			>
-				<CookieDialog></CookieDialog>
 				<slot />
 			</main>
 		</div>

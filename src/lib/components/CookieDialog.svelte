@@ -1,4 +1,6 @@
 <script lang="ts">
+	import CloseCross from './svg/CloseCross.svelte';
+
 	let isOpen = true;
 
 	const open = () => {
@@ -9,93 +11,65 @@
 	};
 </script>
 
-<!-- <dialog
-	class="cookie-dialog fixed left-0 top-0 z-[1055]
-                h-full w-full p-5 sm:p-10
-"
-	open={isOpen}
->
-	<div class="cookie-dialog__content">
-		<p>
-			We use cookies to ensure you get the best experience on our website. By using our
-			website you agree to our
-			<a href="/privacy-policy">Privacy Policy</a>.
-		</p>
-		<button on:click={close}>Got it!</button>
-	</div>
-</dialog> -->
-<dialog
-	class="cookie-dialog fixed left-0 bottom-0 z-[1055]
-"
-	open={isOpen}
->
-	<div
-		data-twe-modal-dialog-ref
-		class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]"
-	>
-		<div
-			class="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-4 outline-none dark:bg-surface-dark"
-		>
-			<div
-				class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 p-4 dark:border-white/10"
-			>
-				<h5
-					class="text-xl font-medium leading-normal text-surface dark:text-white"
-					id="exampleModalLabel"
-				>
-					Modal title
-				</h5>
-				<button
-					type="button"
-					class="box-content rounded-none border-none text-neutral-500 hover:text-neutral-800 hover:no-underline focus:text-neutral-800 focus:opacity-100 focus:shadow-none focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-300 dark:focus:text-neutral-300"
-					data-twe-modal-dismiss
-					aria-label="Close"
-				>
-					<span class="[&>svg]:h-6 [&>svg]:w-6">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="currentColor"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M6 18L18 6M6 6l12 12"
-							/>
-						</svg>
-					</span>
-				</button>
-			</div>
-
-			<!-- Modal body -->
-			<div class="relative flex-auto p-4" data-twe-modal-body-ref>
-				Modal body text goes here.
-			</div>
-
-			<!-- Modal footer -->
-			<div
-				class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 p-4 dark:border-white/10"
-			>
-				<button
-					type="button"
-					class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-200 focus:bg-primary-accent-200 focus:outline-none focus:ring-0 active:bg-primary-accent-200 dark:bg-primary-300 dark:hover:bg-primary-400 dark:focus:bg-primary-400 dark:active:bg-primary-400"
-					data-twe-modal-dismiss
-					data-twe-ripple-init
-					data-twe-ripple-color="light"
-				>
-					Close
-				</button>
-				<button
-					type="button"
-					class="ms-1 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-					data-twe-ripple-init
-					data-twe-ripple-color="light"
-				>
-					Save changes
-				</button>
-			</div>
+<!-- You can open the modal using ID.showModal() method -->
+<!-- <button class="btn" onclick="my_modal_4.showModal()">open modal</button> -->
+<dialog open={isOpen} id="my_modal_4" class={`modal ${isOpen ? 'modal-open' : ''}`}>
+	<div class="modal-box w-11/12 max-w-5xl">
+		<h3 class="font-bold text-lg">Hello!</h3>
+		<p class="py-4">Click the button below to close</p>
+		<div class="modal-action">
+			<form method="dialog">
+				<!-- if there is a button, it will close the modal -->
+				<button class="btn" on:click={close}>Close</button>
+			</form>
 		</div>
 	</div>
 </dialog>
+<!-- <dialog
+	class="cookie-dialog block z-[1055] bg-base
+			shadow-lg fixed left-1/2 top-4 m-0 translate-x-1/2 w-1/3
+"
+	open={isOpen}
+>
+	<div class="flex flex-row mx-auto h-full m-2">
+		<div class="absolute p-4 right-0 top-0">
+			<CloseCross></CloseCross>
+		</div>
+		<div class="container flex flex-col items-center gap-y-2 max-w-4xl p-5">
+			<p class="text-base-content text-center">
+				Apart from functional cookies. Besides that, the only cookies the website uses are
+				analytical cookies, which is straightforward as I am a web analyst 😀. So please hit
+				the accept so I can play with the data.
+			</p>
+			<div class="flex flex-row gap-x-2 max-w-4xl">
+				<button class="text-neutral bg-primary rounded-btn shadow-md px-2 py-1"
+					>Accept</button
+				>
+				<button class="text-neutral bg-primary rounded-btn shadow-md px-2 py-1"
+					>Decline</button
+				>
+			</div>
+		</div>
+	</div>
+</dialog> -->
+<!-- <dialog
+	class="cookie-dialog fixed left-0 bottom-0 z-[1055] w-full h-1/4 bg-base
+			shadow-lg
+"
+	open={isOpen}
+>
+	<div class="absolute p-4 right-0 top-0">
+		<CloseCross></CloseCross>
+	</div>
+	<div class="container mx-auto h-full flex flex-col items-center gap-y-2 max-w-4xl m-10 p-5">
+		<p class="text-base-content text-center">
+			Apart from functional cookies. Besides that, the only cookies the website uses are
+			analytical cookies, which is straightforward as I am a web analyst 😀. So please hit the
+			accept so I can play with the data.
+		</p>
+		<div class="flex flex-row gap-x-2 max-w-4xl">
+			<button class="text-neutral bg-primary rounded-btn shadow-md px-2 py-1">Accept</button>
+			<button class="text-neutral bg-primary rounded-btn shadow-md px-2 py-1">Decline</button>
+		</div>
+	</div>
+</dialog> -->
