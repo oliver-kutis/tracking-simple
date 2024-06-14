@@ -89,13 +89,13 @@
 			<div class="modal-action m-0">
 				<button
 					id="accept"
-					class="btn bg-accent text-base-100 rounded-btn w-20 py-1 px-2 h-10 min-h-10 font-bold"
-					on:click={close}>Accept</button
+					class="btn bg-accent text-base-100 rounded-btn py-1 px-2 h-10 min-h-10 font-bold"
+					on:click={close}>{lang === 'sk' ? 'Akceptovať' : 'Accept'}</button
 				>
 				<button
 					id="deny"
-					class="btn text-base-content rounded-btn w-20 py-1 px-2 h-10 min-h-10 font-medium"
-					on:click={close}>Deny</button
+					class="btn text-base-content rounded-btn py-1 px-2 h-10 min-h-10 font-medium"
+					on:click={close}>{lang === 'sk' ? 'Odmietnuť' : 'Deny'}</button
 				>
 			</div>
 		</div>
