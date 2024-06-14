@@ -71,3 +71,71 @@ export function extractHeadings(arr: ArrayOfHeadings) {
 
 	return arr;
 }
+
+function setCookie(name, value, days) {
+	let expires = '';
+	if (days) {
+		const date = new Date();
+		date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+		expires = '; expires=' + date.toUTCString();
+	}
+	document.cookie = name + '=' + (value || '') + expires + '; path=/';
+}
+
+export function getCookie(name) {
+	const nameEQ = name + '=';
+	const ca = document.cookie.split(';');
+	for (let i = 0; i < ca.length; i++) {
+		let c = ca[i];
+		while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+		if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+	}
+	return null;
+}
+
+export function handleConsentUpdate(action: string) {
+	if (action === 'accept') {
+		setCookie('cookie-consent-analytics', 'accept', 365);
+		gtag('consent', 'update', {
+			functional_storage: 'granted',
+			analytics_storage: 'granted',
+			ad_storage: 'granted',
+			ad_user_data: 'granted',
+			ad_personalization: 'granted',
+		});
+	} else if (action === 'deny') {
+		setCookie('cookie-consent-analytics', 'deny', 365);
+		gtag('consent', 'update', {
+			functional_storage: 'denied',
+			analytics_storage: 'denied',
+			ad_storage: 'denied',
+			ad_user_data: 'denied',
+			ad_personalization: 'denied',
+		});
+	}
+
+	window.dataLayer = window.dataLayer || [];
+	window.dataLayer.push({ event: 'cookie_consent_update', action: action });
+}
+
+export function handleConsentDefault() {
+	const consent = getCookie('cookie-consent-analytics');
+	if (!consent || consent === 'deny') {
+		// setCookie('cookie-consent-analytics', 'deny', 365);
+		gtag('consent', 'default', {
+			functional_storage: 'denied',
+			analytics_storage: 'denied',
+			ad_storage: 'denied',
+			ad_user_data: 'denied',
+			ad_personalization: 'denied',
+		});
+	} else if (consent === 'accept') {
+		gtag('consent', 'default', {
+			functional_storage: 'granted',
+			analytics_storage: 'granted',
+			ad_storage: 'granted',
+			ad_user_data: 'granted',
+			ad_personalization: 'granted',
+		});
+	}
+}

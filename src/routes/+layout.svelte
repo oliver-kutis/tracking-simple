@@ -17,6 +17,7 @@
 	import type { LayoutData, PageData } from './$types';
 	import { langConfigs, socials } from '$lib/config';
 	import CookieDialog from '$lib/components/CookieDialog.svelte';
+	import { getCookie } from '$lib';
 
 	export let data: LayoutData;
 	$: lang = data.lang;
@@ -37,9 +38,13 @@
 	$: $mainClientWidth = mainElement?.clientWidth;
 	// $: console.log($mainClientWidth);
 	$: setContext('mainClientWidth', mainClientWidth);
+	let cookieConsent = false;
 
 	$: {
 		if (typeof document !== 'undefined') {
+			// determine if cookies are set
+			cookieConsent = getCookie('cookie-consent-analytics');
+
 			// change html lang attribute
 			document.documentElement.lang = lang;
 
@@ -104,6 +109,8 @@
 			},
 		});
 	});
+
+	// window.handleConsentDefault = handleConsentDefault;
 </script>
 
 <svelte:head>
@@ -146,7 +153,6 @@
 <Nav bind:bodyScrollY={scrollY} lang={lang}></Nav>
 <PageTransition url={data.url}>
 	<div class="flex w-full h-full">
-		<CookieDialog></CookieDialog>
 		<div class="container items-center inset-0 max-h-full py-5 px-5 rounded max-w-4xl mx-auto">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -154,6 +160,9 @@
 				bind:clientWidth={$mainClientWidth}
 				class="flex flex-col flex-grow w-full mx-auto"
 			>
+				{#if !cookieConsent && lang}
+					<CookieDialog lang={lang}></CookieDialog>
+				{/if}
 				<slot />
 			</main>
 		</div>
