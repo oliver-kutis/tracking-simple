@@ -16,8 +16,11 @@ export type CardData = {
 }[];
 
 export type Post = {
-	imgUrl: string;
-	imgAlt: string;
+	imgUrl: string; // Path to image file
+	imgAlt: string; // Alt text for image
+	imgSourceText: string; // Text for source (not part of link)
+	imgSourceUrl: string; // Source link for image
+	imgSourceUrlText: string; // Text for source link
 	title: string;
 	datePublished: string;
 	dateEdited?: string;

@@ -126,7 +126,9 @@
 		/>
 		<div class="flex justify-end items-right prose max-w-full prose-a:text-60">
 			<span class="prose prose-sm md:prose-base font-light italic text-right"
-				>TAKEN from <a href="" class="prose text-primary hover:text-accent">SOME WEBSITE</a
+				>{metadata.imgSourceText}
+				<a href={metadata.imgSourceUrl} class="prose text-primary hover:text-accent"
+					>{metadata.imgSourceUrlText}</a
 				></span
 			>
 		</div>

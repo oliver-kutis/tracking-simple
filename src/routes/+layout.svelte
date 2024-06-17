@@ -18,16 +18,8 @@
 	import { langConfigs, socials } from '$lib/config';
 	import CookieDialog from '$lib/components/CookieDialog.svelte';
 	import { getCookie } from '$lib';
-
 	export let data: LayoutData;
 	$: lang = data.lang;
-
-	beforeNavigate(navigation => {
-		const goFromPathEnd = navigation.from.url.pathname.split('/').slice(-1)[0];
-		const goToPathEnd = navigation.to.url.pathname.split('/').slice(-1)[0];
-
-		if (goFromPathEnd !== goToPathEnd) document.body.scrollTop = 0;
-	});
 
 	// For passing the scrollY value to the Nav component
 	let scrollY = 0;
@@ -38,13 +30,9 @@
 	$: $mainClientWidth = mainElement?.clientWidth;
 	// $: console.log($mainClientWidth);
 	$: setContext('mainClientWidth', mainClientWidth);
-	let cookieConsent = false;
 
 	$: {
 		if (typeof document !== 'undefined') {
-			// determine if cookies are set
-			cookieConsent = getCookie('cookie-consent-analytics');
-
 			// change html lang attribute
 			document.documentElement.lang = lang;
 
@@ -95,7 +83,16 @@
 
 	const referrer: Writable<string | null> = writable(null);
 
-	beforeNavigate(() => referrer.set($page.url.href));
+	beforeNavigate(navigation => {
+		const goFromPathEnd = navigation.from.url.pathname.split('/').slice(-1)[0];
+		const goToPathEnd = navigation.to.url.pathname.split('/').slice(-1)[0];
+
+		if (goFromPathEnd !== goToPathEnd) document.body.scrollTop = 0;
+
+		// set referrer
+		referrer.set($page.url.href);
+	});
+	// beforeNavigate(() => referrer.set($page.url.href));
 	afterNavigate(() => {
 		window.dataLayer = window.dataLayer || [];
 		window.dataLayer.push({
@@ -110,7 +107,17 @@
 		});
 	});
 
-	// window.handleConsentDefault = handleConsentDefault;
+	let showCookieModal = false;
+	const setCookieModalTimeout = () => {
+		const timerId = setTimeout(() => {
+			showCookieModal = true;
+			clearTimeout(timerId);
+		}, 2000);
+	};
+
+	onMount(() => {
+		setCookieModalTimeout();
+	});
 </script>
 
 <svelte:head>
@@ -160,7 +167,7 @@
 				bind:clientWidth={$mainClientWidth}
 				class="flex flex-col flex-grow w-full mx-auto"
 			>
-				{#if !cookieConsent && lang}
+				{#if lang && showCookieModal}
 					<CookieDialog lang={lang}></CookieDialog>
 				{/if}
 				<slot />

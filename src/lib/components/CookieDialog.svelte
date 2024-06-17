@@ -1,16 +1,20 @@
 <script lang="ts">
-	import { handleConsentUpdate } from '$lib';
+	import { dataLayerPush, handleConsentUpdate, isNordOrValentine } from '$lib';
 	import { langConfigs } from '$lib/config';
 	import { onMount } from 'svelte';
+	import { cubicInOut, quintOut } from 'svelte/easing';
+	import { fade } from 'svelte/transition';
+	import themeStore from '$stores/theme';
 
 	export let lang: string;
 	// export let data: LayoutData;
 	// $: lang = data.lang;
 
-	let isOpen = true;
+	let isOpen;
 
 	const open = () => {
 		isOpen = true;
+		dataLayerPush('cookie_modal_impression');
 	};
 	const close = event => {
 		const target = event.target;
@@ -19,10 +23,10 @@
 	};
 
 	onMount(() => {
-		window.dataLayer = window.dataLayer || [];
-		window.dataLayer.push({
-			event: 'cookie_modal_impression',
-		});
+		const cookieConsent = getCookie('cookie-consent-analytics');
+		if (!cookieConsent) {
+			open();
+		}
 	});
 </script>
 
@@ -45,6 +49,8 @@
 </dialog> -->
 
 <div
+	transition:fade={{ duration: 300, easing: quintOut }}
+	on:visibilitychange={() => console.log('visibilitychange')}
 	class={`cookie-modal modal ${isOpen ? 'modal-open' : ''} items-start max-w-4xl mx-auto`}
 	style={`display: ${isOpen ? 'grid' : 'none'};`}
 >
@@ -52,9 +58,10 @@
 		class="absolute modal-box
 			w-10/12 sm:w-6/12 max-w-sm
 			border border-neutral
-			mt-5 sm:mr-5 p-5
+			mt-5 sm:mr-8 p-5 mr-10
 			top-0 left-0 right-0 m-auto sm:right-0
 			rounded-3xl
+			shadow-3xl
 		"
 	>
 		<!-- <form method="dialog">
@@ -62,13 +69,13 @@
 				<CloseCross></CloseCross>
 			</button>
 		</form> -->
-		<h3 class="font-bold text-lg">
+		<h2 class="font-bold text-xl">
 			{#if lang === 'sk'}
 				Súhlas s analytickými cookies
 			{:else}
 				Analytical cookies consent
 			{/if}
-		</h3>
+		</h2>
 		<p class="py-4">
 			{#if lang === 'sk'}
 				Mimo funkčných cookies tento web používa iba analytické cookie, čo by sa od <b
@@ -89,12 +96,25 @@
 			<div class="modal-action m-0">
 				<button
 					id="accept"
-					class="btn bg-accent text-base-100 rounded-btn py-1 px-2 h-10 min-h-10 font-bold"
+					class={`
+						${isNordOrValentine($themeStore) ? 'bg-secondary border-secondary' : 'bg-accent border-accent'}
+						shadow-md
+						font-semibold
+						btn text-base-100 rounded-xl
+						py-1 px-2 h-10 min-h-10 
+						hover:bg-primary hover:border-primary
+					`}
 					on:click={close}>{lang === 'sk' ? 'Akceptovať' : 'Accept'}</button
 				>
 				<button
 					id="deny"
-					class="btn text-base-content rounded-btn py-1 px-2 h-10 min-h-10 font-medium"
+					class={`
+						btn text-base-content rounded-xl py-1
+						font-semibold
+						px-2 h-10 min-h-10
+						hover:bg-neutral hover:border-neutral
+						${isNordOrValentine($themeStore) || $themeStore === 'garden' ? 'hover:text-neutral-content' : ''}
+					`}
 					on:click={close}>{lang === 'sk' ? 'Odmietnuť' : 'Deny'}</button
 				>
 			</div>

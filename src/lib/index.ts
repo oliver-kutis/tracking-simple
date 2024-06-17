@@ -139,3 +139,79 @@ export function handleConsentDefault() {
 		});
 	}
 }
+
+export function dataLayerPush(event: string, data: object = {}) {
+	window.dataLayer = window.dataLayer || [];
+	window.dataLayer.push({ event: event, ...data });
+}
+
+export function pageEngagementTracker() {
+	let startEngage = new Date().getTime();
+	let timeEngaged = 0;
+	let idleTime = 0;
+	let isIdle = true;
+	let idleReport = false;
+	let idleTimer, reportTimer;
+
+	// Set the user as idle and calculate the time they were not idle
+	const setIdle = () => {
+		idleTime = new Date().getTime();
+		timeEngaged += idleTime - startEngage;
+		isIdle = true;
+	};
+
+	// Reset the 5 second idle timer. If the use was idle, start non-idle timer
+	const pulse = () => {
+		if (isIdle) {
+			isIdle = false;
+			startEngage = new Date().getTime();
+			idleReport = false;
+		}
+
+		clearTimeout(idleTimer);
+		idleTimer = setTimeout(setIdle, 5000);
+	};
+
+	// Utilify func for attaching event listeners
+	const addListener = (evt, cb) => {
+		if (window.addEventListener) {
+			window.addEventListener(evt, cb);
+		} else if (window.attachEvent) {
+			window.attachEvent('on' + evt, cb);
+		}
+	};
+
+	// Push event to dataLayer every 15 seconds unless the user is idle.
+	// ... also, push an event when the iser leaves the page
+	const report = evt => {
+		if (!isIdle) {
+			timeEngaged += new Date().getTime() - startEngage;
+		}
+
+		// Push the event to the dataLayer, push only valid time values
+		if (!idleReport && timeEngaged > 0 && timeEngaged < 3600000) {
+			dataLayerPush('page_engagement', { time_engaged: timeEngaged });
+		}
+
+		if (isIdle) {
+			idleReport = true;
+		}
+
+		// overcome potential beforeunload event duplication
+		if (evt && evt.type === 'beforeunload') {
+			window.removeEventListener('beforeunload', report);
+		}
+
+		timeEngaged = 0;
+		startEngage = new Date().getTime();
+		reportTimer = setTimeout(report, 15000);
+	};
+
+	addListener('mousedown', pulse);
+	addListener('keydown', pulse);
+	addListener('scroll', pulse);
+	addListener('mousemove', pulse);
+	addListener('beforeunload', report);
+	idleTimer = setTimeout(setIdle, 5000);
+	reportTimer = setTimeout(report, 15000);
+}

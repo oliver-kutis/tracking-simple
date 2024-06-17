@@ -4,6 +4,8 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
 	plugins: [sveltekit()],
 	server: {
+		host: 'dev.oliverkutis.blog',
+		port: 80,
 		fs: {
 			allow: ['..'],
 		},

@@ -66,7 +66,7 @@
 				<a
 					href={lastPost.slug}
 					class="text-lg sm:text-2xl font-bold text-primary hover:text-accent transition-colors"
-					>{lastPost.title}</a
+					on:click={() => dataLayerPush('latest_post_click')}>{lastPost.title}</a
 				>
 				<p class="mt-2">{lastPost.summary}</p>
 				<div class="mt-4">
